@@ -1,0 +1,48 @@
+<?php
+
+namespace app;
+
+use think\facade\Route as TpRoute;
+
+class Route{
+    static function SetMethodRoute($url,$method='post'){
+        $method = strtolower($method);
+        switch ($method) {
+            case 'get':
+                TpRoute::get($url,$url);
+                break;
+            case 'put':
+                TpRoute::put($url,$url);
+                break;
+            case 'delete':
+                TpRoute::delete($url,$url);
+                break;
+            case 'any':
+                TpRoute::any($url,$url);
+                break;
+            default:
+                TpRoute::post($url,$url);
+                break;
+        }
+    }
+
+    static function SetRoute($routes){
+        foreach($routes as $v) {
+            if(isset($v['path']) && $v['path']){
+                if(isset($v['base'])){
+                    foreach($v['base'] as $v1) {
+                        self::setMethodRoute($v['path'].'/'.$v1,isset($v['method'])?$v['method']:'post');
+                    }
+                }
+                if(isset($v['admin'])){
+                    foreach($v['base'] as $v1) {
+                        TpRoute::group('admin', function() use($v,$v1) {
+                            self::setMethodRoute($v['path'].'/'.$v1,isset($v['method'])?$v['method']:'post');
+                        })->middleware(\app\middleware\Admin::class);
+                    }
+                }
+            }
+        }
+
+    }
+}
