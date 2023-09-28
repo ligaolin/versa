@@ -2,17 +2,16 @@
 
 namespace app\controller\user;
 
-use app\BaseController;
+use app\controller\Base;
 use app\api\user\UserApi;
 use think\facade\Db;
 
-class User extends BaseController
+class User extends Base
 {
     public function index()
     {
-        $data = UserApi::Get();
-        dump(UserApi::$name);
-        return json_encode($data);
+        $data = UserApi::Get(UserApi::$UserGet);
+        dump($data);
         return ' d';
     }
 }

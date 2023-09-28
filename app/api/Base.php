@@ -5,39 +5,36 @@ namespace app\api;
 use think\exception\ValidateException;
 
 class Base{
-    static function rule(){ return []; }
-
-    static function Get(){
+    static function Get($data){
         $param = input();
-        $data = [];
+
+        $arr = array_combine(array_column($data, 0), array_column($data, 1));
         foreach ($param as $key => $value) {
-            if(property_exists(static::class,$key) && $key!='verify'){
-                static::$$key = $value;
-                $data[$key] = $value;
-            }
+            if(array_key_exists($key,$arr)) $arr[$key] = $value;
         }
-        self::Validate($data); // 验证
-        return $data;
+        self::Validate($data,$arr); // 验证
+        return $arr;
     }
 
-    static function Validate($data){
+    static function Validate($ruleData,$data){
         $ruleArr = [];
         $msgArr = [];
-        foreach(static::rule() as $v){
-            if(is_array($v) && count($v)>=2 && is_array($v[1]) && count($v[1])){
-                foreach($v[1] as $k1 => $v1){
-                    if(is_array($v1) && count($v1)){
+        foreach($ruleData as $v){
+            if(is_array($v) && count($v)>=3){
+                $rules = array_slice($v, 2, null, true);
+                if(count($rules)){
+                    foreach($rules as $k1 => $v1){
                         // 验证规格
-                        if(!$k1) $ruleArr[$v[0]] = $v1[0];
+                        if($k1==2) $ruleArr[$v[0]] = $v1[0];
                         else $ruleArr[$v[0]] .= '|'.$v1[0];
+
                         // 错误信息
-                        $rule = explode(':',$v1[0]);
-                        $msgArr[$v[0].'.'.$rule[0]] = $v1[1];
+                        $msg = explode(':',$v1[0]);
+                        $msgArr[$v[0].'.'.$msg[0]] = $v1[1];
                     }
                 }
             }
         }
-
         try{
             validate($ruleArr,$msgArr)->check($data);
         } catch (ValidateException $e) {
