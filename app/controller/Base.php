@@ -3,9 +3,12 @@
 namespace app\controller;
 
 use app\BaseController;
+use think\facade\Db;
 
 class Base extends BaseController
 {
+    static $table = 'user_auth';
+
     static function ResData($data){
         return json($data);
     }
@@ -24,6 +27,10 @@ class Base extends BaseController
 
     static function Error($msg,$data=[]){
         return self::Res($msg,$data,1000);
+    }
+
+    static function Db($table=''){
+        return Db::name($table?:self::$table);
     }
 
     /**
@@ -94,5 +101,18 @@ class Base extends BaseController
         if(is_object($data)) return json_decode(json_encode($data), true);
         if(is_array($data)) return $data;
         return explode(',',$data);
+    }
+
+    static function GetList($db,$data,$order=''){
+        if(isset($data['order']) && $data['order'] && is_string($data['order'])) $db = $db->orderRaw($data['order']);
+        else if($order)  $db = $db->orderRaw($order);
+        if(isset($data['page']) && $data['page']){
+            return $db->paginate([
+                'list_rows'=> isset($data['pageNum']) && $data['pageNum']?$data['pageNum']:10,
+                'page' => $data['page'],
+            ]);
+        }else{
+            return ['data'=>$db->select()];
+        }
     }
 }

@@ -8,6 +8,8 @@ use app\model\UserAuth as UserAuthModel;
 
 class UserAuth extends Base
 {
+    static $table = 'user_auth';
+
     function Get(){
         $data = UserAuthApi::Get(UserAuthApi::$Get);
         $where = self::Where($data,[
@@ -15,7 +17,7 @@ class UserAuth extends Base
             ['name'=>'name','type'=>'in'],
             ['name'=>'route','type'=>'in'],
         ]);
-        return self::Success('获取完成',UserAuthModel::where($where)->find());
+        return self::Success('获取完成',self::Db()->where($where)->find());
     }
 
     function List(){
@@ -28,7 +30,7 @@ class UserAuth extends Base
             ['name'=>'route','type'=>'in'],
             ['name'=>'state','type'=>'in'],
         ]);
-        $res = UserAuthModel::list(UserAuthModel::where($where),$data);
+        $res = self::GetList(self::Db()->where($where),$data);
         return self::Success('获取完成',$res);
     }
 
@@ -36,15 +38,15 @@ class UserAuth extends Base
     {
         $update = $data = UserAuthApi::Get(UserAuthApi::$Edit);
         unset($update['id']);
-        if($data['pid']) $update['level'] = UserAuthModel::where('id = '.$data['pid'])->value('level')+1;
+        if($data['pid']) $update['level'] = self::Db()->where('id = '.$data['pid'])->value('level')+1;
 
         if($data['id']){
             // 更新
-            UserAuthModel::where('id = '.$data['id'])->update($update);
+            self::Db()->where('id = '.$data['id'])->update($update);
             return self::Success('更新完成');
         }else{
             // 添加
-            if($id = UserAuthModel::insertGetId($update)) return self::Success('添加成功',$id);
+            if($id = self::Db()->insertGetId($update)) return self::Success('添加成功',$id);
             else return self::Error('添加失败');
         }
 
