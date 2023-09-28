@@ -9,8 +9,6 @@ class Index extends BaseController
 {
     public function index()
     {
-        $data = Db::table('test')->where('id', 1)->find();
-        throw new \Exception('ddd');
         return ' d';
     }
 
