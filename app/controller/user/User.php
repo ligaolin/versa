@@ -8,7 +8,7 @@ use think\facade\Db;
 
 class User extends Base
 {
-    public function index()
+    public function AddAdmin()
     {
         $data = UserApi::Get(UserApi::$UserGet);
         dump($data);

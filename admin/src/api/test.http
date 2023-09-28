@@ -1,0 +1,26 @@
+### 添加编辑权限
+POST http://localhost:8000/user.UserAuth/Edit
+Content-Type: application/json
+
+{
+    "id":7,
+    "pid":1,
+    "name":"test"
+}
+
+### 获取权限单条数据
+POST http://localhost:8000/user.UserAuth/Get
+Content-Type: application/json
+
+{
+    "name":"admin"
+}
+
+### 获取权限列表数据
+POST http://localhost:8000/user.UserAuth/List
+Content-Type: application/json
+
+{
+    "page":1,
+    "pageNum":10
+}
