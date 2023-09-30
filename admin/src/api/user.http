@@ -30,9 +30,9 @@ POST http://localhost:8000/user.UserAuth/Change
 Content-Type: application/json
 
 {
-    "whereField":"sort",
+    "whereField":"id",
     "whereVal":20,
-    "changeField":"id",
+    "changeField":"sort",
     "changeVal":2
 }
 

@@ -32,7 +32,7 @@ class Base extends BaseController
     }
 
     static function Db($table=''){
-        return Db::name($table?:self::$table);
+        return Db::name($table?$table:static::$table);
     }
 
     function Change(){
