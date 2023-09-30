@@ -4,11 +4,11 @@ namespace app\controller\user;
 
 use app\controller\Base;
 use app\api\user\UserAuthApi;
-use app\model\UserAuth as UserAuthModel;
 
 class UserAuth extends Base
 {
     static $table = 'user_auth';
+    static $changeField = ['name','route','sort','state'];
 
     function Get(){
         $data = UserAuthApi::Get(UserAuthApi::$Get);

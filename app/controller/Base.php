@@ -4,10 +4,12 @@ namespace app\controller;
 
 use app\BaseController;
 use think\facade\Db;
+use app\api\Base as BaseApi;
 
 class Base extends BaseController
 {
-    static $table = 'user_auth';
+    static $table = '';
+    static $changeField = ['sort','state'];
 
     static function ResData($data){
         return json($data);
@@ -21,16 +23,62 @@ class Base extends BaseController
         return json($res);
     }
 
-    static function Success($msg,$data=[]){
+    static function Success($msg,$data=null){
         return self::Res($msg,$data,2000);
     }
 
-    static function Error($msg,$data=[]){
+    static function Error($msg,$data=null){
         return self::Res($msg,$data,1000);
     }
 
     static function Db($table=''){
         return Db::name($table?:self::$table);
+    }
+
+    function Change(){
+        if(!static::$table) throw new \Exception('数据表未定义');
+        $param = input();
+        BaseApi::Validate([
+            ['whereField',null,['require','条件字段必须']],
+            ['whereVal',null,['require','条件值必须必须']],
+            ['changeField',null,['require','修改字段必须']],
+            ['changeVal',null,['require','修改字段值必须']],
+        ],$param);
+        if(!in_array($param['changeField'],static::$changeField)) throw new \Exception('非法字段');
+        self::Db()->where($param['whereField'],$param['whereVal'])->update([
+            $param['changeField']=>$param['changeVal'],
+        ]);
+        return self::success('修改完成');
+    }
+
+    // 删除
+    function Del(){
+        if(!static::$table) throw new \Exception('数据表未定义');
+        $param = input();
+        if(!isset($param['id']) || !$param['id']) throw new \Exception('id必须');
+        $idArr1 = $idArr = self::DataToAarray($param['id']);
+        foreach($idArr as $id){
+            $find = self::Db()->where('id',$id)->find();
+            if(isset($find['pid'])) $idArr1 = array_merge($idArr1,self::getChildrenId($id));
+        }
+        $inId = implode("','",$idArr1);
+        if(self::Db()->where("id in ('{$inId}')")->delete()){
+            return self::success("删除完成");
+        }else{
+            throw new \Exception('删除出错');
+        }
+    }
+
+    protected static function getChildrenId($id,$pid='pid'){
+        $idArr = self::DataToAarray($id);
+        $inId = implode("','",$idArr);
+        $idArr1 = self::Db()->where($pid." in ('{$inId}')")->column('id');
+        if(count($idArr1)){
+            foreach($idArr1 as $val){
+                $idArr1 = array_merge($idArr1,self::getChildrenId($val,$pid));
+            }
+        }
+        return $idArr1;
     }
 
     /**

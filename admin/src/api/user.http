@@ -24,3 +24,22 @@ Content-Type: application/json
     "page":1,
     "pageNum":10
 }
+
+### 修改单个字段
+POST http://localhost:8000/user.UserAuth/Change
+Content-Type: application/json
+
+{
+    "whereField":"sort",
+    "whereVal":20,
+    "changeField":"id",
+    "changeVal":2
+}
+
+### 删除数据
+POST http://localhost:8000/user.UserAuth/Del
+Content-Type: application/json
+
+{
+    "id":1
+}
