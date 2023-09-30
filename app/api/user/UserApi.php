@@ -5,33 +5,31 @@ namespace app\api\user;
 use app\api\Base;
 
 class UserApi extends Base {
-    static $UserGet = [
-        ['name',null,
-            ['require','名称必须'],
-            ['number','年龄必须是数字'],
-            ['max:25','名称最多不能超过25个字符'],
-            ['between:1,120','年龄只能在1-120之间'],
-        ],
-        ['key',81,
-            ['require','关键词必须'],
-            ['max:25','关键词最多不能超过25个字符'],
-        ],
-        ['kdf',81],
-        ['fsdg',81],
+    static $Get = [
+        ['id',null],
+        ['name',null],
     ];
 
-    static $AddAdmin = [
-        ['name',null,
-            ['require','名称必须'],
-            ['number','年龄必须是数字'],
-            ['max:25','名称最多不能超过25个字符'],
-            ['between:1,120','年龄只能在1-120之间'],
-        ],
-        ['key',81,
-            ['require','关键词必须'],
-            ['max:25','关键词最多不能超过25个字符'],
-        ],
-        ['kdf',81],
-        ['fsdg',81],
+    static $List = [
+        ['id',null],
+        ['name',null],
+        ['user_group_id',null],
+        ['type',null],
+        ['state','开启'],
+        ['page',null],
+        ['pageNum',10],
+        ['order','sort asc,id asc'],
+    ];
+
+    static $Edit = [
+        ['id',null,['number','id必须数字']],
+        ['name',null,['require','名称必须']],
+        ['user_group_id',null],
+        ['type','管理员',['in:管理员','类型值错误']],
+        ['password',null],
+        ['duplicatePassword',null],
+        ['avatar',null],
+        ['sort',100,['number','排序必须数字']],
+        ['state','开启',['in:开启,关闭','状态值错误']],
     ];
 }
