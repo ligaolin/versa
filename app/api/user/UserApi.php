@@ -32,4 +32,10 @@ class UserApi extends Base {
         ['sort',100,['number','排序必须数字']],
         ['state','开启',['in:开启,关闭','状态值错误']],
     ];
+
+    static $AdminLogin = [
+        ['name',null,['require','名称必须']],
+        ['password',null,['require','密码必须']],
+        ['code',null,['require','验证码必须']],
+    ];
 }

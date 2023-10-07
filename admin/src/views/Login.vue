@@ -24,6 +24,7 @@ import router from '@/router'
 import { Random } from '@/utils/math'
 import { adminLogin,getImgCode } from '@/api/account.js'
 import { setItem } from '@/utils/store.js'
+import { http } from '@/data'
 import BgImg1 from '@/assets/images/bg1.jpg'
 import BgImg2 from '@/assets/images/bg2.jpg'
 import BgImg3 from '@/assets/images/bg3.jpg'
@@ -42,10 +43,9 @@ const name = ref("")
 const password = ref("")
 const code = ref("")
 const answer = ref("")
-const code_id = ref("")
 const version = "v1.0"
 const submit = ()=>{
-    adminLogin(name.value,password.value,code.value,code_id.value).then(res=>{
+    adminLogin(name.value,password.value,code.value).then(res=>{
         console.log(res);
         getCode()
         if(res.code == 2000){
@@ -63,12 +63,7 @@ const submit = ()=>{
 }
 
 const getCode = ()=>{
-    getImgCode().then(res=>{
-        if(res.code == 2000){
-            answer.value = res.answer
-            code_id.value = res.id
-        }
-    })
+    answer.value = http+'/file.Captcha/Verify?width=110&height=41&fontSize=14&'+Random(0,100)
 }
 
 const enterEvent = (ev)=>{

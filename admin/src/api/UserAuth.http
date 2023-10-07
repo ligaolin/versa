@@ -1,21 +1,11 @@
-### 添加编辑管理员
-POST http://localhost:8000/user.User/Edit
+### 添加编辑权限
+POST http://localhost:8000/user.UserAuth/Edit
 Content-Type: application/json
 
 {
-    "name":"admin",
-    "password":123,
-    "duplicatePassword":123
-}
-
-### 管理员登录
-POST http://localhost:8000/user.User/AdminLogin
-Content-Type: application/json
-
-{
-    "name":"admin",
-    "password":"123",
-    "code":"hfft"
+    "id":7,
+    "pid":1,
+    "name":"test"
 }
 
 ### 获取权限单条数据

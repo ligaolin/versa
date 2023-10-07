@@ -1,6 +1,6 @@
 import { getItem } from '@/utils/store'
 
-export const domain = 'localhost:8800'
+export const domain = '127.0.0.1:8000'
 export const http = 'http://' + domain
 export const pageNum = 10
 

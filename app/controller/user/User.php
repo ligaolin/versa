@@ -4,6 +4,8 @@ namespace app\controller\user;
 
 use app\controller\Base;
 use app\api\user\UserApi;
+use app\utils\Captcha;
+use Firebase\JWT\JWT;
 
 class User extends Base
 {
@@ -37,13 +39,13 @@ class User extends Base
         $update = $data = UserApi::Get(UserApi::$Edit);
         unset($update['id']);
 
-        if($data['id'] || $data['password']){
+        if($data['password']){
             if(!$data['password']) throw new \Exception('密码必须');
             if(!$data['duplicatePassword']) throw new \Exception('重复密码必须');
             if($data['password']!=$data['duplicatePassword']) throw new \Exception('两次密码不一样');
             unset($update['duplicatePassword']);
             // 密码加密
-            // crypt($data['password'],salt)
+            $update['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         }
 
         if($data['id']){
@@ -57,5 +59,19 @@ class User extends Base
         }
 
         return self::ResData($data);
+    }
+
+    function AdminLogin(){
+        $data = UserApi::Get(UserApi::$AdminLogin);
+
+        if (!Captcha::Check($data['code'])) throw new \Exception('验证码错误');
+
+        if(!$find = self::Db()->where('type = "管理员" AND name = "'.$data['name'].'"')->find()) throw new \Exception('管理员不存在');
+
+        if(!password_verify($data['password'],$find['password'])) throw new \Exception('密码错误');
+
+        $token= JWT::encode(['id'=>$find['id']],env('JWT_KEY'), 'HS256');
+        if($token) return self::Success('登录成功',['data'=>$find,'token'=>$token]);
+        else return self::Error('生成身份验证信息出错');
     }
 }
