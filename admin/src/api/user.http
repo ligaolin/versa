@@ -8,14 +8,18 @@ Content-Type: application/json
     "duplicatePassword":123
 }
 
+
 ### 管理员登录
-POST http://localhost:8000/api/user.User/AdminLogin
+GET https://gmood.site/api/other.Captcha/Img?width=110&height=41
+
+### 管理员登录
+POST https://gmood.site/api/user.User/AdminLogin
 Content-Type: application/json
 
 {
     "name":"admin",
     "password":"123",
-    "code":"hfft"
+    "code":"u4rl"
 }
 
 ### 获取权限单条数据
