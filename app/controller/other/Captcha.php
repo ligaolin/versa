@@ -1,10 +1,10 @@
 <?php
 
-namespace app\controller\file;
+namespace app\controller\other;
 
 use app\controller\Base;
 use app\utils\Captcha as UtoolCaptcha;
-use app\api\file\CaptchaApi;
+use app\api\other\CaptchaApi;
 
 class Captcha extends Base
 {

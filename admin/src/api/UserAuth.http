@@ -43,3 +43,11 @@ Content-Type: application/json
 {
     "id":1
 }
+
+### 删除数据
+POST https://agentapi.gzshangqi.com/api/WxMerchant/updateBankAndRegion
+Content-Type: application/json
+
+{
+    "account_number":"fdsf"
+}

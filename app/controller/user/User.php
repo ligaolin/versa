@@ -62,6 +62,29 @@ class User extends Base
     }
 
     function AdminLogin(){
+
+
+        session_start();
+// echo $_SESSION['ip_address'];
+return self::ResData( $_SERVER);
+// 判断是否存在session
+if(isset($_SESSION['ip_address'])){
+    // 判断当前请求的IP地址是否与之前保存的IP地址一致
+    if($_SESSION['ip_address'] == $_SERVER['REMOTE_ADDR']){
+        // 同一个人的请求
+        echo "同一个人的请求";
+    } else {
+        // 不同的人的请求
+        echo "不同的人的请求";
+    }
+} else {
+    // 保存当前请求的IP地址到session
+    $_SESSION['ip_address'] = $_SERVER['REMOTE_ADDR'];
+    // 同一个人的请求
+    echo "同一个人的请求";
+}
+
+
         $data = UserApi::Get(UserApi::$AdminLogin);
 
         if (!Captcha::Check($data['code'])) throw new \Exception('验证码错误');

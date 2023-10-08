@@ -8,10 +8,9 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-use think\facade\Route;
+use app\utils\Route;
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP6!';
-});
-
-Route::get('hello/:name', 'index/hello');
+Route::SetRoute([
+    ['action'=>'other.Captcha','base'=>['Img'],'method'=>'get'], // 验证码
+    ['action'=>'user.User','base'=>['Get','List','AdminLogin'],'admin'=>['Edit']], // 用户管理
+]);

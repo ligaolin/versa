@@ -1,6 +1,6 @@
 <?php
 
-namespace app\api\file;
+namespace app\api\other;
 
 use app\api\Base;
 

@@ -22,7 +22,7 @@ import { reactive,ref,onMounted,onBeforeUnmount } from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
 import router from '@/router'
 import { Random } from '@/utils/math'
-import { adminLogin,getImgCode } from '@/api/account.js'
+import { adminLogin } from '@/api/account.js'
 import { setItem } from '@/utils/store.js'
 import { http } from '@/data'
 import BgImg1 from '@/assets/images/bg1.jpg'
@@ -63,7 +63,7 @@ const submit = ()=>{
 }
 
 const getCode = ()=>{
-    answer.value = http+'/file.Captcha/Verify?width=110&height=41&fontSize=14&'+Random(0,100)
+    answer.value = http+'/api/other.Captcha/Img?width=110&height=41&'+Random(0,100)
 }
 
 const enterEvent = (ev)=>{

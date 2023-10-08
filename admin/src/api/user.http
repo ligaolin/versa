@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### 管理员登录
-POST http://localhost:8000/user.User/AdminLogin
+POST http://localhost:8000/api/user.User/AdminLogin
 Content-Type: application/json
 
 {

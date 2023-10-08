@@ -1,13 +1,8 @@
 import Request from '@/utils/request'
 
 // 登录
-export const adminLogin = (name,password,code,code_id)=>{
-    return Request.post("account/AdminLogin",{ name:name, password:password, code:code, code_id:code_id, })
-}
-
-// 获取图片验证码
-export const getImgCode = (width='100',height='200')=>{
-    return Request.post("account/CaptchaImage",{width:width,height:height})
+export const adminLogin = (name,password,code)=>{
+    return Request.post("user.User/AdminLogin",{ name:name, password:password, code:code, })
 }
 
 // 退出登录
