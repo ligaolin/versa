@@ -32,7 +32,7 @@ class Route
             if (isset($data['method']) && $data['method']) {
                 TpRoute::rule($path, $path, strtoupper($data['method']));
             } else {
-                TpRoute::rule($path, $path, 'POST');
+                TpRoute::rule($path, $path);
             }
         }
     }

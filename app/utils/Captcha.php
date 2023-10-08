@@ -3,7 +3,6 @@
 namespace app\utils;
 
 use SimpleCaptcha\Builder;
-use think\facade\Cache;
 
 class Captcha {
     static function Set($width=100,$height=41){
@@ -16,28 +15,15 @@ class Captcha {
         $builder->build($width,$height);
 
         // 设置缓存
-        Cache::set('Captcha', self::Cache($builder->phrase));
+        Client::Set('Captcha', $builder->phrase,300);
 
         return response($builder->output(), 200, ['Content-type' => 'image/jpeg']);
     }
 
     static function Check($code){
         if(!$code) return false;
-        $data = self::Cache();
-        if(array_key_exists(strtolower($code),$data)) return true;
+        $data = Client::Get('Captcha');
+        if(strtolower($code) == strtolower($data)) return true;
         else return false;
-    }
-
-    static function Cache($add=''){
-        $cache = Cache::get('Captcha');
-        $time = time();
-        if($add) $data = [strtolower($add)=>$time];
-        else $data = [];
-        if($cache){
-            foreach($cache as $key => $val){
-                if(intval($val)+300 > $time) $data[$key] = $val;
-            }
-        }
-        return $data;
     }
 }
