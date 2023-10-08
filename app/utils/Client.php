@@ -8,7 +8,7 @@ class Client
 {
     static function Name($key)
     {
-        return $_SERVER['SERVER_ADDR'] . '.' . $key;
+        return $_SERVER['REMOTE_ADDR'] . '.' . $key;
     }
 
     // 设置缓存

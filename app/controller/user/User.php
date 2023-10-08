@@ -70,6 +70,7 @@ class User extends Base
         if(!$find = self::Db()->where('type = "管理员" AND name = "'.$data['name'].'"')->find()) throw new \Exception('管理员不存在');
 
         if(!password_verify($data['password'],$find['password'])) throw new \Exception('密码错误');
+        unset($find['password']);
 
         $token= JWT::encode(['id'=>$find['id']],env('JWT_KEY'), 'HS256');
         if($token) return self::Success('登录成功',['data'=>$find,'token'=>$token]);

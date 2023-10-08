@@ -10,10 +10,10 @@ Content-Type: application/json
 
 
 ### 管理员登录
-GET https://gmood.site/api/other.Captcha/Img?width=110&height=41
+GET http://127.0.0.1:8000/api/other.Captcha/Img?width=110&height=41
 
 ### 管理员登录
-POST https://gmood.site/api/user.User/AdminLogin
+POST http://127.0.0.1:8000/api/user.User/AdminLogin
 Content-Type: application/json
 
 {

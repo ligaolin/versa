@@ -51,10 +51,10 @@ const submit = ()=>{
         if(res.code == 2000){
             ElMessage({message:res.msg,type:'success'})
             setItem('adminToken',res.token)
-            res.user.token = res.token
-            setItem('adminData',JSON.stringify(res.user))
+            res.data.token = res.token
+            setItem('adminData',JSON.stringify(res.data))
             setTimeout(() => {
-                router.push('/home')
+                router.push('/')
             }, 1000)
         }else{
             ElMessage({message:res.msg,type:'warning'})

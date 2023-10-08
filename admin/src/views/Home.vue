@@ -43,7 +43,7 @@
                         <template #content>
                             <el-breadcrumb separator="/">
                                 <el-breadcrumb-item>
-                                    <a href="/home"><el-icon><home-filled /></el-icon>首页</a>
+                                    <a href="/"><el-icon><home-filled /></el-icon>首页</a>
                                 </el-breadcrumb-item>
                                 <el-breadcrumb-item v-if="page_title!='首页'">
                                     <a>{{ page_title }}</a>
@@ -68,9 +68,9 @@ import { adminLoginOut } from '@/api/account'
 import AdminMenu from './menu.vue'
 import { getAdminCateByPid } from '@/api/setting'
 const cate = ref([])
-getAdminCateByPid({pid:0}).then(res=>{
-    if(res.code==2000) cate.value = res.data
-})
+// getAdminCateByPid({pid:0}).then(res=>{
+//     if(res.code==2000) cate.value = res.data
+// })
 
 const router = useRouter(),route = useRoute()
 const page_title = route.meta.title
