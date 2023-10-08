@@ -36,18 +36,21 @@ Content-Type: application/json
     "changeVal":2
 }
 
-### 删除数据
-POST http://localhost:8000/user.UserAuth/Del
+###  
+POST http://localhost:8000/api/db.Table/Edit
 Content-Type: application/json
 
 {
-    "id":1
+    "id":1,
+    "name":"test2",
+    "cname":"测试"
 }
 
 ### 删除数据
-POST https://agentapi.gzshangqi.com/api/WxMerchant/updateBankAndRegion
+POST https://agentapi.gzshangqi.com/api/WxMerchant/branches
 Content-Type: application/json
 
 {
-    "account_number":"fdsf"
+   "bank_alias_code":1000009547,
+    "city_code":10
 }
