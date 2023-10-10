@@ -11,7 +11,7 @@ class Exception extends Handle{
     {
         return json([
             'msg'=>$e->getMessage(),
-            'code'=>1000,
+            'code'=>$e->getCode()?:1000,
             'line'=>$e->getLine(),
             'file'=>$e->getFile(),
         ], 200);

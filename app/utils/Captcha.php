@@ -21,8 +21,8 @@ class Captcha {
     }
 
     static function Check($code){
-        if(!$code) return false;
         $data = Client::Get('Captcha');
+        if(!$code || !$data) return false;
         if(strtolower($code) == strtolower($data)) return true;
         else return false;
     }

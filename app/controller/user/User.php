@@ -5,9 +5,7 @@ namespace app\controller\user;
 use app\controller\Base;
 use app\api\user\UserApi;
 use app\utils\Captcha;
-use app\utils\Client;
 use Firebase\JWT\JWT;
-use think\facade\Cache;
 
 class User extends Base
 {
@@ -36,31 +34,37 @@ class User extends Base
         return self::Success('获取完成',$res);
     }
 
-    function Edit()
-    {
+    static private function EditRole($type){
         $update = $data = UserApi::Get(UserApi::$Edit);
         unset($update['id']);
+        unset($update['duplicatePassword']);
+        if($update['avatar']) $update['avatar'] = json_encode($update['avatar']);
+        $update['type'] = $type;
 
-        if($data['password']){
+        if(!$data['id'] || $data['password']){
             if(!$data['password']) throw new \Exception('密码必须');
             if(!$data['duplicatePassword']) throw new \Exception('重复密码必须');
             if($data['password']!=$data['duplicatePassword']) throw new \Exception('两次密码不一样');
-            unset($update['duplicatePassword']);
             // 密码加密
             $update['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         }
-
+        
         if($data['id']){
+            if(self::Db()->where('name',$data['name'])->where('id','<>',$data['id'])->where('type',$type)->count()) throw new \Exception('管理员已存在');
             // 更新
             self::Db()->where('id = '.$data['id'])->update($update);
             return self::Success('更新完成');
         }else{
+            if(self::Db()->where('name',$data['name'])->where('type',$type)->count()) throw new \Exception('管理员已存在');
             // 添加
             if($id = self::Db()->insertGetId($update)) return self::Success('添加成功',$id);
             else return self::Error('添加失败');
         }
+    }
 
-        return self::ResData($data);
+    function Edit()
+    {
+        return self::EditRole('管理员');
     }
 
     function AdminLogin(){
@@ -72,7 +76,10 @@ class User extends Base
         if(!password_verify($data['password'],$find['password'])) throw new \Exception('密码错误');
         unset($find['password']);
 
-        $token= JWT::encode(['id'=>$find['id']],env('JWT_KEY'), 'HS256');
+        $token= JWT::encode([
+            'id'=>$find['id'],
+            'time'=>time(),
+        ],env('JWT_KEY'), 'HS256');
         if($token) return self::Success('登录成功',['data'=>$find,'token'=>$token]);
         else return self::Error('生成身份验证信息出错');
     }

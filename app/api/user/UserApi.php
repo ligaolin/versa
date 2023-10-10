@@ -25,7 +25,6 @@ class UserApi extends Base {
         ['id',null,['number','id必须数字']],
         ['name',null,['require','名称必须']],
         ['user_group_id',null],
-        ['type','管理员',['in:管理员','类型值错误']],
         ['password',null],
         ['duplicatePassword',null],
         ['avatar',null],
