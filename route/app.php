@@ -13,5 +13,6 @@ use app\utils\Route;
 Route::SetRoute([
     ['action'=>'other.Captcha','base'=>['Img'],'method'=>'get'], // 验证码
     ['action'=>'user.User','base'=>['Get','List','AdminLogin'],'admin'=>['Edit']], // 用户管理
-    ['action'=>'db.Table','base'=>['Edit']], // 用户管理
+    ['action'=>'db.Table','admin'=>['Edit','List','Add','Del']], // 数据表
+    ['action'=>'db.Field','admin'=>['List']], // 数据表
 ]);
