@@ -1,0 +1,49 @@
+### 查询字段
+POST http://localhost:8000/api/admin/db.Field/List
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5NzQyMzg4OX0.CKeOtSkMaJAgOAmorOrOpCn2etycHumLs-Ii2ygGt4g
+
+{
+    "table":"test2"
+}
+
+### 添加字段
+POST http://localhost:8000/api/admin/db.Field/Add
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5NzQyMzg4OX0.CKeOtSkMaJAgOAmorOrOpCn2etycHumLs-Ii2ygGt4g
+
+{
+    "table":"admin_cate",
+    "name":"icon",
+    "type":"varchar(50)",
+    "isNull":true,
+    "default":"",
+    "comment":"图标",
+    "Key":""
+}
+
+### 更新字段
+POST http://localhost:8000/api/admin/db.Field/Edit
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5NzQyMzg4OX0.CKeOtSkMaJAgOAmorOrOpCn2etycHumLs-Ii2ygGt4g
+
+{
+    "table":"admin_cate",
+    "oldName":"pid",
+    "name":"pid",
+    "type":"bigint(19)",
+    "isNull":false,
+    "default":"0",
+    "comment":"上级ID",
+    "Key":""
+}
+
+### 删除字段
+POST http://localhost:8000/api/admin/db.Field/Del
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5NzQyMzg4OX0.CKeOtSkMaJAgOAmorOrOpCn2etycHumLs-Ii2ygGt4g
+
+{
+    "table":"test2",
+    "name":"test3"
+}

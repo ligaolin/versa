@@ -19,7 +19,7 @@ Content-Type: application/json
 {
     "name":"admin",
     "password":"123",
-    "code":"u4rl"
+    "code":"85n6"
 }
 
 ### 获取权限单条数据

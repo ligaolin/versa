@@ -5,15 +5,33 @@ namespace app\api\db;
 use app\api\Base;
 
 class FieldApi extends Base {
-    static $Get = [
-        ['id',null],
+    static $List = [
+        ['table',null,['require','表名称必须']],
     ];
 
-    static $List = [
-        ['id',null],
+    static $Add = [
+        ['table',null,['require','表名称必须']],
+        ['name',null,['require','字段名称必须']],
+        ['type',null,['require','字段类型必须']],
+        ['isNull',null],
+        ['default',null],
+        ['comment',null],
+        ['Key',null],
     ];
 
     static $Edit = [
-        ['id',null,['number','id必须数字']],
+        ['table',null,['require','表名称必须']],
+        ['oldName',null,['require','旧字段名称必须']],
+        ['name',null,['require','字段名称必须']],
+        ['type',null,['require','字段类型必须']],
+        ['isNull',null],
+        ['default',null],
+        ['comment',null],
+        ['Key',null],
+    ];
+
+    static $Del = [
+        ['table',null,['require','表名称必须']],
+        ['name',null,['require','字段名称必须']],
     ];
 }

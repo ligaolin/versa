@@ -1,0 +1,39 @@
+### 查询表
+POST http://localhost:8000/api/admin/db.Table/List
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5NzQyMzg4OX0.CKeOtSkMaJAgOAmorOrOpCn2etycHumLs-Ii2ygGt4g
+
+{
+    "name":"test2",
+    "comment":"test2"
+}
+
+### 添加表
+POST http://localhost:8000/api/admin/db.Table/Add
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5NzQyMzg4OX0.CKeOtSkMaJAgOAmorOrOpCn2etycHumLs-Ii2ygGt4g
+
+{
+    "name":"admin_cate",
+    "comment":"后台栏目"
+}
+
+### 更新表
+POST http://localhost:8000/api/admin/db.Table/Edit
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5NzQyMzg4OX0.CKeOtSkMaJAgOAmorOrOpCn2etycHumLs-Ii2ygGt4g
+
+{
+    "oldName":"user_auth",
+    "name":"user_auth",
+    "comment":"用户权限"
+}
+
+### 删除表
+POST http://localhost:8000/api/admin/db.Table/Del
+Content-Type: application/json
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5NzQyMzg4OX0.CKeOtSkMaJAgOAmorOrOpCn2etycHumLs-Ii2ygGt4g
+
+{
+    "name":"test3"
+}

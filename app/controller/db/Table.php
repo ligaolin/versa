@@ -38,7 +38,7 @@ class Table extends Base
 
     function Edit(){
         $data = TableApi::Get(TableApi::$Edit);
-        UtTable::EditTable($data['oldname'],$data['name'],$data['comment']);
+        UtTable::EditTable($data['oldName'],$data['name'],$data['comment']);
         return self::Success('更新成功');
     }
 

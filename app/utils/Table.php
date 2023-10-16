@@ -65,7 +65,7 @@ class Table{
     // 编辑表信息
     static function EditTable($oldname,$name,$comment){
         if(!self::TableIfExists($oldname)) throw new \Exception('数据表不存在');
-        if($oldname!=$name) Db::query("ALTER TABLE `{$oldname}` rename {$name}");
+        if($oldname!=$name) Db::query("ALTER TABLE `{$oldname}` rename `{$name}`");
         Db::query("ALTER TABLE `{$name}` comment '{$comment}'");
     }
 
@@ -85,26 +85,43 @@ class Table{
     }
 
     // 查询表字段
-    static function FiledList($name){
+    static function FieldList($name){
         if(!self::TableIfExists($name)) return [];
         return Db::query("SHOW COLUMNS FROM `{$name}`");
     }
 
     // 添加字段
-    static function AddField($table,$name,$type,$isNull=null,$default=null,$Key=null){
-        $sql = "ALTER TABLE {$table} ADD {$name} {$type}";
+    static function AddField($table,$name,$type,$isNull=null,$default=null,$comment=null,$Key=null){
+        $sql = "ALTER TABLE `{$table}` ADD `{$name}` {$type}";
         if(!$isNull) $sql .= " NOT NULL";
-        if(!$default) $sql .= " DEFAULT {$default}";
+        if($default!=='') $sql .= " DEFAULT '{$default}'";
+        if($comment) $sql .= " COMMENT '{$comment}'";
         if($Key) $sql .= " ADD KEY {$Key} ({$name})";
         return Db::query($sql);
     }
 
     // 修改字段
-    static function AlterField($table,$name,$type,$isNull=null,$default=null,$Key=null){
-        $sql = "ALTER TABLE {$table} MODIFY {$name} {$type}";
+    static function AlterField($table,$oldName,$name,$type,$isNull=null,$default=null,$comment=null,$Key=null){
+        if($name==$oldName) $sql = "ALTER TABLE `{$table}` MODIFY `{$name}`";
+        else  $sql = "ALTER TABLE `{$table}` CHANGE `{$oldName}` `{$name}`";
+        $sql .= " {$type}";
         if(!$isNull) $sql .= " NOT NULL";
-        if(!$default) $sql .= " DEFAULT {$default}";
+        if($default!=='') $sql .= " DEFAULT '{$default}'";
+        if($comment) $sql .= " COMMENT '{$comment}'";
         if($Key) $sql .= " ADD KEY {$Key} ({$name})";
         return Db::query($sql);
+    }
+
+     // 判断字段是否存在
+     static function FieldIfExists($table,$name){
+        foreach (self::FieldList($table) as $val) {
+            if($val['Field'] == $name) return true;
+        }
+        return false;
+    }
+
+    // 删除字段
+    static function DelField($table,$name){
+        return Db::query("ALTER TABLE `{$table}` DROP `{$name}`");
     }
 }

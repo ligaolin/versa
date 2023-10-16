@@ -5,7 +5,7 @@
             <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse">
                 <div class="comm_logo">
                     <!-- <img src="https://element-plus.gitee.io/images/element-plus-logo.svg" alt=""> -->
-                    {{isCollapse?'G':'GOADMIN'}}
+                    {{isCollapse?'V':'VERSA'}}
                 </div>
                 <AdminMenu v-if="cate.length" :data="cate"></AdminMenu>
             </el-menu>
