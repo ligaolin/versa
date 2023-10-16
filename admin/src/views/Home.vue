@@ -7,7 +7,7 @@
                     <!-- <img src="https://element-plus.gitee.io/images/element-plus-logo.svg" alt=""> -->
                     {{isCollapse?'V':'VERSA'}}
                 </div>
-                <AdminMenu v-if="cate.length" :data="cate"></AdminMenu>
+                <adminMenu v-if="cate.length" :data="cate"></adminMenu>
             </el-menu>
             <!-- 左边栏目 end -->
         </el-aside>
@@ -65,12 +65,12 @@ import { ref } from 'vue'
 import { RouterView } from 'vue-router'
 import { useRouter, useRoute } from 'vue-router'
 import { adminLoginOut } from '@/api/account'
-import AdminMenu from './menu.vue'
-import { getAdminCateByPid } from '@/api/setting'
+import adminMenu from './adminMenu.vue'
+import { GetAdminCateByPid } from '@/api/setting/adminCate'
 const cate = ref([])
-// getAdminCateByPid({pid:0}).then(res=>{
-//     if(res.code==2000) cate.value = res.data
-// })
+GetAdminCateByPid({pid:0}).then(res=>{
+    if(res.code==2000) cate.value = res.data
+})
 
 const router = useRouter(),route = useRoute()
 const page_title = route.meta.title

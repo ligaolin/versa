@@ -25,11 +25,15 @@ class AdminCateApi extends Base {
         ['order','sort asc,id asc'],
     ];
 
+    static $GetListByPid = [
+        ['pid',0,['require','上级ID必须']],
+    ];
+
     static $Edit = [
         ['id',null,['number','id必须数字']],
         ['name',null,['require','名称必须']],
-        ['pid',0,['require','名称必须']],
-        ['level',1,['require','名称必须']],
+        ['pid',0,['require','上级ID必须']],
+        ['level',1,['require','级别必须']],
         ['type',null,['require','类型必须'],['in:分类,页面','类型值错误']],
         ['path',null],
         ['view',null],

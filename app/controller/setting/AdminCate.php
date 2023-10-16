@@ -16,22 +16,29 @@ class AdminCate extends Base
             ['name'=>'id','type'=>'in'],
             ['name'=>'name','type'=>'in'],
         ]);
-        return self::Success('获取完成',self::Db()->where($where)->find());
+        $res['data'] = self::Db()->where($where)->find();
+        return self::Success('获取完成',$res);
     }
 
     function List(){
         $data = AdminCateApi::Get(AdminCateApi::$List);
         $where = self::Where($data,[
             ['name'=>'id','type'=>'in'],
-            ['name'=>'name','type'=>'in'],
+            ['name'=>'name','type'=>'like'],
             ['name'=>'pid','type'=>'in'],
             ['name'=>'level','type'=>'in'],
             ['name'=>'type','type'=>'in'],
-            ['name'=>'path','type'=>'in'],
-            ['name'=>'view','type'=>'in'],
+            ['name'=>'path','type'=>'name'],
+            ['name'=>'view','type'=>'name'],
             ['name'=>'state','type'=>'in'],
         ]);
-        $res = self::GetList(self::Db()->where($where),$data);
+        $res = self::GetList(self::Db()->where($where),$data,'','pid');
+        return self::Success('获取完成',$res);
+    }
+
+    function GetListByPid(){
+        $data = AdminCateApi::Get(AdminCateApi::$GetListByPid);
+        $res['data'] = self::AllChildren($data['pid']);
         return self::Success('获取完成',$res);
     }
 

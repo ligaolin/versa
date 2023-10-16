@@ -23,7 +23,6 @@ import { User, Lock } from '@element-plus/icons-vue'
 import router from '@/router'
 import { Random } from '@/utils/math'
 import { adminLogin } from '@/api/account.js'
-import { setItem } from '@/utils/store.js'
 import { http } from '@/data'
 import BgImg1 from '@/assets/images/bg1.jpg'
 import BgImg2 from '@/assets/images/bg2.jpg'
@@ -46,13 +45,12 @@ const answer = ref("")
 const version = "v1.0"
 const submit = ()=>{
     adminLogin(name.value,password.value,code.value).then(res=>{
-        console.log(res);
         getCode()
         if(res.code == 2000){
             ElMessage({message:res.msg,type:'success'})
-            setItem('adminToken',res.token)
+            localStorage.setItem('adminToken',res.token)
             res.data.token = res.token
-            setItem('adminData',JSON.stringify(res.data))
+            localStorage.setItem('adminData',res.data)
             setTimeout(() => {
                 router.push('/')
             }, 1000)

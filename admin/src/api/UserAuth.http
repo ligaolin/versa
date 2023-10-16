@@ -47,6 +47,14 @@ Content-Type: application/json
 }
 
 ### 删除数据
+POST http://localhost:8000/api/setting.AdminCate/GetListByPid
+Content-Type: application/json
+
+{
+   "pid":0
+}
+
+### 删除数据
 POST https://agentapi.gzshangqi.com/api/WxMerchant/branches
 Content-Type: application/json
 

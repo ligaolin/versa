@@ -15,5 +15,5 @@ Route::SetRoute([
     ['action'=>'user.User','base'=>['Get','List','AdminLogin'],'admin'=>['Edit']], // 用户管理
     ['action'=>'db.Table','admin'=>['Edit','List','Add','Del']], // 数据表
     ['action'=>'db.Field','admin'=>['List','Add','Edit','Del']], // 表字段
-    ['action'=>'setting.AdminCate','base'=>['Get','List'],'admin'=>['Edit','Field','Del']], // 后台栏目
+    ['action'=>'setting.AdminCate','base'=>['Get','List','GetListByPid'],'admin'=>['Edit','Field','Del']], // 后台栏目
 ]);
