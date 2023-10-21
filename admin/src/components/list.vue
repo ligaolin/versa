@@ -20,6 +20,7 @@
 <script setup>
 import { ref } from 'vue'
 const props = defineProps(['getData','editPage'])
+const emit = defineEmits(['editEnd'])
 
 const tableData = ref([])
 const page = ref(1)
@@ -28,6 +29,7 @@ const total = ref(0)
 const ids = ref([])
 
 const getData = ()=>{
+    tableData.value = []
     let [list,param] = props.getData()
     param.page = page.value
     param.page_size = page_size.value
@@ -35,9 +37,8 @@ const getData = ()=>{
         if(res.code==2000){
             tableData.value =  res.data
             total.value = res.total
-        }
+        }        
     })
-    
 }
 getData()
 const init = ()=>{
@@ -77,6 +78,7 @@ const editData = ref({})
 const submit = ()=>{
     editShow.value=false
     init()
+    emit('editEnd')
 }
 
 const Edit = (title='添加',data={})=>{

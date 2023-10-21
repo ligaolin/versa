@@ -32,7 +32,7 @@
 <script setup>
 import { ref } from 'vue'
 import { editAdminCate } from '@/api/setting/AdminCate'
-import { objSetObj,Error,Submit } from '@/utils/data.js'
+import { ObjSetObj,Error,Submit } from '@/utils/data.js'
 const props = defineProps(['data'])
 const emit = defineEmits(['submit'])
 
@@ -46,7 +46,7 @@ const data = ref({
     view:'',
     icon:'',
 })
-objSetObj(props.data,data.value)
+ObjSetObj(props.data,data.value)
 
 const submit = ()=>{
     if(!Error([

@@ -12,7 +12,11 @@ use app\utils\Route;
 
 Route::SetRoute([
     ['action'=>'other.Captcha','base'=>['Img'],'method'=>'get'], // 验证码
+
     ['action'=>'user.User','base'=>['Get','List','AdminLogin'],'admin'=>['Edit']], // 用户管理
+    ['action'=>'user.UserGroup','base'=>['Get','List'],'admin'=>['Edit','Change','Del']], // 用户组
+    ['action'=>'user.UserAuth','base'=>['Get','List'],'admin'=>['Edit','Change','Del']], // 用户权限
+
     ['action'=>'db.Table','admin'=>['Edit','List','Add','Del']], // 数据表
     ['action'=>'db.Field','admin'=>['List','Add','Edit','Del']], // 表字段
     ['action'=>'setting.AdminCate','base'=>['Get','List','GetListByPid'],'admin'=>['Edit','Field','Del']], // 后台栏目

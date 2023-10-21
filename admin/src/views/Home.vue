@@ -66,9 +66,10 @@ import { RouterView } from 'vue-router'
 import { useRouter, useRoute } from 'vue-router'
 import { adminLoginOut } from '@/api/account'
 import adminMenu from './adminMenu.vue'
-import { GetAdminCateByPid } from '@/api/setting/adminCate'
+import { Post } from '@/api/setting'
 const cate = ref([])
-GetAdminCateByPid({pid:0}).then(res=>{
+
+Post('getAdminCateByPid',{pid:0}).then(res=>{
     if(res.code==2000) cate.value = res.data
 })
 

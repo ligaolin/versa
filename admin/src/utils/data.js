@@ -1,4 +1,4 @@
-export const objSetObj = (data1, data2) => {
+export const ObjSetObj = (data1, data2) => {
     for(let i in data2){
         for(let j in data1){
             if(i==j) data2[i] = data1[j]
@@ -22,4 +22,13 @@ export const Submit = (edit,param,emit,fun='submit') => {
             ElMessage({message:res.msg,type:'error'})
         }
     })
+}
+
+import Request from '@/utils/request'
+export const SetUrl = async (apiArr,key,param) => {
+    for(let i in apiArr){
+        if(apiArr[i].length>=2 &&  key==apiArr[i][0]){
+            return await Request.post(apiArr[i][1],param)
+        }
+    }
 }
