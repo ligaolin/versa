@@ -31,7 +31,7 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import { editAdminCate } from '@/api/setting/AdminCate'
+import { editAdminCate } from '@/api/setting'
 import { ObjSetObj,Error,Submit } from '@/utils/data.js'
 const props = defineProps(['data'])
 const emit = defineEmits(['submit'])

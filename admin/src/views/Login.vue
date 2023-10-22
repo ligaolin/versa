@@ -22,7 +22,7 @@ import { reactive,ref,onMounted,onBeforeUnmount } from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
 import router from '@/router'
 import { Random } from '@/utils/math'
-import { adminLogin } from '@/api/account.js'
+import { Post } from '@/api/role'
 import { http } from '@/data'
 import BgImg1 from '@/assets/images/bg1.jpg'
 import BgImg2 from '@/assets/images/bg2.jpg'
@@ -44,7 +44,7 @@ const code = ref("")
 const answer = ref("")
 const version = "v1.0"
 const submit = ()=>{
-    adminLogin(name.value,password.value,code.value).then(res=>{
+    Post('AdminLogin',{name:name.value,password:password.value,code:code.value}).then(res=>{
         getCode()
         if(res.code == 2000){
             ElMessage({message:res.msg,type:'success'})

@@ -64,12 +64,12 @@
 import { ref } from 'vue'
 import { RouterView } from 'vue-router'
 import { useRouter, useRoute } from 'vue-router'
-import { adminLoginOut } from '@/api/account'
 import adminMenu from './adminMenu.vue'
 import { Post } from '@/api/setting'
 const cate = ref([])
 
-Post('getAdminCateByPid',{pid:0}).then(res=>{
+Post('AdminCateGetListByPid',{pid:0}).then(res=>{
+    console.log(res)
     if(res.code==2000) cate.value = res.data
 })
 
@@ -79,7 +79,7 @@ const fullscreen = ref(true)
 const isCollapse = ref(false)
 
 const loginOut = ()=>{ // 退出登录
-    adminLoginOut().then(res=>{
+    Post('AdminLoginOut').then(res=>{
         if(res.code==2000){
             ElMessage({message:res.msg,type:'success'})
             localStorage.removeItem('adminToken')

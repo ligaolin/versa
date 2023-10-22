@@ -4,6 +4,7 @@ namespace app\middleware;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use think\facade\Db;
 
 class Admin
 {
@@ -21,6 +22,10 @@ class Admin
             if(intval($decoded->time)+intval(env('JWT_EXPIR')) < time()) throw new \Exception('登录过期');
 
             // url验证
+
+
+            $request->user = Db::table('user')->where('id', $decoded->id)->find();
+            if(!$request->user) throw new \Exception('角色信息不存在');
 
             return $next($request);
         }catch(\Exception $e){

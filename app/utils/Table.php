@@ -11,6 +11,14 @@ class Table{
         return " LIMIT {$offset},{$pageNum}";
     }
 
+    // 数据库备份
+    static function Backups(){
+        // $backupFile = $backupPath . '/' . date('YmdHis') . '.sql';
+        // Db::query("
+        // mysqldump -u{$config['username']} -p{$config['password']} -h{$config['hostname']} {$config['database']} > $backupFile
+        // ");
+    }
+
     // 查询所有数据表
     static function TableList(){
         $list = Db::query("SHOW TABLES");

@@ -80,7 +80,14 @@ class User extends Base
             'id'=>$find['id'],
             'time'=>time(),
         ],env('JWT_KEY'), 'HS256');
-        if($token) return self::Success('登录成功',['data'=>$find,'token'=>$token]);
-        else return self::Error('生成身份验证信息出错');
+
+        if($token){
+            self::Db('user_token')->insertGetId(['user_id'=>$find['id'],'token'=>$token]);
+            return self::Success('登录成功',['data'=>$find,'token'=>$token]);
+        } else return self::Error('生成身份验证信息出错');
+    }
+
+    function AdminLoginOut(){
+        return self::ResData( request()->user);
     }
 }

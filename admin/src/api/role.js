@@ -1,15 +1,13 @@
-import Request from '@/utils/request'
 import { SetUrl } from '@/utils/data'
 
 const api = [
-    ['adminLogin','user.User/AdminLogin'], // 登录
+    ['AdminLogin','user.User/AdminLogin'], // 管理员登录
+    ['AdminLoginOut','admin/user.User/AdminLoginOut'], // 管理员退出登录
 
-    ['adminLoginOut','admin/account/AdminLoginOut'], // 退出登录
-
-    ['getAdminCateById','setting.AdminCate/Get'],
-    ['editAdminCate','admin/setting.AdminCate/Edit'],
-    ['delAdminCate','admin/setting.AdminCate/Del'],
-    ['getAdmin','admin/account/GetAdmin'], // 会员信息
+    // 用户
+    ['UserGet','user.User/Get'],
+    ['UserList','user.User/List'],
+    ['UserEdit','admin/user.User/Edit'],
 ]
 
 export const Post = (key,param) => {
