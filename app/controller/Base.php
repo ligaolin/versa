@@ -35,7 +35,7 @@ class Base extends BaseController
         return Db::name($table?$table:static::$table);
     }
 
-    function Change(){
+    function Change($where=[]){
         if(!static::$table) throw new \Exception('数据表未定义');
         $param = input();
         BaseApi::Validate([
@@ -45,24 +45,29 @@ class Base extends BaseController
             ['changeVal',null,['require','修改字段值必须']],
         ],$param);
         if(!in_array($param['changeField'],static::$changeField)) throw new \Exception('非法字段');
-        self::Db()->where($param['whereField'],$param['whereVal'])->update([
+        $db = self::Db();
+        if($where) $db = $db->where($where);
+        $db->where($param['whereField'],$param['whereVal'])->update([
             $param['changeField']=>$param['changeVal'],
         ]);
         return self::success('修改完成');
     }
 
     // 删除
-    function Del(){
+    function Del($where=[]){
         if(!static::$table) throw new \Exception('数据表未定义');
         $param = input();
         if(!isset($param['id']) || !$param['id']) throw new \Exception('id必须');
         $idArr1 = $idArr = self::DataToAarray($param['id']);
+
+        $db = self::Db();
         foreach($idArr as $id){
-            $find = self::Db()->where('id',$id)->find();
+            if($where) $db = $db->where($where);
+            $find = $db->where('id',$id)->find();
             if(isset($find['pid'])) $idArr1 = array_merge($idArr1,self::getChildrenId($id));
         }
         $inId = implode("','",$idArr1);
-        if(self::Db()->where("id in ('{$inId}')")->delete()){
+        if($db->where("id in ('{$inId}')")->delete()){
             return self::success("删除完成");
         }else{
             throw new \Exception('删除出错');

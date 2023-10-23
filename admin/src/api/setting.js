@@ -8,7 +8,17 @@ const api = [
     ['AdminCateChange','admin/setting.AdminCate/Change'],
     ['AdminCateDel','admin/setting.AdminCate/Del'],
     
-    // ['addTable','admin/setting/AddTable'], //  
+    // 数据表
+    ['TableEdit','admin/db.Table/Edit'],
+    ['TableList','admin/db.Table/List'],
+    ['TableAdd','admin/db.Table/Add'],
+    ['TableDel','admin/db.Table/Del'],
+
+    // 数据表字段
+    ['FieldEdit','admin/db.Field/Edit'],
+    ['FieldList','admin/db.Field/List'],
+    ['FieldAdd','admin/db.Field/Add'],
+    ['FieldDel','admin/db.Field/Del'],
 ]
 
 export const Post = (key,param) => {

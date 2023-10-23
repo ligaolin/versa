@@ -15,6 +15,7 @@ class UserApi extends Base {
         ['name',null],
         ['user_group_id',null],
         ['type',null],
+        
         ['state','开启'],
         ['page',null],
         ['pageNum',10],

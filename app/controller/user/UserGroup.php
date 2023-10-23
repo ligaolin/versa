@@ -31,21 +31,40 @@ class UserGroup extends Base
         return self::Success('获取完成',$res);
     }
 
-    function Edit()
+    function Edit($type)
     {
         $update = $data = UserGroupApi::Get(UserGroupApi::$Edit);
         unset($update['id']);
+        $update['type'] = $type;
 
         if($data['id']){
+            if(self::Db()->where('name',$data['name'])->where('id','<>',$data['id'])->where('type',$type)->count()) throw new \Exception('同级已有相同组名');
+
             // 更新
             self::Db()->where('id = '.$data['id'])->update($update);
             return self::Success('更新完成');
         }else{
+            if(self::Db()->where('name',$data['name'])->where('type',$type)->count()) throw new \Exception('同级已有相同组名');
+
             // 添加
             if($id = self::Db()->insertGetId($update)) return self::Success('添加成功',$id);
             else return self::Error('添加失败');
         }
 
         return self::ResData($data);
+    }
+
+    function AdminEdit($type){
+        self::Edit($type);
+    }
+
+    function AdminChange()
+    {
+        self::Change(['type'=>'管理员']);
+    }
+
+    function AdminDel()
+    {
+        self::Del(['type'=>'管理员']);
     }
 }

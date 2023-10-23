@@ -62,9 +62,17 @@ class User extends Base
         }
     }
 
-    function Edit()
+    function AdminEdit()
     {
         return self::EditRole('管理员');
+    }
+    function AdminChange()
+    {
+        self::Change(['type'=>'管理员']);
+    }
+    function AdminDel()
+    {
+        self::Del(['type'=>'管理员']);
     }
 
     function AdminLogin(){

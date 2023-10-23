@@ -17,6 +17,8 @@ class UserAuthApi extends Base {
         ['level',null],
         ['name',null],
         ['route',null],
+        ['type',null],
+
         ['state','开启'],
         ['page',null],
         ['pageNum',10],

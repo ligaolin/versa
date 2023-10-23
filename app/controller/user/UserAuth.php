@@ -34,22 +34,47 @@ class UserAuth extends Base
         return self::Success('获取完成',$res);
     }
 
-    function Edit()
+    function Edit($type)
     {
         $update = $data = UserAuthApi::Get(UserAuthApi::$Edit);
         unset($update['id']);
         if($data['pid']) $update['level'] = self::Db()->where('id = '.$data['pid'])->value('level')+1;
+        $update['type'] = $type;
 
         if($data['id']){
+            if(self::Db()->where('name',$data['name'])->where('id','<>',$data['id'])->where('type',$type)->count()) throw new \Exception('同级已有相同权限名');
+
+            if(self::Db()->where('route',$data['route'])->where('id','<>',$data['id'])->where('type',$type)->count()) throw new \Exception('同级已有相同路由');
+
             // 更新
             self::Db()->where('id = '.$data['id'])->update($update);
             return self::Success('更新完成');
         }else{
+            if(self::Db()->where('name',$data['name'])->where('type',$type)->count()) throw new \Exception('同级已有相同权限名');
+
+            if(self::Db()->where('route',$data['route'])->where('type',$type)->count()) throw new \Exception('同级已有相同路由');
+
             // 添加
             if($id = self::Db()->insertGetId($update)) return self::Success('添加成功',$id);
             else return self::Error('添加失败');
         }
 
         return self::ResData($data);
+    }
+    
+
+    function AdminEdit()
+    {
+        self::Edit('管理员');
+    }
+
+    function AdminChange()
+    {
+        self::Change(['type'=>'管理员']);
+    }
+
+    function AdminDel()
+    {
+        self::Del(['type'=>'管理员']);
     }
 }
