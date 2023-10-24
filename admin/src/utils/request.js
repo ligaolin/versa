@@ -21,5 +21,12 @@ axios.interceptors.response.use(res => { // 响应拦截
 }, err => {
     return Promise.reject(err)
 })
-
 export default axios
+
+export const SetUrl = async (apiArr,key,param) => {
+    for(let i in apiArr){
+        if(apiArr[i].length>=2 &&  key==apiArr[i][0]){
+            return await axios.post(apiArr[i][1],param)
+        }
+    }
+}

@@ -12,6 +12,11 @@ class User extends Base
     static $table = 'user';
     static $changeField = ['name','sort','state'];
 
+    function __construct(){
+        $time = time()-intval(env('JWT_EXPIR'));
+        self::Db('user_token')->where('created_at','<',date('Y-m-d H:i:s',$time))->delete();
+    }
+
     function Get(){
         $data = UserApi::Get(UserApi::$Get);
         $where = self::Where($data,[
@@ -95,7 +100,14 @@ class User extends Base
         } else return self::Error('生成身份验证信息出错');
     }
 
+    function Me(){
+        $data['data'] = request()->user;
+        unset($data['data']['password']);
+        return self::Success('获取成功',$data);
+    }
+
     function AdminLoginOut(){
-        return self::ResData( request()->user);
+        self::Db('user_token')->where('token',request()->token)->delete();
+        return self::Success('退出登录成功');
     }
 }

@@ -16,7 +16,7 @@ class TableApi extends Base {
     ];
 
     static $Edit = [
-        ['oldName',null,['require','原名称必须']],
+        ['oldName',null],
         ['name',null,['require','名称必须'],['alphaDash','数据表名只能是字母、数字、下划线（_）和及破折号（-）的组合']],
         ['comment',null],
     ];

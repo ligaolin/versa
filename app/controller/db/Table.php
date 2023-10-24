@@ -21,7 +21,9 @@ class Table extends Base
       
         if(!$res) $res = UtTable::TableList();
         $list['data'] = [];
-        if($res && count($res)){
+        $list['total'] = count($res);
+        
+        if($res && $list['total']){
             foreach ($res as $value) {
                 $list['data'][] = ['name'=>$value,'comment'=>UtTable::TableComm($value)];
             }
@@ -42,7 +44,7 @@ class Table extends Base
         return self::Success('更新成功');
     }
 
-    function Del(){
+    function Del($data=[]){
         $data = TableApi::Get(TableApi::$Del);
         $data['name'] = self::DataToAarray($data['name']);
         if($data['name'] && count($data['name'])){
@@ -51,5 +53,10 @@ class Table extends Base
             }
         }
         return self::Success('删除成功');
+    }
+
+    function Backups(){
+        $res['data'] = UtTable::Backups();
+        return self::Success('备份完成',$res);
     }
 }

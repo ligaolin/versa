@@ -31,14 +31,39 @@ class AdminCate extends Base
             ['name'=>'path','type'=>'name'],
             ['name'=>'view','type'=>'name'],
             ['name'=>'state','type'=>'in'],
+            ['name'=>'show','type'=>'in'],
         ]);
-        $res = self::GetList(self::Db()->where($where),$data,'','pid');
+        $cwhere = self::Where($data,[
+            ['name'=>'childId','type'=>'in','key'=>'id'],
+            ['name'=>'childName','type'=>'like','key'=>'name'],
+            ['name'=>'childPid','type'=>'in','key'=>'pid'],
+            ['name'=>'childLevel','type'=>'in','key'=>'level'],
+            ['name'=>'childType','type'=>'in','key'=>'type'],
+            ['name'=>'childPath','type'=>'name','key'=>'path'],
+            ['name'=>'childView','type'=>'name','key'=>'view'],
+            ['name'=>'childState','type'=>'in','key'=>'state'],
+            ['name'=>'childShow','type'=>'in','key'=>'show'],
+        ]);
+        $res = self::GetList(self::Db()->where($where),$data,'','pid',$cwhere);
+        $res['cwhere'] = $cwhere;
         return self::Success('获取完成',$res);
     }
 
     function GetListByPid(){
         $data = AdminCateApi::Get(AdminCateApi::$GetListByPid);
-        $res['data'] = self::AllChildren($data['pid']);
+        $cwhere = self::Where($data,[
+            ['name'=>'childId','type'=>'in','key'=>'id'],
+            ['name'=>'childName','type'=>'like','key'=>'name'],
+            ['name'=>'childPid','type'=>'in','key'=>'pid'],
+            ['name'=>'childLevel','type'=>'in','key'=>'level'],
+            ['name'=>'childType','type'=>'in','key'=>'type'],
+            ['name'=>'childPath','type'=>'name','key'=>'path'],
+            ['name'=>'childView','type'=>'name','key'=>'view'],
+            ['name'=>'childState','type'=>'in','key'=>'state'],
+            ['name'=>'childShow','type'=>'in','key'=>'show'],
+        ]);
+        $res['data'] = self::AllChildren($data['pid'],$cwhere);
+        $res['all'] = self::AllChildren($data['pid']);
         return self::Success('获取完成',$res);
     }
 

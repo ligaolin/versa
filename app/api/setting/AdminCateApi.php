@@ -18,8 +18,19 @@ class AdminCateApi extends Base {
         ['type',null],
         ['path',null],
         ['view',null],
-
+        ['show',null],
         ['state','开启'],
+
+        ['childId',null],
+        ['childName',null],
+        ['childPid',null],
+        ['childLevel',null],
+        ['childType',null],
+        ['childPath',null],
+        ['childView',null],
+        ['childState',null],
+        ['childShow',null],
+        
         ['page',null],
         ['pageNum',10],
         ['order','sort asc,id asc'],
@@ -27,6 +38,16 @@ class AdminCateApi extends Base {
 
     static $GetListByPid = [
         ['pid',0,['require','上级ID必须']],
+
+        ['childId',null],
+        ['childName',null],
+        ['childPid',null],
+        ['childLevel',null],
+        ['childType',null],
+        ['childPath',null],
+        ['childView',null],
+        ['childState',null],
+        ['childShow',null],
     ];
 
     static $Edit = [
@@ -36,8 +57,10 @@ class AdminCateApi extends Base {
         ['level',1,['require','级别必须']],
         ['type',null,['require','类型必须'],['in:分类,页面','类型值错误']],
         ['path',null],
+        ['active',null],
         ['view',null],
         ['icon',null],
+        ['show','是',['in:是,否','是否显示值错误']],
         ['sort',100,['number','排序必须数字']],
         ['state','开启',['in:开启,关闭','状态值错误']],
     ];

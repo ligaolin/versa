@@ -1,6 +1,7 @@
 <template>
     <list :getData="getData" :editPage="edit" ref="listEleme" @editEnd="editEnd">
         <template #search>
+            <label>ID：<el-input v-model="id" type="number"/></label>
             <label>栏目名称：<el-input v-model="name"/></label>
         </template>
 
@@ -26,17 +27,18 @@
 <script setup>
 import edit from "./edit.vue"
 import { ref } from 'vue'
-import { adminCate,delAdminCate } from '@/api/setting/AdminCate'
 const name = ref("")
+const id = ref("")
 const getData = ()=>{
     let param = {pid : 0}
     if(name.value) param.name = name.value
-    return [adminCate,param]
+    if(id.value) param.id = id.value
+    return ['AdminCateList',param]
 }
 
 const listEleme = ref(null)
 const Del = (ids)=>{
-    listEleme.value.Del(delAdminCate,ids)
+    listEleme.value.Del('AdminCateDel',ids)
 }
 const addEdit = (item={},isEdit=false) => {
     if(!isEdit){

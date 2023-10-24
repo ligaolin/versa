@@ -1,7 +1,7 @@
 <template>
     <table class="edit_table">
         <editTr label="栏目名称">
-            <el-input v-model="data.name" size="large" />
+            <el-input clearable v-model="data.name" size="large" />
         </editTr>
         <editTr label="栏目类型">
             <el-radio-group v-model="data.type">
@@ -12,14 +12,14 @@
 
         <template v-if="data.type=='页面'">
             <editTr label="栏目跳转路径">
-                <el-input v-model="data.path" size="large" />
+                <el-input clearable v-model="data.path" size="large" />
             </editTr>
             <editTr label="栏目文件路径">
-                <el-input v-model="data.view" size="large" />
+                <el-input clearable v-model="data.view" size="large" />
             </editTr>
         </template>
         <editTr label="栏目图标" v-if="data.level==1" tip="">
-            <el-input v-model="data.icon" size="large" />
+            <el-input clearable v-model="data.icon" size="large" />
             <div class="tips">
                 <a href="https://element-plus.gitee.io/zh-CN/component/icon.html" target="_blank">查看可选图标</a>，示例：复制值“&lt;el-icon&gt;&lt;Notification /&gt;&lt;/el-icon&gt;”，填写值“Notification”
             </div>
@@ -31,8 +31,8 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import { editAdminCate } from '@/api/setting'
-import { ObjSetObj,Error,Submit } from '@/utils/data.js'
+import { Post } from '@/api/api'
+import { ObjSetObj,Error } from '@/utils/other'
 const props = defineProps(['data'])
 const emit = defineEmits(['submit'])
 
@@ -56,7 +56,15 @@ const submit = ()=>{
         [(data.value.type == "页面" && !data.value.view),'栏目文件路径不能为空'],
         [(data.value.level==1 && !data.value.icon),'请填写图标'],
     ])) return
-    Submit(editAdminCate,data.value,emit,'submit')
+
+    Post('AdminCateEdit',data.value).then(res=>{
+        if(res.code == 2000){
+            ElMessage({message:res.msg,type:'success'})
+            emit('submit')
+        }else{
+            ElMessage({message:res.msg,type:'error'})
+        }
+    })
 }
 </script>
 

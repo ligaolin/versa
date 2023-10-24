@@ -6,7 +6,7 @@ let routes = [
     { path: '/home',name:'home', meta:{title:"后台首页"}, component: () => import('@/views/home.vue'),children:[]},
 ]
 
-import { Post } from '@/api/setting'
+import { Post } from '@/api/api'
 
 let res = await Post('AdminCateList',{type:"页面"})
 if(res.code==2000){

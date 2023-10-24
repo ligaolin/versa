@@ -13,10 +13,21 @@ class Table{
 
     // 数据库备份
     static function Backups(){
-        // $backupFile = $backupPath . '/' . date('YmdHis') . '.sql';
-        // Db::query("
-        // mysqldump -u{$config['username']} -p{$config['password']} -h{$config['hostname']} {$config['database']} > $backupFile
-        // ");
+        $backupFile = './public/db/' . date('Y-m-d-H-i-s') . '.sql';
+        $sql = 'mysqldump';
+        $DB_USER = env('DB_USER');
+        $DB_PASS = env('DB_PASS');
+        $DB_HOST = env('DB_HOST');
+        $DB_NAME = env('DB_NAME');
+        $DB_PORT = env('DB_PORT');
+        if($DB_HOST) $sql .= ' -h'.$DB_HOST;
+        if($DB_PORT) $sql .= ' -P'.$DB_PORT;
+        if($DB_USER) $sql .= ' -u'.$DB_USER;
+        if($DB_PASS) $sql .= ' -p'.$DB_PASS;
+        if($DB_NAME) $sql .= ' '.$DB_NAME;
+        $sql .= ' > '.$backupFile;
+        // Db::execute($sql);
+        exec($sql);
     }
 
     // 查询所有数据表
@@ -72,8 +83,10 @@ class Table{
 
     // 编辑表信息
     static function EditTable($oldname,$name,$comment){
-        if(!self::TableIfExists($oldname)) throw new \Exception('数据表不存在');
-        if($oldname!=$name) Db::query("ALTER TABLE `{$oldname}` rename `{$name}`");
+        if($oldname){
+            if(!self::TableIfExists($oldname)) throw new \Exception('数据表不存在');
+            if($oldname!=$name) Db::query("ALTER TABLE `{$oldname}` rename `{$name}`");
+        }
         Db::query("ALTER TABLE `{$name}` comment '{$comment}'");
     }
 
@@ -92,31 +105,45 @@ class Table{
         Db::query("DROP TABLE IF EXISTS `{$name}`");
     }
 
+    // 查询字段注释
+    static function FieldComm($table){
+        return Db::query("SELECT COLUMN_NAME, COLUMN_COMMENT
+        FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE TABLE_SCHEMA = '".env('DB_NAME')."' AND TABLE_NAME = '{$table}'");
+    }
+
     // 查询表字段
     static function FieldList($name){
         if(!self::TableIfExists($name)) return [];
-        return Db::query("SHOW COLUMNS FROM `{$name}`");
+        $fields = Db::query("SHOW COLUMNS FROM `{$name}`");
+        $comms = Db::query("SELECT COLUMN_NAME, COLUMN_COMMENT FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '".env('DB_NAME')."' AND TABLE_NAME = '{$name}'");
+        foreach ($fields as $k => $v) {
+            foreach ($comms as $k1 => $v1) {
+                if($v1['COLUMN_NAME'] == $v['Field']) $fields[$k]['comment'] = $v1['COLUMN_COMMENT'];
+            }
+        }
+        return $fields;
     }
 
     // 添加字段
-    static function AddField($table,$name,$type,$isNull=null,$default=null,$comment=null,$Key=null){
+    static function AddField($table,$name,$type,$isNull=null,$default=null,$comment=null,$key=null){
         $sql = "ALTER TABLE `{$table}` ADD `{$name}` {$type}";
         if(!$isNull) $sql .= " NOT NULL";
         if($default!=='') $sql .= " DEFAULT '{$default}'";
         if($comment) $sql .= " COMMENT '{$comment}'";
-        if($Key) $sql .= " ADD KEY {$Key} ({$name})";
+        if($key) $sql .= " ADD KEY {$key} ({$name})";
         return Db::query($sql);
     }
 
     // 修改字段
-    static function AlterField($table,$oldName,$name,$type,$isNull=null,$default=null,$comment=null,$Key=null){
+    static function AlterField($table,$oldName,$name,$type,$isNull=null,$default=null,$comment=null,$key=null){
         if($name==$oldName) $sql = "ALTER TABLE `{$table}` MODIFY `{$name}`";
         else  $sql = "ALTER TABLE `{$table}` CHANGE `{$oldName}` `{$name}`";
         $sql .= " {$type}";
         if(!$isNull) $sql .= " NOT NULL";
         if($default!=='') $sql .= " DEFAULT '{$default}'";
         if($comment) $sql .= " COMMENT '{$comment}'";
-        if($Key) $sql .= " ADD KEY {$Key} ({$name})";
+        if($key) $sql .= " ADD KEY {$key} ({$name})";
         return Db::query($sql);
     }
 

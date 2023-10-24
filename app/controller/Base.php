@@ -74,11 +74,11 @@ class Base extends BaseController
         }
     }
 
-    static protected function AllChildren($pid){
-        $list = self::Db()->where('pid',$pid)->where('state','开启')->select()->toArray();
+    static protected function AllChildren($pid,$where=' 1'){
+        $list = self::Db()->where($where." AND `pid` = {$pid} AND `state` = '开启'")->select()->toArray();
         if($list && count($list)){
             foreach ($list as $key => $val) {
-                $list[$key]['children'] = self::AllChildren($val['id']);
+                $list[$key]['children'] = self::AllChildren($val['id'],$where);
             }
         }
         return $list;
@@ -166,7 +166,7 @@ class Base extends BaseController
         return explode(',',$data);
     }
 
-    static function GetList($db,$data,$order='',$pid=''){
+    static function GetList($db,$data,$order='',$pid='',$childwhere=''){
         if(isset($data['order']) && $data['order'] && is_string($data['order'])) $db = $db->orderRaw($data['order']);
         else if($order)  $db = $db->orderRaw($order);
         if(isset($data['page']) && $data['page']){
@@ -180,7 +180,9 @@ class Base extends BaseController
         $res = json_decode(json_encode($res),true);
         if($pid){
             foreach ($res['data'] as $k => $v) {
-                if(self::Db()->where($pid,$v['id'])->count()) $res['data'][$k]['hasChildren'] = true;
+                $cdb = self::Db()->where($pid,$v['id']);
+                if($childwhere) $cdb = $cdb->where($childwhere);
+                if($cdb->count()) $res['data'][$k]['hasChildren'] = true;
                 else $res['data'][$k]['hasChildren'] = false;
             }
         }

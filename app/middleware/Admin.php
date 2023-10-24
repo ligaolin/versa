@@ -11,11 +11,10 @@ class Admin
     public function handle($request, \Closure $next)
     {
         try{
-            $jwt = $request->header('Authorization');
-            if(!$jwt) throw new \Exception();
+            if(!$request->token = $request->header('Authorization')) throw new \Exception();
 
             // 角色验证
-            $decoded = JWT::decode($jwt, new Key(env('JWT_KEY'), 'HS256'));
+            $decoded = JWT::decode($request->token, new Key(env('JWT_KEY'), 'HS256'));
             if(!$decoded || !isset($decoded->id) || !$decoded->id) throw new \Exception();
 
             if(!isset($decoded->time) || !$decoded->time) throw new \Exception('登录过期');

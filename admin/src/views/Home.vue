@@ -2,7 +2,7 @@
     <el-container class="common">
         <el-aside class="comm_cate">
             <!-- 左边栏目 -->
-            <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse">
+            <el-menu :default-active="path_id" class="el-menu-vertical-demo" :collapse="isCollapse">
                 <div class="comm_logo">
                     <!-- <img src="https://element-plus.gitee.io/images/element-plus-logo.svg" alt=""> -->
                     {{isCollapse?'V':'VERSA'}}
@@ -26,7 +26,7 @@
                             <span>
                                 <el-avatar :size="35" src="https://element-plus.gitee.io/images/element-plus-logo.svg" />
                             </span>
-                            <span class="comm_head_admin_name">admin</span>
+                            <span class="comm_head_admin_name">{{user.name}}</span>
                             <el-icon><arrow-up /></el-icon>
                         </div>
                         <div>
@@ -65,58 +65,68 @@ import { ref } from 'vue'
 import { RouterView } from 'vue-router'
 import { useRouter, useRoute } from 'vue-router'
 import adminMenu from './adminMenu.vue'
-import { Post } from '@/api/setting'
-const cate = ref([])
+import { Post } from '@/api/api'
+import { Fullscreen } from '@/utils/other'
+const router = useRouter(),route = useRoute()
 
-Post('AdminCateGetListByPid',{pid:0}).then(res=>{
-    console.log(res)
-    if(res.code==2000) cate.value = res.data
+const path_id = ref('2')
+const activeRouter = (arr)=>{
+    for(let i in arr){
+        if('/'+arr[i].path == router.currentRoute._value.path) {
+            if(arr[i].active) path_id.value = arr[i].active+''
+            else path_id.value = arr[i].id+''
+            return false
+        }
+        if(arr[i].children && arr[i].children.length) {
+            if(!activeRouter(arr[i].children)) return;
+        }
+    }
+    return true
+}
+
+const cate = ref([])
+Post('AdminCateGetListByPid',{pid:0,childShow:'是'}).then(res=>{
+    if(res.code==2000) {
+        activeRouter(res.all)
+        cate.value = res.data
+    }
 })
 
-const router = useRouter(),route = useRoute()
-const page_title = route.meta.title
-const fullscreen = ref(true)
-const isCollapse = ref(false)
-
 const loginOut = ()=>{ // 退出登录
-    Post('AdminLoginOut').then(res=>{
-        if(res.code==2000){
-            ElMessage({message:res.msg,type:'success'})
-            localStorage.removeItem('adminToken')
-            setTimeout(() => {
-                router.push('/login')
-            }, 1000)
-        }else{
-            ElMessage({message:res.msg,type:'warning'})
-        }
+    ElMessageBox.confirm('确定退出登录吗').then(()=>{
+        Post('AdminLoginOut').then(res=>{
+            if(res.code==2000){
+                ElMessage({message:res.msg,type:'success'})
+                localStorage.removeItem('adminToken')
+                setTimeout(() => {
+                    router.push('/login')
+                }, 1000)
+            }else{
+                ElMessage({message:res.msg,type:'warning'})
+            }
+        })
+    }).catch(()=>{})
+}
+
+const user = ref({})
+const Me = ()=>{
+    Post('UserAdminMe').then(res=>{
+        if(res.code==2000) user.value = res.data
     })
 }
+Me()
+
+const page_title = route.meta.title
+const isCollapse = ref(false)
 const onBack = ()=>{ // 返回上一页
     history.back()
 }
 const refreshPage = ()=>{ // 刷新页面
     location.reload()
 }
+const fullscreen = ref(true)
 const handleFullScreen = () =>{ // 全屏切换
-    if(fullscreen.value){ // 全屏
-        if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen()
-        } else if (document.documentElement.mozRequestFullScreen) {
-            document.documentElement.mozRequestFullScreen()
-        } else if (document.documentElement.webkitRequestFullscreen) {
-            document.documentElement.webkitRequestFullscreen()
-        } else if (document.documentElement.msRequestFullscreen) {
-            document.documentElement.msRequestFullscreen()
-        }
-    }else{ // 退出全屏
-        if (document.exitFullscreen) {
-            document.exitFullscreen()
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen()
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen()
-        }
-    }
+    Fullscreen(fullscreen.value)
     fullscreen.value = !fullscreen.value
 }
 </script>
