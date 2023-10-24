@@ -29,20 +29,23 @@ const props = defineProps({
     editPage:{ type: Object, default: {} },
     page:{ type: Boolean, default: true },
     rowKey:{ type: String, default: 'id' },
+    reload:{ type: Boolean, default: false }, // 修改内容后是否整个页面刷新
 })
 const emit = defineEmits(['editEnd'])
 
 const tableData = ref([])
 const page = ref(1)
-const page_size = ref(5)
+const page_size = ref(10)
 const total = ref(0)
 const ids = ref([])
 
 const getData = ()=>{
     tableData.value = []
     let [api,param] = props.getData()
-    param.page = page.value
-    param.page_size = page_size.value
+    if(!param) param = {}
+    if(!param.page) param.page = page.value
+    if(!param.page_size) param.page_size = page_size.value
+    if(!param.state) param.state = '开启,关闭'
     Post(api,param).then(res=>{
         if(res.code==2000){
             tableData.value =  res.data
@@ -53,8 +56,9 @@ const getData = ()=>{
 getData()
 const init = ()=>{
     page.value = 1
-    getData()
     emit('editEnd')
+    if(props.reload) setTimeout(()=>{ location.reload() },700)
+    else getData()
 }
 
 const currentChange = val => {
@@ -68,10 +72,11 @@ const sizeChange = val =>{
 }
 
 const load = (data,treeNode,resolve)=>{
-    let [api,param,pid] = props.getData()
-    if(pid) param[pid] = data.id
-    else param.pid = data.id
-    Post(api,param).then(res=>{
+    let [api,param,childParam] = props.getData()
+    if(!childParam) childParam = {}
+    if(!childParam.pid) childParam.pid= data.id
+    if(!childParam.state) childParam.state = '开启,关闭'
+    Post(api,childParam).then(res=>{
         if(res.code == 2000) resolve(res.data);
     })
 }
@@ -113,5 +118,25 @@ const Del = (api,ids,field='id')=>{
     }).catch(()=>{})
 }
 
-defineExpose({Edit,Del})
+const Change = (api,changeField,changeVal,whereVal,whereField='id')=>{
+    if(!whereField) {ElMessage({message:'缺少条件字段',type:'error'});return}
+    if(!whereVal) {ElMessage({message:'缺少条件值',type:'error'});return}
+    if(!changeField) {ElMessage({message:'缺少改变字段',type:'error'});return}
+    if(!changeVal) {ElMessage({message:'缺少改变值',type:'error'});return}
+    Post(api,{
+        whereField:whereField,
+        whereVal:whereVal,
+        changeField:changeField,
+        changeVal:changeVal,
+    }).then(res=>{
+        if(res.code==2000){
+            ElMessage({message:res.msg,type:'success'})
+            init()
+        }else{
+            ElMessage({message:res.msg,type:'error'})
+        }
+    })
+}
+
+defineExpose({Edit,Del,Change})
 </script>

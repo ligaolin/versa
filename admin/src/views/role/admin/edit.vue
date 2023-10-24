@@ -1,36 +1,34 @@
 <template>
     <table class="edit_table">
-        <editTr label="栏目名称">
-            <el-input clearable v-model="data.name" size="large" />
+        <editTr label="管理员名称" required>
+            <el-input clearable v-model="data.name" />
         </editTr>
-        <editTr label="栏目类型">
-            <el-radio-group v-model="data.type">
-                <el-radio label="分类" border>分类</el-radio>
-                <el-radio label="页面" border>页面</el-radio>
-            </el-radio-group>
+        <editTr label="所属管理员组" required>
+            <el-select v-model="data.user_group_id">
+                <el-option label="请选择" value=""/>
+                <el-option :label="item.name" :value="item.id" v-for="item in groups"/>
+            </el-select>
         </editTr>
-
-        <template v-if="data.type=='页面'">
-            <editTr label="栏目跳转路径">
-                <el-input clearable v-model="data.path" size="large" />
-            </editTr>
-            <editTr label="栏目文件路径">
-                <el-input clearable v-model="data.view" size="large" />
+        <editTr label="密码" :required="data.id?false:true">
+            <el-input clearable v-model="data.password" />
+            <div class="tips" v-if="data.id">不修改密码不用填写</div>
+        </editTr>
+        <template v-if="data.password">
+            <editTr label="重复密码" required>
+                <el-input clearable v-model="data.duplicatePassword" />
             </editTr>
         </template>
-        <editTr label="栏目图标" v-if="data.level==1" tip="">
-            <el-input clearable v-model="data.icon" size="large" />
-            <div class="tips">
-                <a href="https://element-plus.gitee.io/zh-CN/component/icon.html" target="_blank">查看可选图标</a>，示例：复制值“&lt;el-icon&gt;&lt;Notification /&gt;&lt;/el-icon&gt;”，填写值“Notification”
-            </div>
+        <editTr label="头像">
+            <wangEditor />
         </editTr>
         <editTr>
-            <el-button type="primary" size="large" @click="submit">提交</el-button>
+            <el-button type="primary" @click="submit">提交</el-button>
         </editTr>
     </table>
 </template>
 <script setup>
 import { ref } from 'vue'
+import wangEditor from '@/components/wangEditor.vue'
 import { Post } from '@/api/api'
 import { ObjSetObj,Error } from '@/utils/other'
 const props = defineProps(['data'])
@@ -38,26 +36,25 @@ const emit = defineEmits(['submit'])
 
 const data = ref({
     id:'',
-    pid:0,
-    level:1,
     name:'',
-    type:'分类',
-    path:'',
-    view:'',
-    icon:'',
+    user_group_id:'',
+    password:'',
+    duplicatePassword:'',
+    avatar:'',
 })
 ObjSetObj(props.data,data.value)
+data.value.password = ''
+data.value.duplicatePassword = ''
 
 const submit = ()=>{
     if(!Error([
-        [!data.value.name,'栏目名称不能为空'],
-        [!data.value.type,'请选择栏目类型'],
-        [(data.value.type == "页面" && !data.value.path),'栏目跳转路径不能为空'],
-        [(data.value.type == "页面" && !data.value.view),'栏目文件路径不能为空'],
-        [(data.value.level==1 && !data.value.icon),'请填写图标'],
+        [!data.value.name,'管理员名称不能为空'],
+        [!data.value.user_group_id,'请选择所属管理员组'],
+        [(!data.value.id && !data.value.password),'密码必须'],
+        [(data.value.password && !data.value.duplicatePassword),'重复密码不能为空'],
     ])) return
 
-    Post('AdminCateEdit',data.value).then(res=>{
+    Post('UserAdminEdit',data.value).then(res=>{
         if(res.code == 2000){
             ElMessage({message:res.msg,type:'success'})
             emit('submit')
@@ -66,6 +63,11 @@ const submit = ()=>{
         }
     })
 }
+
+const groups = ref([])
+Post('UserGroupList',{type:'管理员',state:'开启'}).then(res=>{
+    if(res.code == 2000) groups.value = res.data
+})
 </script>
 
 <style scoped>

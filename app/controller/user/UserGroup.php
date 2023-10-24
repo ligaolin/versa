@@ -54,17 +54,17 @@ class UserGroup extends Base
         return self::ResData($data);
     }
 
-    function AdminEdit($type){
-        self::Edit($type);
+    function AdminEdit(){
+        return self::Edit('管理员');
     }
 
     function AdminChange()
     {
-        self::Change(['type'=>'管理员']);
+        return self::Change(['type'=>'管理员']);
     }
 
     function AdminDel()
     {
-        self::Del(['type'=>'管理员']);
+        return self::Del(['type'=>'管理员']);
     }
 }

@@ -26,14 +26,14 @@ CREATE TABLE `admin_cate` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `pid` bigint NOT NULL DEFAULT '0' COMMENT '上级ID',
   `level` tinyint(1) NOT NULL DEFAULT '1' COMMENT '级别',
-  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
-  `type` enum('分类','页面') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '分类' COMMENT '类型',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
+  `type` enum('分类','页面') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '分类' COMMENT '类型',
   `path` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '路由',
   `view` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'vue文件路径',
-  `icon` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '图标',
+  `icon` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '图标',
   `sort` int NOT NULL DEFAULT '100' COMMENT '排序',
   `state` enum('开启','关闭') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '开启' COMMENT '状态',
-  `show` enum('是','否') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '是' COMMENT '是否显示',
+  `show` enum('是','否') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '是' COMMENT '是否显示',
   `active` bigint DEFAULT NULL COMMENT '选中状态的栏目，空表示使用自身作为选中状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='后台栏目';
@@ -58,7 +58,7 @@ DROP TABLE IF EXISTS `test`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `test` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `name1` varchar(20) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'lin1' COMMENT '名称1',
+  `name1` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'lin1' COMMENT '名称1',
   PRIMARY KEY (`id`),
   KEY `name1` (`name1`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='测试';
@@ -92,7 +92,7 @@ CREATE TABLE `user` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +101,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,0,'管理员','admin','$2y$10$19lIOBSbphg1J64OUTHEQ..vfYqQka10EQH9dICD5C2YHVfb4EL2S','',0,'开启','2023-10-10 06:14:16',NULL);
+INSERT INTO `user` VALUES (1,1,'管理员','admin','$2y$10$4vGK0H44LOiLanBkodhw8ejnBWhAYWy8DGFI4yd0anOsJWVfdop5S','',0,'开启','2023-10-10 06:14:16','2023-10-24 21:48:56'),(2,1,'管理员','gmood','$2y$10$vU24rhzYiHaqv5sWp8nB/OSh0fCMWr6UFdXrWlEG8hDLVvwFpS8Ui','',100,'开启','2023-10-24 22:03:50',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,7 +122,7 @@ CREATE TABLE `user_auth` (
   `state` enum('开启','关闭') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '开启' COMMENT '状态',
   `type` enum('管理员') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '管理员' COMMENT '类型',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户权限';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户权限';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,7 +131,7 @@ CREATE TABLE `user_auth` (
 
 LOCK TABLES `user_auth` WRITE;
 /*!40000 ALTER TABLE `user_auth` DISABLE KEYS */;
-INSERT INTO `user_auth` VALUES (1,0,1,'admin',NULL,100,'开启','管理员'),(2,0,1,'admin',NULL,100,'开启','管理员'),(3,0,1,'admin',NULL,100,'开启','管理员'),(4,0,1,'admin',NULL,100,'开启','管理员'),(5,0,1,'d',NULL,100,'开启','管理员'),(6,1,1,'test',NULL,100,'开启','管理员'),(7,1,2,'test',NULL,100,'开启','管理员');
+INSERT INTO `user_auth` VALUES (1,0,1,'角色管理',NULL,100,'开启','管理员'),(3,0,1,'admin',NULL,100,'开启','管理员'),(9,1,2,'管理员','',100,'开启','管理员'),(10,3,2,'gsg','rewr',100,'开启','管理员'),(11,10,3,'fdsf','fdsf',100,'开启','管理员'),(12,0,1,'das','das',100,'开启','管理员'),(13,9,3,'管理员信息','admin/user.User/Me',100,'开启','管理员');
 /*!40000 ALTER TABLE `user_auth` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +152,7 @@ CREATE TABLE `user_group` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `type` enum('管理员') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '管理员' COMMENT '类型',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户组';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户组';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,6 +161,7 @@ CREATE TABLE `user_group` (
 
 LOCK TABLES `user_group` WRITE;
 /*!40000 ALTER TABLE `user_group` DISABLE KEYS */;
+INSERT INTO `user_group` VALUES (1,'超级管理员',',1,9,13,3,10,11',100,'开启','2023-10-24 20:53:53','2023-10-24 22:18:19','管理员');
 /*!40000 ALTER TABLE `user_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,7 +186,7 @@ CREATE TABLE `user_token` (
 
 LOCK TABLES `user_token` WRITE;
 /*!40000 ALTER TABLE `user_token` DISABLE KEYS */;
-INSERT INTO `user_token` VALUES (1,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5ODEzODY0MX0.JTRDkn6qrSEwdbRCwYxtB6_KwHzk-WUqvr_K2gk7fkQ','2023-10-24 09:10:41',NULL);
+INSERT INTO `user_token` VALUES (1,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5ODEzODY0MX0.JTRDkn6qrSEwdbRCwYxtB6_KwHzk-WUqvr_K2gk7fkQ','2023-10-24 09:10:41',NULL),(2,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwidGltZSI6MTY5ODE4NTA1NH0.xpkK4MTHd4L5xfWoq_yvvXE34YyyOxIzw3ZzU-3uUaw','2023-10-24 22:04:14',NULL),(1,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5ODE4Njg0N30.v--TnsqXvlhTkwJYEiNU5iHDPKHivwQO4KLuRja0aqg','2023-10-24 22:34:07',NULL);
 /*!40000 ALTER TABLE `user_token` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -198,4 +199,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-24 21:17:42
+-- Dump completed on 2023-10-25  7:05:43

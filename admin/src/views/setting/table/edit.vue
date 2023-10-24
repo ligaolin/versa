@@ -1,14 +1,14 @@
 <template>
     <table class="edit_table">
-        <editTr label="数据表名称">
-            <el-input clearable v-model="data.name" size="large" />
+        <editTr label="数据表名称" required>
+            <el-input clearable v-model="data.name" />
         </editTr>
         <editTr label="数据表注释">
-            <el-input clearable v-model="data.comment" size="large" />
+            <el-input clearable v-model="data.comment" />
         </editTr>
        
         <editTr>
-            <el-button type="primary" size="large" @click="submit">提交</el-button>
+            <el-button type="primary" @click="submit">提交</el-button>
         </editTr>
     </table>
 </template>

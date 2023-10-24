@@ -85,7 +85,7 @@ const activeRouter = (arr)=>{
 }
 
 const cate = ref([])
-Post('AdminCateGetListByPid',{pid:0,childShow:'是'}).then(res=>{
+Post('AdminCateGetListByPid',{pid:0,show:'是'}).then(res=>{
     if(res.code==2000) {
         activeRouter(res.all)
         cate.value = res.data

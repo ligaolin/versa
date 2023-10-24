@@ -38,16 +38,12 @@ class AdminCateApi extends Base {
 
     static $GetListByPid = [
         ['pid',0,['require','上级ID必须']],
-
-        ['childId',null],
-        ['childName',null],
-        ['childPid',null],
-        ['childLevel',null],
-        ['childType',null],
-        ['childPath',null],
-        ['childView',null],
-        ['childState',null],
-        ['childShow',null],
+        ['name',null],
+        ['type',null],
+        ['path',null],
+        ['view',null],
+        ['show',null],
+        ['state','开启'],
     ];
 
     static $Edit = [

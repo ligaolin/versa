@@ -25,6 +25,15 @@ class UserAuthApi extends Base {
         ['order','sort asc,id asc'],
     ];
 
+    static $GetListByPid = [
+        ['pid',0,['require','上级ID必须']],
+
+        ['name',null],
+        ['type',null],
+        ['route',null],
+        ['state','开启'],
+    ];
+
     static $Edit = [
         ['id',null,['number','id必须数字']],
         ['pid',0],

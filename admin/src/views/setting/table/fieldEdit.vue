@@ -1,11 +1,11 @@
 <template>
     <table class="edit_table">
-        <editTr label="数据表"> {{ data.table }} </editTr>
-        <editTr label="字段名称">
-            <el-input clearable v-model="data.name" size="large" />
+        <editTr label="数据表" required> {{ data.table }} </editTr>
+        <editTr label="字段名称" required>
+            <el-input clearable v-model="data.name" />
         </editTr>
-        <editTr label="字段类型">
-            <el-input clearable v-model="data.type" size="large" />
+        <editTr label="字段类型" required>
+            <el-input clearable v-model="data.type" />
         </editTr>
         <editTr label="可否为空">
             <el-radio-group v-model="data.isNull">
@@ -14,17 +14,17 @@
             </el-radio-group>
         </editTr>
         <editTr label="默认值">
-            <el-input clearable v-model="data.default" size="large" />
+            <el-input clearable v-model="data.default" />
         </editTr>
         <editTr label="注释">
-            <el-input clearable v-model="data.comment" size="large" />
+            <el-input clearable v-model="data.comment" />
         </editTr>
         <!-- <editTr label="键">
-            <el-input clearable v-model="data.key" size="large" />
+            <el-input clearable v-model="data.key" />
         </editTr> -->
        
         <editTr>
-            <el-button type="primary" size="large" @click="submit">提交</el-button>
+            <el-button type="primary" @click="submit">提交</el-button>
         </editTr>
     </table>
 </template>

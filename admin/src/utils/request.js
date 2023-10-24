@@ -13,10 +13,8 @@ axios.interceptors.request.use(config => { // 添加请求拦截器
 axios.interceptors.response.use(res => { // 响应拦截
     if (res.data.code == 1100) {
         ElMessage({message:res.data.msg,type:'warning'})
-        setTimeout(() => {
-            router.push('/login')
-        }, 1000)
-    }
+        setTimeout(() => { router.push('/login') }, 1000)
+    }else if(res.data.code == 1200) ElMessage({message:res.data.msg,type:'warning'})
     return res.data
 }, err => {
     return Promise.reject(err)

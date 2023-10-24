@@ -30,7 +30,20 @@ class UserAuth extends Base
             ['name'=>'route','type'=>'in'],
             ['name'=>'state','type'=>'in'],
         ]);
-        $res = self::GetList(self::Db()->where($where),$data);
+        $res = self::GetList(self::Db()->where($where),$data,'','pid');
+        return self::Success('获取完成',$res);
+    }
+
+    function GetListByPid(){
+        $data = UserAuthApi::Get(UserAuthApi::$GetListByPid);
+        $cwhere = self::Where($data,[
+            ['name'=>'name','type'=>'like','key'=>'name'],
+            ['name'=>'type','type'=>'in','key'=>'type'],
+            ['name'=>'route','type'=>'name','key'=>'path'],
+            ['name'=>'state','type'=>'in','key'=>'state'],
+        ]);
+        $res['data'] = self::AllChildren($data['pid'],$cwhere);
+        $res['all'] = self::AllChildren($data['pid']);
         return self::Success('获取完成',$res);
     }
 
@@ -43,16 +56,14 @@ class UserAuth extends Base
 
         if($data['id']){
             if(self::Db()->where('name',$data['name'])->where('id','<>',$data['id'])->where('type',$type)->count()) throw new \Exception('同级已有相同权限名');
-
-            if(self::Db()->where('route',$data['route'])->where('id','<>',$data['id'])->where('type',$type)->count()) throw new \Exception('同级已有相同路由');
+            if($data['route'] && self::Db()->where('route',$data['route'])->where('id','<>',$data['id'])->where('type',$type)->count()) throw new \Exception('同级已有相同路由');
 
             // 更新
             self::Db()->where('id = '.$data['id'])->update($update);
             return self::Success('更新完成');
         }else{
             if(self::Db()->where('name',$data['name'])->where('type',$type)->count()) throw new \Exception('同级已有相同权限名');
-
-            if(self::Db()->where('route',$data['route'])->where('type',$type)->count()) throw new \Exception('同级已有相同路由');
+            if($data['route'] && self::Db()->where('route',$data['route'])->where('type',$type)->count()) throw new \Exception('同级已有相同路由');
 
             // 添加
             if($id = self::Db()->insertGetId($update)) return self::Success('添加成功',$id);
@@ -65,16 +76,16 @@ class UserAuth extends Base
 
     function AdminEdit()
     {
-        self::Edit('管理员');
+        return self::Edit('管理员');
     }
 
     function AdminChange()
     {
-        self::Change(['type'=>'管理员']);
+        return self::Change(['type'=>'管理员']);
     }
 
     function AdminDel()
     {
-        self::Del(['type'=>'管理员']);
+        return self::Del(['type'=>'管理员']);
     }
 }

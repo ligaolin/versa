@@ -75,7 +75,7 @@ class Base extends BaseController
     }
 
     static protected function AllChildren($pid,$where=' 1'){
-        $list = self::Db()->where($where." AND `pid` = {$pid} AND `state` = '开启'")->select()->toArray();
+        $list = self::Db()->where($where." AND `pid` = {$pid}")->select()->toArray();
         if($list && count($list)){
             foreach ($list as $key => $val) {
                 $list[$key]['children'] = self::AllChildren($val['id'],$where);

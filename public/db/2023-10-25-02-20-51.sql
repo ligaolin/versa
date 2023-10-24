@@ -26,14 +26,14 @@ CREATE TABLE `admin_cate` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `pid` bigint NOT NULL DEFAULT '0' COMMENT '上级ID',
   `level` tinyint(1) NOT NULL DEFAULT '1' COMMENT '级别',
-  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
-  `type` enum('分类','页面') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '分类' COMMENT '类型',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
+  `type` enum('分类','页面') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '分类' COMMENT '类型',
   `path` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '路由',
   `view` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'vue文件路径',
-  `icon` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '图标',
+  `icon` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '图标',
   `sort` int NOT NULL DEFAULT '100' COMMENT '排序',
   `state` enum('开启','关闭') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '开启' COMMENT '状态',
-  `show` enum('是','否') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '是' COMMENT '是否显示',
+  `show` enum('是','否') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '是' COMMENT '是否显示',
   `active` bigint DEFAULT NULL COMMENT '选中状态的栏目，空表示使用自身作为选中状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='后台栏目';
@@ -58,7 +58,7 @@ DROP TABLE IF EXISTS `test`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `test` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `name1` varchar(20) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'lin1' COMMENT '名称1',
+  `name1` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'lin1' COMMENT '名称1',
   PRIMARY KEY (`id`),
   KEY `name1` (`name1`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='测试';
@@ -185,7 +185,7 @@ CREATE TABLE `user_token` (
 
 LOCK TABLES `user_token` WRITE;
 /*!40000 ALTER TABLE `user_token` DISABLE KEYS */;
-INSERT INTO `user_token` VALUES (1,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5ODEzODY0MX0.JTRDkn6qrSEwdbRCwYxtB6_KwHzk-WUqvr_K2gk7fkQ','2023-10-24 09:10:41',NULL);
+INSERT INTO `user_token` VALUES (1,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5ODEzODY0MX0.JTRDkn6qrSEwdbRCwYxtB6_KwHzk-WUqvr_K2gk7fkQ','2023-10-24 09:10:41',NULL),(1,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5ODE3MTMwM30.QbWcRPnzZXRc8BdPTWEBX8a48UGSGeZl8eHKD9iZhcU','2023-10-24 18:15:03',NULL);
 /*!40000 ALTER TABLE `user_token` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -198,4 +198,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-24 21:18:07
+-- Dump completed on 2023-10-25  2:20:52

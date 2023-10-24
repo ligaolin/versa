@@ -1,14 +1,14 @@
 <template>
     <list :getData="getData" :editPage="edit" ref="listEleme" rowKey="name" :page="false">
         <template #search>
-            <label>数据表名称：<el-input v-model="name"/></label>
-            <label>数据表注释：<el-input v-model="comment"/></label>
+            <label>数据表名称：<el-input clearable v-model="name"/></label>
+            <label>数据表注释：<el-input clearable v-model="comment"/></label>
         </template>
 
         <template #operation="{ ids }">
             <el-button type="primary" @click="addEdit()">添加</el-button>
             <el-button type="danger" @click="Del(ids)">批量删除</el-button>
-            <el-button type="danger" @click="Backups()">数据库备份</el-button>
+            <el-button @click="Backups()">数据库备份</el-button>
         </template>
 
         <el-table-column type="selection" width="55" align="center"/>
@@ -58,8 +58,10 @@ const fieldPage = (item)=>{
 }
 
 const Backups = ()=>{
-    Post('TableBackups').then(res=>{
-        if(res.code==2000) ElMessage({message:res.msg,type:'success'});
-    })
+    ElMessageBox.confirm('确定备份数据库吗').then(()=>{
+        Post('TableBackups').then(res=>{
+            if(res.code==2000) ElMessage({message:res.msg,type:'success'});
+        })
+    }).catch(()=>{})
 }
 </script>

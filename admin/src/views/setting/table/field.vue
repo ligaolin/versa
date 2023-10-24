@@ -5,18 +5,18 @@
         </template>
 
         <template #search>
-            <label>字段名称：<el-input v-model="name"/></label>
-            <label>字段类型：<el-input v-model="type"/></label>
+            <label>字段名称：<el-input clearable v-model="name"/></label>
+            <label>字段类型：<el-input clearable v-model="type"/></label>
             <label>可否为空：
-                <el-select v-model="isNull" size="large">
+                <el-select v-model="isNull">
                     <el-option label="请选择" value=""/>
                     <el-option label="可以" :value="true" />
                     <el-option label="不可以" :value="false" />
                 </el-select>
             </label>
-            <label>默认值：<el-input v-model="defaultVal"/></label>
-            <label>注释：<el-input v-model="comment"/></label>
-            <!-- <label>键：<el-input v-model="key"/></label> -->
+            <label>默认值：<el-input clearable v-model="defaultVal"/></label>
+            <label>注释：<el-input clearable v-model="comment"/></label>
+            <!-- <label>键：<el-input clearable v-model="key"/></label> -->
         </template>
 
         <template #operation="{ ids }">

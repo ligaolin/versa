@@ -15,6 +15,7 @@ class UserApi extends Base {
         ['name',null],
         ['user_group_id',null],
         ['type',null],
+        ['group_name',null],
         
         ['state','开启'],
         ['page',null],
@@ -29,8 +30,6 @@ class UserApi extends Base {
         ['password',null],
         ['duplicatePassword',null],
         ['avatar',null],
-        ['sort',100,['number','排序必须数字']],
-        ['state','开启',['in:开启,关闭','状态值错误']],
     ];
 
     static $AdminLogin = [

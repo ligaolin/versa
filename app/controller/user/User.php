@@ -20,28 +20,34 @@ class User extends Base
     function Get(){
         $data = UserApi::Get(UserApi::$Get);
         $where = self::Where($data,[
-            ['name'=>'id','type'=>'in'],
-            ['name'=>'name','type'=>'in'],
+            ['name'=>'user.id','type'=>'in'],
+            ['name'=>'user.name','type'=>'in'],
+            ['name'=>'group_name','type'=>'in','key'=>'user_group.name'],
         ]);
-        return self::Success('获取完成',self::Db()->where($where)->find());
+        if($res['data'] = self::Db()->where($where)->leftJoin('user_group','user_group.id = user.user_group_id')->field('user.*,user_group.name as group_name')->find()) unset($res['data']['password']);
+        return self::Success('获取完成',$res);
     }
 
     function List(){
         $data = UserApi::Get(UserApi::$List);
         $where = self::Where($data,[
-            ['name'=>'id','type'=>'in'],
-            ['name'=>'name','type'=>'like'],
-            ['name'=>'type','type'=>'like'],
-            ['name'=>'user_group_id','type'=>'like'],
-            ['name'=>'state','type'=>'in'],
+            ['name'=>'user.id','type'=>'in'],
+            ['name'=>'user.name','type'=>'like'],
+            ['name'=>'user.type','type'=>'like'],
+            ['name'=>'user.user_group_id','type'=>'like'],
+            ['name'=>'user.state','type'=>'in'],
         ]);
-        $res = self::GetList(self::Db()->where($where),$data);
+        $res = self::GetList(self::Db()->where($where)->leftJoin('user_group','user_group.id = user.user_group_id')->field('user.*,user_group.name as group_name'),$data);
+        foreach ($res['data'] as $k => $v) {
+            unset($res['data'][$k]['password']);
+        }
         return self::Success('获取完成',$res);
     }
 
     static private function EditRole($type){
         $update = $data = UserApi::Get(UserApi::$Edit);
         unset($update['id']);
+        unset($update['password']);
         unset($update['duplicatePassword']);
         if($update['avatar']) $update['avatar'] = json_encode($update['avatar']);
         $update['type'] = $type;
@@ -73,11 +79,11 @@ class User extends Base
     }
     function AdminChange()
     {
-        self::Change(['type'=>'管理员']);
+        return self::Change(['type'=>'管理员']);
     }
     function AdminDel()
     {
-        self::Del(['type'=>'管理员']);
+        return self::Del(['type'=>'管理员']);
     }
 
     function AdminLogin(){
