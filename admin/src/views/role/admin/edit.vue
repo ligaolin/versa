@@ -19,7 +19,7 @@
             </editTr>
         </template>
         <editTr label="头像">
-            <upload />
+            <upload :list="data.avatar" @change="uploadChange"/>
         </editTr>
         <editTr>
             <el-button type="primary" @click="submit">提交</el-button>
@@ -28,7 +28,6 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import upload from '@/components/upload.vue'
 import { Post } from '@/api/api'
 import { ObjSetObj,Error } from '@/utils/other'
 const props = defineProps(['data'])
@@ -40,8 +39,13 @@ const data = ref({
     user_group_id:'',
     password:'',
     duplicatePassword:'',
-    avatar:'',
+    avatar: [],
 })
+for(let i in props.data){
+    if(i=='avatar' && (typeof props.data[i] != 'array' && typeof props.data[i] != 'object')) {
+        props.data[i] = []
+    }
+}
 ObjSetObj(props.data,data.value)
 data.value.password = ''
 data.value.duplicatePassword = ''
@@ -62,6 +66,9 @@ const submit = ()=>{
             ElMessage({message:res.msg,type:'error'})
         }
     })
+}
+const uploadChange = (res)=>{
+    data.value.avatar = res
 }
 
 const groups = ref([])

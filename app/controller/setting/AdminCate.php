@@ -60,8 +60,8 @@ class AdminCate extends Base
             ['name'=>'state','type'=>'in'],
             ['name'=>'show','type'=>'in'],
         ]);
-        $res['data'] = self::AllChildren($data['pid'],$cwhere);
-        $res['all'] = self::AllChildren($data['pid']);
+        $res['data'] = self::AllChildren($data['pid'],$cwhere,'sort asc,id asc');
+        $res['all'] = self::AllChildren($data['pid'],' 1','sort asc,id asc');
         return self::Success('获取完成',$res);
     }
 

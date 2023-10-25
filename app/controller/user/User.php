@@ -24,7 +24,10 @@ class User extends Base
             ['name'=>'user.name','type'=>'in'],
             ['name'=>'group_name','type'=>'in','key'=>'user_group.name'],
         ]);
-        if($res['data'] = self::Db()->where($where)->leftJoin('user_group','user_group.id = user.user_group_id')->field('user.*,user_group.name as group_name')->find()) unset($res['data']['password']);
+        if($res['data'] = self::Db()->where($where)->leftJoin('user_group','user_group.id = user.user_group_id')->field('user.*,user_group.name as group_name')->find()) {
+            unset($res['data']['password']);
+            $res['data']['avatar'] = json_decode($res['data']['avatar']);
+        }
         return self::Success('获取完成',$res);
     }
 
@@ -40,6 +43,7 @@ class User extends Base
         $res = self::GetList(self::Db()->where($where)->leftJoin('user_group','user_group.id = user.user_group_id')->field('user.*,user_group.name as group_name'),$data);
         foreach ($res['data'] as $k => $v) {
             unset($res['data'][$k]['password']);
+            $res['data'][$k]['avatar'] = json_decode($v['avatar']);
         }
         return self::Success('获取完成',$res);
     }
@@ -107,9 +111,10 @@ class User extends Base
     }
 
     function Me(){
-        $data['data'] = request()->user;
-        unset($data['data']['password']);
-        return self::Success('获取成功',$data);
+        $res['data'] = request()->user;
+        unset($res['data']['password']);
+        $res['data']['avatar'] = json_decode($res['data']['avatar']);
+        return self::Success('获取成功',$res);
     }
 
     function AdminLoginOut(){

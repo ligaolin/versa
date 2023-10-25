@@ -21,4 +21,5 @@ Route::SetRoute([
     ['action'=>'db.Table','admin'=>['Edit','List','Add','Del','Backups']], // 数据表
     ['action'=>'db.Field','admin'=>['List','Add','Edit','Del']], // 表字段
     ['action'=>'setting.AdminCate','base'=>['GetListByPid','List'],'admin'=>['Edit','Change','Del','Get','List']], // 后台栏目
+    ['action'=>'setting.Config','base'=>['Get','List'],'admin'=>['Edit','Change','Del','Get','List','ForEditVal']], // 配置
 ]);

@@ -36,7 +36,7 @@
         <el-table-column label="操作" align="center">
             <template #default="scope">
                 <el-button v-if="scope.row.name!='id'" type="primary" size="small" @click="addEdit(scope.row)">编辑</el-button>
-                <el-button v-if="scope.row.name!='id'" type="danger" size="small" @click="Del(scope.row.id)">删除</el-button>
+                <el-button v-if="scope.row.name!='id'" type="danger" size="small" @click="Del(scope.row.name)">删除</el-button>
             </template>
         </el-table-column>
     </list>

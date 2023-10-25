@@ -74,11 +74,15 @@ class Base extends BaseController
         }
     }
 
-    static protected function AllChildren($pid,$where=' 1'){
-        $list = self::Db()->where($where." AND `pid` = {$pid}")->select()->toArray();
+    static protected function AllChildren($pid,$where=' 1',$order=''){
+        $db = self::Db();
+        if($where) $db = $db->where($where." AND `pid` = {$pid}");
+        else $db = $db->where("`pid` = {$pid}");
+        if($order && is_string($order)) $db = $db->orderRaw($order);
+        $list = $db->select()->toArray();
         if($list && count($list)){
             foreach ($list as $key => $val) {
-                $list[$key]['children'] = self::AllChildren($val['id'],$where);
+                $list[$key]['children'] = self::AllChildren($val['id'],$where,$order);
             }
         }
         return $list;

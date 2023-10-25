@@ -18,7 +18,7 @@
             <template #default="scope">
                 <el-button type="primary" size="small" @click="fieldPage(scope.row)">字段</el-button>
                 <el-button type="primary" size="small" @click="addEdit(scope.row)">编辑</el-button>
-                <el-button type="danger" size="small" @click="Del(scope.row.id)">删除</el-button>
+                <el-button type="danger" size="small" @click="Del(scope.row.name)">删除</el-button>
             </template>
         </el-table-column>
     </list>

@@ -52,6 +52,16 @@ const api = [
     ['UserAuthAdminDel','admin/user.UserAuth/AdminDel'],
 
     ['FileUpload','admin/other.File/Upload'],
+
+    // 配置
+    ['ConfigGet','admin/setting.Config/Get'],
+    ['ConfigList','setting.Config/List'],
+    ['ConfigGetAuth','admin/setting.Config/Get'], // 需要权限
+    ['ConfigListAuth','admin/setting.Config/List'], // 需要权限
+    ['ConfigEdit','admin/setting.Config/Edit'],
+    ['ConfigChange','admin/setting.Config/Change'],
+    ['ConfigDel','admin/setting.Config/Del'],
+    ['ConfigForEditVal','admin/setting.Config/ForEditVal'],
 ]
 
 export const Post = (key,param) => {

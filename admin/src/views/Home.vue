@@ -24,7 +24,7 @@
                     <span class="comm_head_admin">
                         <div>
                             <span>
-                                <el-avatar :size="35" src="https://element-plus.gitee.io/images/element-plus-logo.svg" />
+                                <el-avatar :size="35" :src="user.avatar && user.avatar.length && user.avatar[0] && user.avatar[0].url?user.avatar[0].url:''" />
                             </span>
                             <span class="comm_head_admin_name">{{user.name}}</span>
                             <el-icon><arrow-up /></el-icon>
@@ -50,7 +50,7 @@
                                 </el-breadcrumb-item>
                             </el-breadcrumb>
                         </template>
-                        <div>
+                        <div class="comm_body">
                             <RouterView />
                         </div>
                     </el-page-header>
@@ -163,4 +163,5 @@ const handleFullScreen = () =>{ // 全屏切换
 .comm_cont{background-color: white;padding: 15px;height: calc(100vh - 80px);}
 .el-breadcrumb .el-icon{ color: #9f9f9f; float: left; font-size: 15px; vertical-align: middle; margin-right: 4px;}
 .comm_cont>div:last-child{overflow-y: auto; height: calc(100vh - 160px); margin-top: 15px;}
+.comm_body{height: calc(100vh - 135px); overflow: auto;padding: 20px 0;}
 </style>
