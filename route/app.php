@@ -12,6 +12,7 @@ use app\utils\Route;
 
 Route::SetRoute([
     ['action'=>'other.Captcha','base'=>['Img'],'method'=>'get'], // 验证码
+    ['action'=>'other.File','admin'=>['Upload']], // 文件
 
     ['action'=>'user.User','base'=>['AdminLogin'],'admin'=>['AdminEdit','AdminLoginOut','AdminChange','AdminDel','Me','Get','List']], // 用户管理
     ['action'=>'user.UserGroup','admin'=>['AdminEdit','AdminChange','AdminDel','Get','List']], // 用户组

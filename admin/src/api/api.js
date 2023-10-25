@@ -50,6 +50,8 @@ const api = [
     ['UserAuthAdminEdit','admin/user.UserAuth/AdminEdit'],
     ['UserAuthAdminChange','admin/user.UserAuth/AdminChange'],
     ['UserAuthAdminDel','admin/user.UserAuth/AdminDel'],
+
+    ['FileUpload','admin/other.File/Upload'],
 ]
 
 export const Post = (key,param) => {

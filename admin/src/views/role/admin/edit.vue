@@ -19,7 +19,7 @@
             </editTr>
         </template>
         <editTr label="头像">
-            <wangEditor />
+            <upload />
         </editTr>
         <editTr>
             <el-button type="primary" @click="submit">提交</el-button>
@@ -28,7 +28,7 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import wangEditor from '@/components/wangEditor.vue'
+import upload from '@/components/upload.vue'
 import { Post } from '@/api/api'
 import { ObjSetObj,Error } from '@/utils/other'
 const props = defineProps(['data'])
