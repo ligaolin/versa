@@ -5,6 +5,7 @@ namespace app\controller;
 use app\BaseController;
 use think\facade\Db;
 use app\api\Base as BaseApi;
+use app\utils\Other;
 
 class Base extends BaseController
 {
@@ -191,5 +192,14 @@ class Base extends BaseController
             }
         }
         return $res;
+    }
+
+    static function MakeCode($field,$len=7,$table=''){
+        $code = Other::randomStr($len);
+        if(self::Db($table)->where($field,$code)->first()){
+            self::makeCode($field,$table);
+        }else{
+            return $code;
+        }
     }
 }
