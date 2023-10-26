@@ -57,7 +57,5 @@ class AdminCateApi extends Base {
         ['view',null],
         ['icon',null],
         ['show','是',['in:是,否','是否显示值错误']],
-        ['sort',100,['number','排序必须数字']],
-        ['state','开启',['in:开启,关闭','状态值错误']],
     ];
 }

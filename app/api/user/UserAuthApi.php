@@ -40,7 +40,5 @@ class UserAuthApi extends Base {
         ['level',1],
         ['name',null,['require','名称必须']],
         ['route',null],
-        ['sort',100,['number','排序必须数字']],
-        ['state','开启',['in:开启,关闭','状态值错误']],
     ];
 }
