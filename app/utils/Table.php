@@ -130,7 +130,10 @@ class Table{
         $sql = "ALTER TABLE `{$table}` ADD `{$name}` {$type}";
         if(!$isNull) $sql .= " NOT NULL";
         else $sql .= " NULL";
-        if($default!=='' && $default!==null) $sql .= " DEFAULT '{$default}'";
+        if($default!=='' && $default!==null) {
+            if(strtolower($type) == 'timestamp') $sql .= " DEFAULT {$default}";
+            else $sql .= " DEFAULT '{$default}'";
+        }
         if($comment) $sql .= " COMMENT '{$comment}'";
         if($key) $sql .= " ADD KEY {$key} ({$name})";
         return Db::query($sql);
@@ -143,7 +146,10 @@ class Table{
         $sql .= " {$type}";
         if(!$isNull) $sql .= " NOT NULL";
         else $sql .= " NULL";
-        if($default!=='' && $default!==null) $sql .= " DEFAULT '{$default}'";
+        if($default!=='' && $default!==null) {
+            if(strtolower($type) == 'timestamp') $sql .= " DEFAULT {$default}";
+            else $sql .= " DEFAULT '{$default}'";
+        }
         if($comment) $sql .= " COMMENT '{$comment}'";
         if($key) $sql .= " ADD KEY {$key} ({$name})";
         return Db::query($sql);
