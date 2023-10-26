@@ -196,7 +196,7 @@ class Base extends BaseController
 
     static function MakeCode($field,$len=7,$table=''){
         $code = Other::randomStr($len);
-        if(self::Db($table)->where($field,$code)->first()){
+        if(self::Db($table)->where($field,$code)->count()){
             self::makeCode($field,$table);
         }else{
             return $code;
