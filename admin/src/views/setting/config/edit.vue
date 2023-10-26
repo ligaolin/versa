@@ -6,9 +6,9 @@
         <editTr label="值" v-if="data.field_type!='上传文件'">
             <el-input clearable v-model="data.val" type="textarea" style="width:300px;"/>
         </editTr>
-        <editTr label="分类">
+        <!-- <editTr label="分类">
             <el-input clearable v-model="data.type" />
-        </editTr>
+        </editTr> -->
         <editTr label="数据类型">
             <el-select v-model="data.field_type">
                 <el-option label="单行文本" value="单行文本"/>
@@ -44,7 +44,7 @@ const data = ref({
     id:'',
     name:'',
     val:'',
-    type:'',
+    type:'site',
     field_type:'单行文本',
     vals: '',
 })

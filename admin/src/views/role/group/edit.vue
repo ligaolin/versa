@@ -11,7 +11,7 @@
                 node-key="id"
                 default-expand-all
                 :expand-on-click-node="false"
-                :props="{label:'name'}"
+                :props="{label:'name',class:customNodeClass}"
                 :default-checked-keys="checkedKeys"
             />
         </editTr>
@@ -26,6 +26,11 @@ import { Post } from '@/api/api'
 import { ObjSetObj,Error } from '@/utils/other'
 const props = defineProps(['data'])
 const emit = defineEmits(['submit'])
+
+const customNodeClass = (data, node)=>{
+    if(data.level==2) return 'flex';
+    return null;
+}
 
 const data = ref({
     id:'',
@@ -65,4 +70,5 @@ getAuth()
 </script>
 
 <style scoped>
+:deep .flex > .el-tree-node__children { display: flex; }
 </style>

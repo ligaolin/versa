@@ -37,4 +37,10 @@ class UserApi extends Base {
         ['password',null,['require','密码必须']],
         ['code',null,['require','验证码必须']],
     ];
+
+    static $ChangePassword = [
+        ['originalPassword',null,['require','原密码必须']],
+        ['password',null,['require','密码必须']],
+        ['duplicatePassword',null,['require','重复密码必须']],
+    ];
 }

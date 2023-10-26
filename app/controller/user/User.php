@@ -77,6 +77,19 @@ class User extends Base
         }
     }
 
+    static function ChangePassword(){
+        $data = UserApi::Get(UserApi::$ChangePassword);
+        $user = request()->user;
+        if(!password_verify($data['originalPassword'],$user['password'])) throw new \Exception('原密码错误');
+
+        if($data['password']!=$data['duplicatePassword']) throw new \Exception('两次密码不一样');
+        // 密码加密
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        // 更新
+        self::Db()->where('id = '.$user['id'])->update(['password'=>$data['password']]);
+        return self::Success('更新成功');
+    }
+
     function AdminEdit()
     {
         return self::EditRole('管理员');

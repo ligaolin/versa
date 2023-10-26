@@ -9,7 +9,7 @@
                 <el-option :label="item.name" :value="item.id" v-for="item in groups"/>
             </el-select>
         </editTr>
-        <editTr label="密码" :required="data.id?false:true">
+        <editTr label="密码" required v-if="!data.id">
             <el-input clearable v-model="data.password" />
             <div class="tips" v-if="data.id">不修改密码不用填写</div>
         </editTr>

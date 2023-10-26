@@ -32,6 +32,7 @@ const api = [
     ['UserAdminChange','admin/user.User/AdminChange'],
     ['UserAdminDel','admin/user.User/AdminDel'],
     ['UserAdminMe','admin/user.User/Me'], // 我的信息
+    ['UseradminChangePassword','admin/user.User/ChangePassword'], // 修改密码
 
     // 用户组
     ['UserGroupGet','admin/user.UserGroup/Get'],
@@ -62,6 +63,7 @@ const api = [
     ['ConfigChange','admin/setting.Config/Change'],
     ['ConfigDel','admin/setting.Config/Del'],
     ['ConfigForEditVal','admin/setting.Config/ForEditVal'],
+    ['ConfigCacheClear','admin/setting.Config/CacheClear'],
 ]
 
 export const Post = (key,param) => {

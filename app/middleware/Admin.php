@@ -30,6 +30,9 @@ class Admin
                 if (substr($route, 0, strlen($prefix)) == $prefix) $route = substr($route, strlen($prefix));
                 if(!in_array($route,[
                     'admin/user.User/AdminLoginOut',
+                    'admin/user.User/ChangePassword',
+                    'admin/setting.Config/CacheClear',
+                    'admin/user.User/Me',
                 ])){
                     if($request->user['state']!='开启') throw new \Exception('管理员已被关闭',1200);
                     if(!$request->user['user_group_id']) throw new \Exception('缺少管理员组信息',1200);

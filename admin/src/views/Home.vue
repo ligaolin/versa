@@ -19,7 +19,7 @@
                     <el-icon @click="handleFullScreen()"><full-screen /></el-icon>
                 </div>
                 <div class="comm_head_text">
-                    <span><el-icon><Delete /></el-icon>清除缓存</span>
+                    <span @click="cacheClear"><el-icon><Delete /></el-icon>清除缓存</span>
                     <span><el-icon><House /></el-icon>访问网站</span>
                     <span class="comm_head_admin">
                         <div>
@@ -30,8 +30,7 @@
                             <el-icon><arrow-up /></el-icon>
                         </div>
                         <div>
-                            <div><el-icon><Postcard /></el-icon>个人资料</div>
-                            <div><el-icon><Lock /></el-icon>修改密码</div>
+                            <div @click="passwordShow=true"><el-icon><Lock /></el-icon>修改密码</div>
                             <div @click="loginOut"><el-icon><switch-button /></el-icon>退出登录</div>
                         </div>
                     </span>
@@ -58,16 +57,29 @@
             </el-container>
         </el-container>
     </el-container>
+
+    <el-dialog v-model="passwordShow" title="修改密码" width="80%">
+        <changePassword v-if="passwordShow" @submit="passwordShow = false" />
+    </el-dialog>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import changePassword from './changePassword.vue'
 import { RouterView } from 'vue-router'
 import { useRouter, useRoute } from 'vue-router'
 import adminMenu from './adminMenu.vue'
 import { Post } from '@/api/api'
 import { Fullscreen } from '@/utils/other'
 const router = useRouter(),route = useRoute()
+
+const passwordShow = ref(false)
+const cacheClear = ()=>{
+    Post('ConfigCacheClear').then(res=>{
+        if(res.code==2000) ElMessage({message:res.msg,type:'success'})
+        else ElMessage({message:res.msg,type:'warning'})
+    })
+}
 
 const path_id = ref('2')
 const activeRouter = (arr)=>{

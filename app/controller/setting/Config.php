@@ -4,6 +4,7 @@ namespace app\controller\setting;
 
 use app\controller\Base;
 use app\api\setting\ConfigApi;
+use think\facade\Cache;
 
 class Config extends Base
 {
@@ -67,5 +68,10 @@ class Config extends Base
             self::Db()->where('id = '.$v['id'])->update(['val'=>$v['val']]);
         }
         return self::Success('更新完成');
+    }
+
+    function CacheClear(){
+        Cache::clear();
+        return self::Success('清理缓存完成');
     }
 }
