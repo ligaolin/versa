@@ -125,7 +125,7 @@ class Base extends BaseController
                 case 'in':
                     $res = self::DataToAarray($data);
                     if(count($res) == 1){
-                        $where .= " AND {$key} = '{$data}'";
+                        $where .= " AND {$key} = '{$res[0]}'";
                     }else{
                         $v = implode("','",$res);
                         $where .= " AND {$key} in ('{$v}')";
