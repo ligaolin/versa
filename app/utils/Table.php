@@ -129,7 +129,8 @@ class Table{
     static function AddField($table,$name,$type,$isNull=null,$default=null,$comment=null,$key=null){
         $sql = "ALTER TABLE `{$table}` ADD `{$name}` {$type}";
         if(!$isNull) $sql .= " NOT NULL";
-        if($default!=='') $sql .= " DEFAULT '{$default}'";
+        else $sql .= " NULL";
+        if($default!=='' && $default!==null) $sql .= " DEFAULT '{$default}'";
         if($comment) $sql .= " COMMENT '{$comment}'";
         if($key) $sql .= " ADD KEY {$key} ({$name})";
         return Db::query($sql);
@@ -142,7 +143,7 @@ class Table{
         $sql .= " {$type}";
         if(!$isNull) $sql .= " NOT NULL";
         else $sql .= " NULL";
-        if($default!=='') $sql .= " DEFAULT '{$default}'";
+        if($default!=='' && $default!==null) $sql .= " DEFAULT '{$default}'";
         if($comment) $sql .= " COMMENT '{$comment}'";
         if($key) $sql .= " ADD KEY {$key} ({$name})";
         return Db::query($sql);
