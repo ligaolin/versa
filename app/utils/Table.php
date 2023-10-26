@@ -141,7 +141,9 @@ class Table{
         else  $sql = "ALTER TABLE `{$table}` CHANGE `{$oldName}` `{$name}`";
         $sql .= " {$type}";
         if(!$isNull) $sql .= " NOT NULL";
+        else $sql .= " NULL";
         if($default!=='') $sql .= " DEFAULT '{$default}'";
+        else $sql .= " DROP DEFAULT";
         if($comment) $sql .= " COMMENT '{$comment}'";
         if($key) $sql .= " ADD KEY {$key} ({$name})";
         return Db::query($sql);

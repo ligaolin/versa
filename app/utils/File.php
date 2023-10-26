@@ -7,31 +7,33 @@ class File{
         $file = request()->file('file');
         $mime = $file->getOriginalMime();
         $type = explode('/',$mime)[0];
-        $path = '/static/';
+        $dir = 'static/';
         switch ($type) {
             case 'image':
-                $path .= 'image/';
+                $dir .= 'image/';
                 break;
             case 'video':
-                $path .= 'video/';
+                $dir .= 'video/';
                 break;
             default:
-                $path .= 'other/';
+            $dir .= 'other/';
                 break;
         }
-        $path .= date('Y-m-d').'/';
-        $name = $file->getOriginalName();
+        $dir .= date('Y-m-d').'/';
+        $extension = $file->extension();
+        $fileName = time().rand(1000, 9999).'.'.$extension;
+        $path =  '/'.$dir.$fileName;
         $info = [
             'mime' => $mime,
             'size' => $file->getSize(),
-            'extension' => $file->extension(),
-            'name' => $name,
+            'extension' => $extension,
+            'name' => $file->getOriginalName(),
             'type' => $type,
-            'path' => $path.$name,
-            'url' => request()->domain().$path.$name,
+            'path' => $path,
+            'url' => request()->domain().$path,
         ];
 
-        $file->move('./public'.$path,$name);
+        $file->move($dir,$fileName);
         return $info;
     }
 }
