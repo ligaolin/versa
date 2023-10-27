@@ -55,20 +55,18 @@ class Base extends BaseController
     }
 
     // 删除
-    function Del($where=[]){
+    function Del(){
         if(!static::$table) throw new \Exception('数据表未定义');
         $param = input();
         if(!isset($param['id']) || !$param['id']) throw new \Exception('id必须');
-        $idArr1 = $idArr = self::DataToAarray($param['id']);
-
-        $db = self::Db();
+        $idArr = self::DataToAarray($param['id']);
+        $arr = [];
         foreach($idArr as $id){
-            if($where) $db = $db->where($where);
-            $find = $db->where('id',$id)->find();
-            if(isset($find['pid'])) $idArr1 = array_merge($idArr1,self::getChildrenId($id));
+            $find = self::Db()->where('id',$id)->find();
+            $arr[] = $id;
+            if(isset($find['pid'])) $arr = array_merge($arr,self::getChildrenId($id));
         }
-        $inId = implode("','",$idArr1);
-        if($db->where("id in ('{$inId}')")->delete()){
+        if(self::Db()->delete($arr)){
             return self::success("删除完成");
         }else{
             throw new \Exception('删除出错');
@@ -91,14 +89,15 @@ class Base extends BaseController
 
     protected static function getChildrenId($id,$pid='pid'){
         $idArr = self::DataToAarray($id);
-        $inId = implode("','",$idArr);
-        $idArr1 = self::Db()->where($pid." in ('{$inId}')")->column('id');
+        $idArr1 = self::Db()->where($pid,'in',$idArr)->column('id');
+        $arr = [];
         if(count($idArr1)){
             foreach($idArr1 as $val){
-                $idArr1 = array_merge($idArr1,self::getChildrenId($val,$pid));
+                $arr[] = $val;
+                $arr = array_merge($arr,self::getChildrenId($val,$pid));
             }
         }
-        return $idArr1;
+        return $arr;
     }
 
     /**
