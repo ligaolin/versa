@@ -1,6 +1,6 @@
 <template>
 <div class="title">系统信息</div>
-<el-table class="listTable" border :data="list" >
+<el-table class="listTable" border :data="list" :show-header="false">
     <el-table-column prop="name" label="信息" />
     <el-table-column prop="val" label="值" />
 </el-table>
@@ -17,5 +17,5 @@ Post('Welcome').then(res=>{
 </script>
 
 <style scoped>
-.title{font-weight:bold;font-size:18px;margin-bottom:10px;}
+.title{font-weight:bold;font-size:18px;margin-bottom:20px;text-align:center;margin-top:20px;}
 </style>
