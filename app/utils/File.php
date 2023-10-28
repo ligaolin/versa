@@ -33,6 +33,7 @@ class File{
             'name' => $name,
             'path' => $path,
             'url' => request()->domain().'/'.$path,
+            'fileOrDir' => '文件',
         ];
     }
 
@@ -42,6 +43,7 @@ class File{
             'name'=>$name,
             'path'=>$path,
             'url'=>request()->domain().'/'.$path,
+            'fileOrDir' => '文件夹',
         ];
     }
 

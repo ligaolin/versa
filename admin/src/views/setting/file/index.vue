@@ -17,19 +17,15 @@
         </template>
 
         <el-table-column type="selection" width="55" align="center"/>
-        <el-table-column prop="name" label="名称" align="center"/>
+        <el-table-column prop="name" sortable label="名称" align="center"/>
         <el-table-column label="预览" align="center">
             <template #default="scope">
                 <el-image class="image" @click="preview(scope.row)" v-if="scope.row.type=='image'" :src="scope.row.url?scope.row.url:''" fit="cover" />
                 <video class="video" @click="preview(scope.row)" v-else-if="scope.row.type=='video'" :src="scope.row.url?scope.row.url:''" />
             </template>
         </el-table-column>
-        <el-table-column label="文件|文件夹" align="center">
-            <template #default="scope">
-                {{ scope.row.type=='dir'?'文件夹':'文件' }}
-            </template>
-        </el-table-column>
-        <el-table-column label="文件类型" align="center">
+        <el-table-column prop="fileOrDir" label="文件|文件夹" align="center" />
+        <el-table-column prop="dir" sortable label="文件类型" align="center">
             <template #default="scope">
                 {{ scope.row.type=='dir'?'-':scope.row.type }}
             </template>
