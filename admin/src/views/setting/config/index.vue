@@ -1,4 +1,5 @@
 <template>
+<tabs @active="active" />
 <table class="edit_table">
     <tr>
         <td>搜索</td>
@@ -38,7 +39,7 @@
         <td valign="top">
             <el-input clearable v-model="item.sort" @change="change('sort',item.sort,item.id)" style="width:100px;margin-top:5px;" />
         </td>
-        <td class="operation" valign="top">
+        <td class="operation" valign="top" v-if="item.edit=='是'">
             <el-button type="primary" size="small" @click="addEdit('编辑 '+item.name,item)">编辑</el-button>
             <el-button type="danger" size="small" @click="del(item.id)">删除</el-button>
         </td>
@@ -57,9 +58,16 @@
 
 </template>
 <script setup>
+import tabs from "./tabs.vue"
 import edit from "./edit.vue"
 import { ref } from 'vue'
 import { Post } from '@/api/api'
+
+const activeName = ref('')
+const active = (type)=>{
+    activeName.value = type
+    getList()
+}
 
 const submit = ()=>{
     Post('ConfigForEditVal',{data:list.value}).then(res=>{
@@ -74,8 +82,9 @@ const submit = ()=>{
 
 const name = ref("")
 const list = ref([])
-const getList = ()=>{
-    let param = {type:'site'}
+const getList = (type='')=>{
+    let param = {}
+    if(activeName.value) param.type = activeName.value
     if(name.value) param.name = name.value
     Post('ConfigListAuth',param).then(res=>{
         if(res.code == 2000) list.value = res.data
@@ -91,7 +100,7 @@ const editSubmit = ()=>{
     getList()
 }
 const addEdit = (title='添加',data={}) => {
-    data.type = 'site'
+    data.type = activeName.value
     editTitle.value = title
     editData.value = data
     editShow.value = true

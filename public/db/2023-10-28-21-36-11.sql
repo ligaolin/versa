@@ -18,7 +18,7 @@
 --
 -- Table structure for table `admin_cate`
 --
-use `versa`;
+
 DROP TABLE IF EXISTS `admin_cate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -62,10 +62,11 @@ CREATE TABLE `config` (
   `val` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '值',
   `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '分类',
   `field_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '单行文本' COMMENT '数据类型：单行文本、单行数字、多行文本、单选项、多选项、下拉菜单、上传图片、上传视频、上传文件、编辑器、',
-  `vals` text COLLATE utf8mb4_general_ci COMMENT '可选值，'',''隔开',
+  `vals` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '可选值，'',''隔开',
   `sort` int NOT NULL DEFAULT '100' COMMENT '排序',
+  `edit` enum('是','否') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '是' COMMENT '可否编辑，修改、删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='系统配置';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='系统配置';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,8 +75,58 @@ CREATE TABLE `config` (
 
 LOCK TABLES `config` WRITE;
 /*!40000 ALTER TABLE `config` DISABLE KEYS */;
-INSERT INTO `config` VALUES (1,'网站名称','versa','site','单行文本','',100);
+INSERT INTO `config` VALUES (1,'网站名称','versa','site','单行文本','',100,'否'),(2,'图片最大限制（M）','1','upload','单行数字','',100,'否'),(3,'视频最大限制（M）','1','upload','单行数字','',100,'否'),(4,'其他最大限制（M）','1','upload','单行数字','',100,'否'),(5,'可上传类型','jpg,png','upload','多行文本','',100,'否'),(11,'上传文件','[]','upload','上传文件','',100,'是');
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `config_type`
+--
+
+DROP TABLE IF EXISTS `config_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `config_type` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类型名称',
+  `type` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT '类型值',
+  `edit` enum('是','否') COLLATE utf8mb4_general_ci NOT NULL DEFAULT '是' COMMENT '可否编辑，修改、删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='配置类型';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `config_type`
+--
+
+LOCK TABLES `config_type` WRITE;
+/*!40000 ALTER TABLE `config_type` DISABLE KEYS */;
+INSERT INTO `config_type` VALUES (1,'网站配置','site','否'),(2,'上传配置','upload','否');
+/*!40000 ALTER TABLE `config_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `test`
+--
+
+DROP TABLE IF EXISTS `test`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `test` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name1` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'lin1' COMMENT '名称1',
+  PRIMARY KEY (`id`),
+  KEY `name1` (`name1`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='测试';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `test`
+--
+
+LOCK TABLES `test` WRITE;
+/*!40000 ALTER TABLE `test` DISABLE KEYS */;
+/*!40000 ALTER TABLE `test` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -191,7 +242,7 @@ CREATE TABLE `user_token` (
 
 LOCK TABLES `user_token` WRITE;
 /*!40000 ALTER TABLE `user_token` DISABLE KEYS */;
-INSERT INTO `user_token` VALUES (1,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5ODMwNTYyMn0.7Wsj4RSfHJx19p3DzLSJpoFOakCXB6pilX8tNSy2jkg','2023-10-26 07:33:42',NULL);
+INSERT INTO `user_token` VALUES (1,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5ODQ4ODUzMn0.UMxAAYJoI05kf1cKtZWvhrnOtxCSswr6dGxCGSJKgxA','2023-10-28 10:22:12',NULL);
 /*!40000 ALTER TABLE `user_token` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -204,4 +255,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-26 16:17:39
+-- Dump completed on 2023-10-28 21:36:12

@@ -44,7 +44,7 @@ import { http } from '@/data'
 const emit = defineEmits(['change'])
 const props = defineProps({
     list:{type:Array,default:[]},
-    limit:{type:[String,Number],default:3},
+    limit:{type:[String,Number],default:0},
     accept:{type:[String],default:'image/*'},
 })
 const fileList = ref([])
@@ -61,7 +61,12 @@ const preview = (item)=>{
 const setList = ()=>{
     let list = [];
     for(let i in fileList.value){
-        if(fileList.value[i] && fileList.value[i].response && fileList.value[i].response.code && fileList.value[i].response.code==2000) list.push(fileList.value[i].response.data)
+        if(fileList.value[i] && fileList.value[i].response && fileList.value[i].response.code){
+            if(fileList.value[i].response.code==1000){
+                ElMessage({message:fileList.value[i].response.msg,type:'error'})
+                fileList.value.splice(i)
+            }else if(fileList.value[i].response.code==2000) list.push(fileList.value[i].response.data)
+        }
     }
     emit('change',list)
 }

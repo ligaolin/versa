@@ -75,13 +75,15 @@ const router = useRouter(),route = useRoute()
 
 const passwordShow = ref(false)
 const cacheClear = ()=>{
-    Post('ConfigCacheClear').then(res=>{
-        if(res.code==2000) ElMessage({message:res.msg,type:'success'})
-        else ElMessage({message:res.msg,type:'warning'})
-    })
+    ElMessageBox.confirm('确定清除缓存吗').then(()=>{
+        Post('ConfigCacheClear').then(res=>{
+            if(res.code==2000) ElMessage({message:res.msg,type:'success'})
+            else ElMessage({message:res.msg,type:'warning'})
+        })
+    }).catch(()=>{})
 }
 
-const path_id = ref('2')
+const path_id = ref('welcome')
 const activeRouter = (arr)=>{
     for(let i in arr){
         if('/'+arr[i].path == router.currentRoute._value.path) {
@@ -100,7 +102,7 @@ const cate = ref([])
 Post('AdminCateGetListByPid',{pid:0,show:'是'}).then(res=>{
     if(res.code==2000) {
         activeRouter(res.all)
-        cate.value = res.data
+        cate.value = [{name:'欢迎',type:'页面',path:'welcome',icon:'ChatSquare',id:'welcome',show:'是',level:1},...res.data]
     }
 })
 
