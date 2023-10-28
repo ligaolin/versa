@@ -52,8 +52,14 @@ const api = [
     ['UserAuthAdminChange','admin/user.UserAuth/AdminChange'],
     ['UserAuthAdminDel','admin/user.UserAuth/AdminDel'],
 
-    ['FileUpload','admin/other.File/Upload'],
-    ['Welcome','admin/other.Welcome/index'],
+    // 文件
+    ['FileUpload','admin/other.Upload/Index'],
+    ['FileList','admin/other.File/List'],
+    ['FileDel','admin/other.File/Del'],
+    ['FileChange','admin/other.File/Change'],
+    ['FileAdd','admin/other.File/Add'],
+    
+    ['Welcome','admin/other.Welcome/Index'],
 
     // 配置
     ['ConfigGet','admin/setting.Config/Get'],

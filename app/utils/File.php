@@ -2,79 +2,87 @@
 
 namespace app\utils;
 
-use function PHPSTORM_META\type;
-
 class File{
-    static function Upload(){
-        try{
-            $file = request()->file('file');
-            $mime = $file->getOriginalMime();
-            $type = explode('/',$mime)[0];
-            $extension = $file->extension();
-            $size = $file->getSize();
-
-            self::checkSize($size,$type);
-            self::checkExt($extension);
-
-            $dir = 'static/';
-            switch ($type) {
-                case 'image':
-                    $dir .= 'image/';
-                    break;
-                case 'video':
-                    $dir .= 'video/';
-                    break;
-                default:
-                $dir .= 'other/';
-                    break;
+    static function List($dir='static'){
+        if(!$dir) $dir='static';
+        $dir1 = $dir;
+        if(basename($_SERVER['DOCUMENT_ROOT'])=='public') $dir = 'public/'.$dir;
+        $contents = scandir($dir);
+        $arr = [];
+        // 遍历文件夹内容
+        foreach ($contents as $item) {
+            if ($item != "." && $item != "..") {
+                $path = $dir1.'/'.$item;
+                $file = $dir.'/'.$item;
+                if (is_dir($dir . "/" . $item)) {
+                    $arr[] = self::dirInfo($path,$item);
+                } else {
+                    $arr[] = self::fileInfo($file,$path,$item);
+                }
             }
-            $dir .= date('Y-m-d').'/';
-
-            $fileName = time().rand(1000, 9999).'.'.$extension;
-            $path =  '/'.$dir.$fileName;
-
-            $info = [
-                'mime' => $mime,
-                'size' => $size,
-                'extension' => $extension,
-                'name' => $file->getOriginalName(),
-                'type' => $type,
-                'path' => $path,
-                'url' => request()->domain().$path,
-            ];
-
-            $file->move($dir,$fileName);
-            return $info;
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
         }
+        return $arr;
     }
 
-    // 核对大小
-    static function checkSize($size,$type){
-        $config = Config::ListByName(['图片最大限制（M）','视频最大限制（M）','其他最大限制（M）']);
-        switch($type){
-            case 'image':
-                $max_size = $config['图片最大限制（M）'];
-                break;
-            case 'video':
-                $max_size = $config['视频最大限制（M）'];
-                break;
-            default:
-                $max_size = $config['其他最大限制（M）'];
-                break;
-        }
-        $max_size_byte = intval($max_size) * 1024 * 1024;
-        if($size > $max_size_byte) throw new \Exception('文件不能超过'.$max_size.'M');
+    static function fileInfo($file,$path,$name){
+        return [
+            'mime' => mime_content_type($file),
+            'size' => filesize($file),
+            'extension' => pathinfo($file, PATHINFO_EXTENSION),
+            'type' => explode('/',mime_content_type($file))[0],
+            'name' => $name,
+            'path' => $path,
+            'url' => request()->domain().'/'.$path,
+        ];
     }
 
-    // 核对格式限制
-    static function checkExt($ext){
-        $format = Config::GetByName('可上传类型');
-        $format = explode(',',$format);
-        foreach ($format as $k => $v) {
-            $format[$k] = strtolower($v);
-        }
-        if(!in_array(strtolower($ext),$format)) throw new \Exception('该文件格式不能上传');
+    static function dirInfo($path,$name){
+        return [
+            'type'=>'dir',
+            'name'=>$name,
+            'path'=>$path,
+            'url'=>request()->domain().'/'.$path,
+        ];
+    }
+
+    static function Del($path){
+        // 检查文件夹是否存在
+        if (is_dir($path)) {
+            // 打开文件夹
+            $handle = opendir($path);
+            // 遍历文件夹中的文件和子文件夹
+            while (($file = readdir($handle)) !== false) {
+                if ($file != "." && $file != "..") {
+                    $filePath = $path . '/' . $file;
+
+                    // 如果是文件，则直接删除
+                    if (is_file($filePath)) {
+                        unlink($filePath);
+                    }
+                    // 如果是子文件夹，则递归调用删除函数
+                    elseif (is_dir($filePath)) {
+                        self::Del($filePath);
+                    }
+                }
+            }
+            // 关闭文件夹
+            closedir($handle);
+
+            // 删除空的文件夹
+            if (!rmdir($path)) throw new \Exception('删除失败');
+        }else if (is_file($path)) {
+            if (!unlink($path)) throw new \Exception('删除失败');
+        } else throw new \Exception('路径不存在');
+    }
+
+    static function Change($path,$newName){
+        if (!file_exists($path)) throw new \Exception('路径不存在');
+        $newPath = str_replace(basename($path), '', $path);
+        if (!rename($path, $newPath.'/'.$newName)) throw new \Exception('修改失败');
+    }
+
+    static function AddDir($path,$name){
+        if (file_exists($path.'/'.$name)) throw new \Exception('路径已存在');
+        mkdir($path.'/'.$name, 0777, true);
     }
 }

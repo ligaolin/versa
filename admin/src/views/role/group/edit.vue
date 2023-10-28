@@ -1,6 +1,6 @@
 <template>
     <table class="edit_table">
-        <editTr label="组名称">
+        <editTr label="组名称" required>
             <el-input clearable v-model="data.name" />
         </editTr>
         <editTr label="权限">

@@ -58,7 +58,7 @@ const listEleme = ref(null)
 const del = (ids)=>{
     listEleme.value.Del('UserGroupAdminDel',ids)
 }
-const addEdit = (item={},isEdit=false) => {
+const addEdit = (item={}) => {
     if(item.id) listEleme.value.Edit('编辑 '+item.name,item)
     else listEleme.value.Edit('添加',item)
 }

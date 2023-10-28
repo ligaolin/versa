@@ -31,7 +31,7 @@ const props = defineProps({
     rowKey:{ type: String, default: 'id' },
     reload:{ type: Boolean, default: false }, // 修改内容后是否整个页面刷新
 })
-const emit = defineEmits(['editEnd'])
+const emit = defineEmits(['editEnd','listEnd'])
 
 const tableData = ref([])
 const page = ref(1)
@@ -51,10 +51,11 @@ const getData = ()=>{
             tableData.value =  res.data
             total.value = res.total
         }
+        emit('listEnd',res)
     })
 }
 getData()
-const init = ()=>{
+const Init = ()=>{
     page.value = 1
     emit('editEnd')
     if(props.reload) setTimeout(()=>{ location.reload() },700)
@@ -93,7 +94,7 @@ const editTitle = ref("添加")
 const editData = ref({})
 const submit = ()=>{
     editShow.value=false
-    init()
+    Init()
 }
 
 const Edit = (title='添加',data={})=>{
@@ -110,7 +111,7 @@ const Del = (api,ids,field='id')=>{
         Post(api,param).then(res=>{
             if(res.code==2000){
                 ElMessage({message:res.msg,type:'success'})
-                init()
+                Init()
             }else{
                 ElMessage({message:res.msg,type:'error'})
             }
@@ -131,12 +132,12 @@ const Change = (api,changeField,changeVal,whereVal,whereField='id')=>{
     }).then(res=>{
         if(res.code==2000){
             ElMessage({message:res.msg,type:'success'})
-            init()
+            Init()
         }else{
             ElMessage({message:res.msg,type:'error'})
         }
     })
 }
 
-defineExpose({Edit,Del,Change})
+defineExpose({Edit,Del,Change,Init,total})
 </script>
