@@ -10,6 +10,7 @@ use app\utils\Other;
 class File extends Base
 {
     function List(){
+        return self::ResData($_SERVER);
         $data = FileApi::Get(FileApi::$List);
         $res['data'] = UtFile::List($data['dir']);
         if($data['name']) $res['data'] = Other::Search($data['name'],$res['data'],'name');
