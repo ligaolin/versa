@@ -142,6 +142,9 @@ class Base extends BaseController
                 case 'null':
                     $where .= " AND {$key} is null";
                     break;
+                case 'set':
+                    $where .= " AND FIND_IN_SET('{$data}',{$key})";
+                    break;
                 case '>':
                     $where .= " AND {$key} > '{$data}'";
                     break;
