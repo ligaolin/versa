@@ -75,11 +75,13 @@ class AdminCate extends Base
 
         if($data['id']){ // 更新
             if(self::Db()->where('name',$data['name'])->where('id','<>',$data['id'])->where('pid',$data['pid'])->count()) throw new \Exception('名称已存在');
+            if(self::Db()->where('path',$data['path'])->where('id','<>',$data['id'])->count()) throw new \Exception('栏目跳转路径已存在');
 
             self::Db()->where('id = '.$data['id'])->update($update);
             return self::Success('更新完成');
         }else{ // 添加
             if(self::Db()->where('name',$data['name'])->where('pid',$data['pid'])->count()) throw new \Exception('名称已存在');
+            if(self::Db()->where('path',$data['path'])->count()) throw new \Exception('栏目跳转路径已存在');
 
             if($id = self::Db()->insertGetId($update)) return self::Success('添加成功',$id);
             else return self::Error('添加失败');
