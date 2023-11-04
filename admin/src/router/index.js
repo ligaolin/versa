@@ -15,7 +15,7 @@ const modules = import.meta.glob('../views/**/*.vue')
 let res = await Post('AdminCateList',{type:"页面"})
 if(res.code==2000){
     for(let i in res.data){
-        if(modules[res.data[i].view]) routes[2].children.push({ path: '/'+res.data[i].path, meta:{title:res.data[i].name}, component:defineAsyncComponent(modules[res.data[i].view])})
+        if(modules[res.data[i].view]) routes[2].children.push({ path: '/'+res.data[i].path.split('?')[0], meta:{title:res.data[i].name}, component:defineAsyncComponent(modules[res.data[i].view])})
     }
 }
 

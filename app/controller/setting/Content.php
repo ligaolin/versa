@@ -28,9 +28,11 @@ class Content extends Base
     function List(){
         $data = ContentApi::Get(ContentApi::$List);
         $where = self::Where($data,[
-            ['name'=>'id','type'=>'in'],
-            ['name'=>'name','type'=>'like'],
-            ['name'=>'cname','type'=>'like'],
+            ['name'=>'content.id','type'=>'in'],
+            ['name'=>'content.name','type'=>'like'],
+            ['name'=>'content.cname','type'=>'like'],
+            ['name'=>'content.cate_id','type'=>'like'],
+            ['name'=>'content.state','type'=>'in'],
         ]);
         $res = self::GetList(self::Db()->where($where)->leftJoin('admin_cate','admin_cate.id = content.cate_id')->field('content.*,admin_cate.name as cate_name'),$data);
         foreach ($res['data'] as $k => $v) {
@@ -86,6 +88,8 @@ class Content extends Base
                 'icon'=>$icon,
                 'pid'=>$cate_pid,
                 'level'=>$level,
+                'path'=>'content?id='.$id.'&name='.$name,
+                'view'=>'../views/setting/content/content.vue',
             ]);
         }else{
             $cate_id = self::Db('admin_cate')->insertGetId([
@@ -94,8 +98,8 @@ class Content extends Base
                 'level'=>$level,
                 'name'=>$name,
                 'type'=>'页面',
-                'path'=>'content/'.$name.'/index',
-                'view'=>'../views/content/index.vue',
+                'path'=>'content?id='.$id.'&name='.$name,
+                'view'=>'../views/setting/content/content.vue',
             ]);
         }
         self::Db()->where('id',$id)->update(['cate_id'=>$cate_id]);
@@ -114,7 +118,7 @@ class Content extends Base
             }
             self::Db()->where('id','in',$data['id'])->delete();
             Db::commit();
-            return parent::Del();
+            return self::success("删除完成");
         } catch (\Exception $e) {
             // 回滚事务
             Db::rollback();

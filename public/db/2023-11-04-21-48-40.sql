@@ -18,7 +18,6 @@
 --
 -- Table structure for table `admin_cate`
 --
-use `versa`;
 
 DROP TABLE IF EXISTS `admin_cate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -37,7 +36,7 @@ CREATE TABLE `admin_cate` (
   `show` enum('是','否') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '是' COMMENT '是否显示',
   `active` bigint DEFAULT NULL COMMENT '选中状态的栏目，空表示使用自身作为选中状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='后台栏目';
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='后台栏目';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +45,7 @@ CREATE TABLE `admin_cate` (
 
 LOCK TABLES `admin_cate` WRITE;
 /*!40000 ALTER TABLE `admin_cate` DISABLE KEYS */;
-INSERT INTO `admin_cate` VALUES (1,0,1,'系统设置','分类','','','Setting',100,'开启','是',NULL),(2,1,2,'后台栏目','页面','setting/adminCate/index','../views/setting/adminCate/index.vue','',100,'开启','是',NULL),(3,0,1,'角色管理','分类','','','User',100,'开启','是',NULL),(4,3,2,'管理员','页面','role/admin/index','../views/role/admin/index.vue','',100,'开启','是',NULL),(5,3,2,'管理员组','页面','role/group/index','../views/role/group/index.vue','',100,'开启','是',NULL),(6,3,2,'管理员权限','页面','role/auth/index','../views/role/auth/index.vue','',100,'开启','是',NULL),(7,1,2,'数据表','页面','setting/table/index','../views/setting/table/index.vue','',100,'开启','是',NULL),(8,7,3,'数据表字段','页面','setting/table/field','../views/setting/table/field.vue',NULL,100,'开启','否',13),(9,1,2,'系统配置','页面','setting/config/index','../views/setting/config/index.vue','',99,'开启','是',NULL),(18,1,2,'上传文件管理','页面','setting/file/index','../views/setting/file/index.vue','',100,'开启','是',0);
+INSERT INTO `admin_cate` VALUES (1,0,1,'系统设置','分类','','','Setting',100,'开启','是',NULL),(2,1,2,'后台栏目','页面','setting/adminCate/index','../views/setting/adminCate/index.vue','',100,'开启','是',NULL),(3,0,1,'角色管理','分类','','','User',100,'开启','是',NULL),(4,3,2,'管理员','页面','role/admin/index','../views/role/admin/index.vue','',100,'开启','是',NULL),(5,3,2,'管理员组','页面','role/group/index','../views/role/group/index.vue','',100,'开启','是',NULL),(6,3,2,'管理员权限','页面','role/auth/index','../views/role/auth/index.vue','',100,'开启','是',NULL),(7,1,2,'数据表','页面','setting/table/index','../views/setting/table/index.vue','',100,'开启','是',NULL),(8,7,3,'数据表字段','页面','setting/table/field','../views/setting/table/field.vue',NULL,100,'开启','否',7),(9,1,2,'系统配置','页面','setting/config/index','../views/setting/config/index.vue','',99,'开启','是',NULL),(18,1,2,'上传文件管理','页面','setting/file/index','../views/setting/file/index.vue','',100,'开启','是',NULL),(19,1,2,'自定义内容','页面','setting/content/index','../views/setting/content/index.vue','',100,'开启','是',NULL),(20,19,3,'自定义内容字段','页面','setting/content/field','../views/setting/content/field.vue','',100,'开启','否',19),(21,3,2,'test','页面','content?id=1&name=test','../views/setting/content/content.vue',NULL,100,'开启','是',NULL);
 /*!40000 ALTER TABLE `admin_cate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,11 +116,12 @@ CREATE TABLE `content` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
   `cname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '中文名称',
-  `cate_id` int DEFAULT NULL COMMENT '后台栏目id',
+  `cate_id` int DEFAULT NULL COMMENT '当前后台栏目id',
+  `cate_pid` int DEFAULT NULL COMMENT '所属后台栏目id',
   `sort` int NOT NULL DEFAULT '100' COMMENT '排序',
   `state` enum('开启','关闭') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '开启' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='自定义内容';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='自定义内容';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,6 +130,7 @@ CREATE TABLE `content` (
 
 LOCK TABLES `content` WRITE;
 /*!40000 ALTER TABLE `content` DISABLE KEYS */;
+INSERT INTO `content` VALUES (1,'test','测试',21,3,100,'开启');
 /*!40000 ALTER TABLE `content` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,16 +144,21 @@ DROP TABLE IF EXISTS `content_field`;
 CREATE TABLE `content_field` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `content_id` int NOT NULL COMMENT '所属自定义内容id',
-  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
-  `type` enum('单行文本','单行数字','多行文本','单选项','多选项','下拉菜单','上传图片','上传视频','上传文件','时间','日期','时间和日期','编辑器','关联数据选择器') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '单行文本' COMMENT '数据类型',
-  `is_null` enum('可以','不可以') COLLATE utf8mb4_general_ci DEFAULT '可以' COMMENT '可否为空',
-  `default` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '默认值',
-  `vals` text COLLATE utf8mb4_general_ci COMMENT '可选值',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
+  `cname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '中文名称',
+  `type` enum('单行文本','单行整数','单行小数','多行文本','单选项','多选项','下拉菜单','上传图片','上传视频','上传文件','时间','日期','时间和日期','编辑器','关联数据单选器','关联数据多选器') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '单行文本' COMMENT '数据类型',
+  `is_null` enum('可以','不可以') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '可以' COMMENT '可否为空',
+  `is_repeat` enum('可以','不可以') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '可以' COMMENT '可否重复',
+  `default` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '默认值',
+  `vals` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '可选值',
+  `tips` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '提示',
+  `table` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '关联表名称',
+  `field` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '关联表的关联字段',
+  `field_name` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '关联表的显示字段',
   `sort` int NOT NULL DEFAULT '100' COMMENT '排序',
   `state` enum('开启','关闭') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '开启' COMMENT '状态',
-  `table` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '关联表名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='自定义内容字段';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='自定义内容字段';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +167,32 @@ CREATE TABLE `content_field` (
 
 LOCK TABLES `content_field` WRITE;
 /*!40000 ALTER TABLE `content_field` DISABLE KEYS */;
+INSERT INTO `content_field` VALUES (2,1,'text','单行文本','单行文本','不可以','可以',NULL,'是,否','名称',NULL,'id',NULL,100,'开启'),(3,2,'cont','内容','单行小数','可以','可以',NULL,NULL,NULL,NULL,'id',NULL,100,'开启'),(4,1,'int','单行整数','单行整数','可以','可以',NULL,NULL,NULL,NULL,'id',NULL,100,'开启');
 /*!40000 ALTER TABLE `content_field` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `test`
+--
+
+DROP TABLE IF EXISTS `test`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `test` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `text` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT '单行文本',
+  `int` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '单行整数',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='测试';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `test`
+--
+
+LOCK TABLES `test` WRITE;
+/*!40000 ALTER TABLE `test` DISABLE KEYS */;
+/*!40000 ALTER TABLE `test` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -277,7 +308,6 @@ CREATE TABLE `user_token` (
 
 LOCK TABLES `user_token` WRITE;
 /*!40000 ALTER TABLE `user_token` DISABLE KEYS */;
-INSERT INTO `user_token` VALUES (1,'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidGltZSI6MTY5ODgzOTYyMn0.-0T3_XpyKDALMyLFunBvUNrLW_IBPSeANudjlH1WqCw','2023-11-01 11:53:42',NULL);
 /*!40000 ALTER TABLE `user_token` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -290,4 +320,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-01 20:47:32
+-- Dump completed on 2023-11-04 21:48:40

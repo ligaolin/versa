@@ -15,7 +15,9 @@ class ContentApi extends Base {
         ['id',null],
         ['name',null],
         ['cname',null],
-
+        ['cate_id',null],
+        ['state',null],
+        
         ['page',null],
         ['pageNum',10],
         ['order','sort asc,id asc'],
