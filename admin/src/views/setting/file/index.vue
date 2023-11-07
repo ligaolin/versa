@@ -20,8 +20,7 @@
         <el-table-column prop="name" sortable label="名称" align="center"/>
         <el-table-column label="预览" align="center">
             <template #default="scope">
-                <el-image class="image" @click="preview(scope.row)" v-if="scope.row.type=='image'" :src="scope.row.url?scope.row.url:''" fit="cover" />
-                <video class="video" @click="preview(scope.row)" v-else-if="scope.row.type=='video'" :src="scope.row.url?scope.row.url:''" />
+                <media :item="scope.row"></media>
             </template>
         </el-table-column>
         <el-table-column prop="fileOrDir" label="文件|文件夹" align="center" />
@@ -39,14 +38,6 @@
             </template>
         </el-table-column>
     </list>
-
-    <el-dialog v-model="previewShow" title="预览" width="80%" >
-        <div class="previewBox">
-            <el-image class="preview" v-if="previewItem.type=='image'" :src="previewItem.url" fit="contain" />
-            <video class="preview" v-if="previewItem.type=='video'" :src="previewItem.url" controls></video>
-        </div>
-    </el-dialog>
-
 </template>
 
 <script setup>
@@ -55,6 +46,7 @@ import add from "./add.vue"
 import { ref,watch,markRaw } from 'vue'
 import { useRouter,useRoute } from 'vue-router'
 import { http } from '@/data'
+import media from '@/components/media.vue'
 const router = useRouter(),route = useRoute()
 
 const name = ref("")
@@ -102,20 +94,8 @@ const uploadChange = (file,files)=>{
         else if(file.response.code==1000) ElMessage({message:file.response.msg,type:'error'})
     }
 }
-
-const previewShow = ref(false)
-const previewItem = ref({})
-const preview = (item)=>{
-    previewItem.value = item
-    previewShow.value = true
-}
-
 </script>
 <style scoped>
-.image,.video{width:70px;height:70px;cursor:pointer;} 
-.preview{max-width:100%;}
-.previewBox{text-align:center;}
-
 .upload{display:inline-block;margin:0 10px;vertical-align:middle;}
 .tips{color:#666;margin-top:10px;}
 </style>

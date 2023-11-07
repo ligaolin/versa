@@ -74,7 +74,6 @@ const state = ref('')
 const getData = ()=>{
     let param = {content_id : content_id.value}
     if(content_id.value) param.content_id = content_id.value
-    if(content_name.value) param.content_name = content_name.value
     if(id.value) param.id = id.value
     if(name.value) param.name = name.value
     if(cname.value) param.cname = cname.value

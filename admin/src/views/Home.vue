@@ -86,7 +86,7 @@ const cacheClear = ()=>{
 const path_id = ref('welcome')
 const activeRouter = (arr)=>{
     for(let i in arr){
-        if('/'+arr[i].path == router.currentRoute._value.path) {
+        if('/'+arr[i].path.split('?')[0] == router.currentRoute._value.path) {
             if(arr[i].active) path_id.value = arr[i].active+''
             else path_id.value = arr[i].id+''
             return false

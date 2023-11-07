@@ -22,6 +22,17 @@
         <el-table-column type="selection" width="55" align="center"/>
         <el-table-column prop="name" label="英文名称" align="center"/>
         <el-table-column prop="cname" label="中文名称" align="center"/>
+        <el-table-column label="排序" align="center">
+            <template #default="scope">
+                <el-input clearable v-model="scope.row.sort" @change="change('sort',scope.row.sort,scope.row.id)" />
+            </template>
+        </el-table-column>
+        <el-table-column label="状态" align="center">
+            <template #default="scope">
+                <el-switch v-model="scope.row.state" active-value="开启" inactive-value="关闭" active-text="开启" inactive-text="关闭" inline-prompt @change="change('state',scope.row.state,scope.row.id)"/>
+            </template>
+        </el-table-column>
+
         <el-table-column label="操作" align="center">
             <template #default="scope">
                 <el-button type="primary" size="small" @click="fieldPage(scope.row)">内容字段</el-button>
@@ -58,14 +69,15 @@ const listEleme = ref(null)
 const Del = (ids)=>{
     listEleme.value.Del('ContentDel',ids)
 }
-
 const addEdit = (item={}) => {
     if(item.name) {
         listEleme.value.Edit('编辑 '+ item.name,item)
     } else listEleme.value.Edit('添加',item)
 }
-
+const change = (changeField,changeVal,whereVal)=>{
+    listEleme.value.Change('ContentChange',changeField,changeVal,whereVal)
+}
 const fieldPage = (item)=>{
-    router.push('/setting/content/field?id='+item.id+'&name='+item.name);
+    router.push('/setting/content/field?id='+item.id+'&name='+item.cname);
 }
 </script>
