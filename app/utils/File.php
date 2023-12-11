@@ -6,7 +6,6 @@ class File{
     static function List($dir='static'){
         if(!$dir) $dir='static';
         $dir1 = $dir;
-        if(basename($_SERVER['DOCUMENT_ROOT'])=='public') $dir = 'public/'.$dir;
         $contents = scandir($dir);
         $arr = [];
         // 遍历文件夹内容

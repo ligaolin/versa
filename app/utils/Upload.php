@@ -24,7 +24,6 @@ class Upload{
                 $fileName = $name;
 
                 $dir1 = $dir;
-                if($base=='public') $dir1 = 'public/'.$dir1;
                 if (file_exists($dir1.'/'.$fileName)) throw new \Exception('文件已存在');
             }else{
                 $dir = 'static/';
@@ -52,7 +51,6 @@ class Upload{
                 'path' => $path,
                 'url' => request()->domain().$path,
             ];
-            if($base=='public') $dir = 'public/'.$dir;
             $file->move($dir,$fileName);
             return $info;
         } catch (\Exception $e) {
