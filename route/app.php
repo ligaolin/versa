@@ -11,6 +11,8 @@
 use app\utils\Route;
 
 Route::SetRoute([
+    ['action'=>'test.Test','base'=>['Index'],'method'=>'get'], // 测试
+
     ['action'=>'other.Captcha','base'=>['Img'],'method'=>'get'], // 验证码
     ['action'=>'other.Upload','admin'=>['Index']], // 文件
     ['action'=>'other.File','admin'=>['List','Del','Change','Add']], // 文件
