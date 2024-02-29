@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 use app\utils\Route;
 
-Route::SetRoute([
+Route::SetRoute('api',[
     ['action'=>'test.Test','base'=>['Index'],'method'=>'get'], // 测试
 
     ['action'=>'other.Captcha','base'=>['Img'],'method'=>'get'], // 验证码

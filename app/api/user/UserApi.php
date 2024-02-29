@@ -1,6 +1,6 @@
 <?php
 
-namespace app\api\user;
+namespace app\api\api\user;
 
 use app\api\Base;
 

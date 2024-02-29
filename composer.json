@@ -25,7 +25,9 @@
         "topthink/think-orm": "^3.0",
         "topthink/think-filesystem": "^2.0",
         "firebase/php-jwt": "^6.8",
-        "s1syphos/php-simple-captcha": "^2.3"
+        "s1syphos/php-simple-captcha": "^2.3",
+        "topthink/think-multi-app": "^1.0",
+        "topthink/think-view": "^2.0"
     },
     "require-dev": {
         "symfony/var-dumper": ">=4.2",

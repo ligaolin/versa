@@ -1,6 +1,6 @@
 <?php
 
-namespace app\api\setting;
+namespace app\api\api\setting;
 
 use app\api\Base;
 
