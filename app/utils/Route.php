@@ -8,28 +8,25 @@ class Route
 {
     static function SetRoute($app,$arr)
     {
-        // TpRoute::group(function () use ($app,$arr) {
+        TpRoute::group(function () use ($app,$arr) {
             foreach ($arr as $v) {
                 if (isset($v['action']) && $v['action']) {
-                    if (isset($v['base']) && count($v['base'])) self::Route($app,$v, 'base');
-
+                    if (isset($v['base']) && count($v['base'])) self::Route($app,$v['base'],$v['action']);
                     if (isset($v['admin']) && count($v['admin'])) {
-                        TpRoute::group('admin', function () use ($app,$v) {
-                            self::Route($app,$v, 'admin');
+                        TpRoute::group(function () use ($app,$v) {
+                            self::Route($app,$v['admin'],$v['action'],'admin');
                         })->middleware(\app\middleware\Admin::class);
                     }
                 }
             }
-        // })->allowCrossDomain();
+        })->allowCrossDomain();
     }
 
-    static function Route($app,$data, $type)
+    static function Route($app,$data,$action,$type='')
     {
-        foreach ($data[$type] as $v1) {
-            $path = 'app/'.$app.'/'.($type!='base'?$type.'/':'').$data['action'].'/'. $v1;
-            $data['action'] = explode('.',$data['action']);
-            $data['action'] = implode('\\',$data['action']);
-            $class = '\app\\'.$app.'\controller\\'.$data['action'].'::'.$v1;
+        foreach ($data as $v1) {
+            $path = 'app/'.$app.'/'.($type?$type.'/':'').$action.'/'. $v1;
+            $class = '\app\\'.$app.'\controller\\'.implode('\\',explode('.',$action)).'::'.$v1;
             if (isset($data['method']) && $data['method']) {
                 TpRoute::rule($path, $class, strtoupper($data['method']));
             } else {

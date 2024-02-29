@@ -2,7 +2,7 @@
 
 namespace app\api\api\setting;
 
-use app\api\Base;
+use app\api\api\Base;
 
 class AdminCateApi extends Base {
     static $Get = [

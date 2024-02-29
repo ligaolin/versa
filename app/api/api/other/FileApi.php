@@ -2,7 +2,7 @@
 
 namespace app\api\api\other;
 
-use app\api\Base;
+use app\api\api\Base;
 
 class FileApi extends Base {
     static $List = [

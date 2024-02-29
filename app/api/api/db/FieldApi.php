@@ -2,7 +2,7 @@
 
 namespace app\api\api\db;
 
-use app\api\Base;
+use app\api\api\Base;
 
 class FieldApi extends Base {
     static $List = [

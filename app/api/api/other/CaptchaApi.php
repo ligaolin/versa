@@ -2,7 +2,7 @@
 
 namespace app\api\api\other;
 
-use app\api\Base;
+use app\api\api\Base;
 
 class CaptchaApi extends Base {
     static $Verify = [

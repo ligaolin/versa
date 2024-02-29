@@ -27,7 +27,4 @@ Route::SetRoute('api',[
     ['action'=>'setting.AdminCate','base'=>['GetListByPid','List'],'admin'=>['Edit','Change','Del','Get','List']], // 后台栏目
     ['action'=>'setting.Config','base'=>['Get','List'],'admin'=>['Edit','Change','Del','Get','List','ForEditVal','CacheClear']], // 配置
     ['action'=>'setting.ConfigType','admin'=>['Edit','Change','Del','List']], // 配置
-
-    ['action'=>'setting.Content','admin'=>['Get','Edit','Change','Del','List']], // 自定义内容
-    ['action'=>'setting.ContentField','admin'=>['Get','Edit','Change','Del','List']], // 自定义内容字段
 ]);

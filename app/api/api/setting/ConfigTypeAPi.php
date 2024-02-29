@@ -2,7 +2,7 @@
 
 namespace app\api\api\setting;
 
-use app\api\Base;
+use app\api\api\Base;
 
 class ConfigTypeAPi extends Base {
     static $List = [
