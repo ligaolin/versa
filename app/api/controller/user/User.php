@@ -126,7 +126,7 @@ class User extends Base
     function Me(){
         $res['data'] = request()->user;
         unset($res['data']['password']);
-        $res['data']['avatar'] = json_decode($res['data']['avatar']);
+        if($res['data']['avatar']) $res['data']['avatar'] = json_decode($res['data']['avatar']);
         return self::Success('获取成功',$res);
     }
 
