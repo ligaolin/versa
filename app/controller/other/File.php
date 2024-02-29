@@ -3,7 +3,7 @@
 namespace app\controller\other;
 
 use app\controller\Base;
-use app\utils\File as UtFile;
+use app\utils\Files as UtFile;
 use app\api\other\FileApi;
 use app\utils\Other;
 
