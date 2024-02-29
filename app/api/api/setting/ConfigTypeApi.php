@@ -2,9 +2,9 @@
 
 namespace app\api\api\setting;
 
-use app\api\Base;
+use app\api\api\Base;
 
-class ConfigTypeAPi extends Base {
+class ConfigTypeApi extends Base {
     static $List = [
         ['id',null],
         ['name',null],

@@ -2,7 +2,7 @@
 
 namespace app\api\api\user;
 
-use app\api\Base;
+use app\api\api\Base;
 
 class UserApi extends Base {
     static $Get = [

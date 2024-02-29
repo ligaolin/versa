@@ -4,7 +4,7 @@ namespace app\api\controller;
 
 use app\BaseController;
 use think\facade\Db;
-use app\api\Base as BaseApi;
+use app\api\api\Base as BaseApi;
 use app\utils\Other;
 
 class Base extends BaseController
