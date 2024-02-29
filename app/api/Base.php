@@ -10,7 +10,7 @@ class Base{
 
         $arr = array_combine(array_column($data, 0), array_column($data, 1));
         foreach ($param as $key => $value) {
-            if(array_key_exists($key,$arr) && $value) $arr[$key] = $value;
+            if(array_key_exists($key,$arr) && $value!=='' && $value!==null) $arr[$key] = $value;
         }
         self::Validate($data,$arr); // 验证
         return $arr;
