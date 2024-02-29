@@ -39,7 +39,7 @@ const upConfig = {
     maxFileSize: 20 * 1024 * 1024, // 20M
     fieldName:'file',
     headers:{Authorization:localStorage.getItem('adminToken')},
-    server: http+'/api/admin/other.Upload/Index',
+    server: http+'/app/api/admin/other.Upload/Index',
     customInsert: (res,insertFn) => {
         if(res.code == 2000){
             insertFn(res.data.url);

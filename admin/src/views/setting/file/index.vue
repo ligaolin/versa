@@ -9,7 +9,7 @@
 
         <template #operation="{ ids }">
             <el-button type="primary" v-if="dir!='static'" @click="go()">返回上级</el-button>
-            <el-upload :action="http+'/api/admin/other.Upload/Index?dir='+dir" :headers="headers" multiple :show-file-list="false" :on-change="uploadChange" class="upload">
+            <el-upload :action="http+'/app/api/admin/other.Upload/Index?dir='+dir" :headers="headers" multiple :show-file-list="false" :on-change="uploadChange" class="upload">
                 <el-button type="primary">上传文件</el-button>
             </el-upload>
             <el-button type="primary" @click="addEdit">添加文件夹</el-button>

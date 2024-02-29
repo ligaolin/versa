@@ -61,7 +61,7 @@ const submit = ()=>{
 }
 
 const getCode = ()=>{
-    answer.value = http+'/api/other.Captcha/Img?width=110&height=41&'+Random(0,100)
+    answer.value = http+'/app/api/other.Captcha/Img?width=110&height=41&'+Random(0,100)
 }
 
 const enterEvent = (ev)=>{

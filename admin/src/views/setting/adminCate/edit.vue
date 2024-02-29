@@ -13,9 +13,11 @@
         <template v-if="data.type=='页面'">
             <editTr label="栏目跳转路径" required>
                 <el-input clearable v-model="data.path" />
+                <div class="tips">示例：setting/adminCate/index</div>
             </editTr>
             <editTr label="栏目文件路径" required>
                 <el-input clearable v-model="data.view" />
+                <div class="tips">示例：../views/setting/adminCate/index.vue</div>
             </editTr>
             <editTr label="是否显示" required>
                 <el-radio-group v-model="data.show">

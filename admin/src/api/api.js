@@ -77,20 +77,6 @@ const api = [
     ['ConfigTypeEdit','admin/setting.ConfigType/Edit'],
     ['ConfigTypeChange','admin/setting.ConfigType/Change'],
     ['ConfigTypeDel','admin/setting.ConfigType/Del'],
-
-    // 自定义内容
-    ['ContentGet','admin/setting.Content/Get'],
-    ['ContentList','admin/setting.Content/List'],
-    ['ContentEdit','admin/setting.Content/Edit'],
-    ['ContentChange','admin/setting.Content/Change'],
-    ['ContentDel','admin/setting.Content/Del'],
-
-     // 自定义内容字段
-     ['ContentFieldGet','admin/setting.ContentField/Get'],
-     ['ContentFieldList','admin/setting.ContentField/List'],
-     ['ContentFieldEdit','admin/setting.ContentField/Edit'],
-     ['ContentFieldChange','admin/setting.ContentField/Change'],
-     ['ContentFieldDel','admin/setting.ContentField/Del'],
 ]
 
 export const Post = (key,param) => {
