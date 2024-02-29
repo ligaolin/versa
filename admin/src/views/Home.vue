@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref,watch } from 'vue'
 import changePassword from './changePassword.vue'
 import { RouterView } from 'vue-router'
 import { useRouter, useRoute } from 'vue-router'
@@ -130,7 +130,10 @@ const Me = ()=>{
 }
 Me()
 
-const page_title = route.meta.title
+const page_title = ref(route.meta.title)
+watch(()=>route.meta.title,(newData)=>{
+    page_title.value = newData
+})
 const isCollapse = ref(false)
 const onBack = ()=>{ // 返回上一页
     history.back()

@@ -1,5 +1,5 @@
 <template>
-<tabs @active="active" />
+<tabs @active="active" @success="success"/>
 <table class="edit_table">
     <tr>
         <td>搜索</td>
@@ -90,7 +90,10 @@ const getList = (type='')=>{
         if(res.code == 2000) list.value = res.data
     })
 }
-getList()
+
+function success(){
+    getList()
+}
 
 const editShow = ref(false)
 const editTitle = ref('')

@@ -20,7 +20,7 @@
 import { ref,watch } from 'vue'
 import edit from "./tabsEdit.vue"
 import { Post } from '@/api/api'
-const emit = defineEmits(['active'])
+const emit = defineEmits(['active','success'])
 
 const activeName = ref('site')
 emit('active',activeName.value)
@@ -32,6 +32,7 @@ const list = ref([])
 const getList = ()=>{
     Post('ConfigTypeList').then(res=>{
         if(res.code == 2000) list.value = res.data
+        emit('success')
     })
 }
 getList()
