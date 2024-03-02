@@ -7,7 +7,6 @@ use app\index\controller\Base;
 class Index extends Base
 {
     function index(){
-        echo 'fdsfsfd';
-        return view();
+        return view('index/index');
     }
 }

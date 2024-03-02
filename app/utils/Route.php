@@ -25,7 +25,7 @@ class Route
     static function Route($app,$data,$action,$type='')
     {
         foreach ($data as $v1) {
-            $path = 'app/'.$app.'/'.($type?$type.'/':'').$action.'/'. $v1;
+            $path = ($type?$type.'/':'').$action.'/'. $v1;
             $class = '\app\\'.$app.'\controller\\'.implode('\\',explode('.',$action)).'::'.$v1;
             if (isset($data['method']) && $data['method']) {
                 TpRoute::rule($path, $class, strtoupper($data['method']));
