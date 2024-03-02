@@ -105,7 +105,6 @@ CREATE TABLE IF NOT EXISTS `user` (
 DELETE FROM `user`;
 INSERT INTO `user` (`id`, `user_group_id`, `type`, `name`, `password`, `avatar`, `sort`, `state`, `created_at`, `updated_at`) VALUES
 	(1, 1, '管理员', 'admin', '$2y$10$4vGK0H44LOiLanBkodhw8ejnBWhAYWy8DGFI4yd0anOsJWVfdop5S', NULL, 0, '开启', '2023-10-10 06:14:16', '2023-12-11 06:39:06'),
-	(2, 1, '管理员', 'gmood', '$2y$10$sremc2em3WNcN/0xOjApeOHqi80B2EdAqkqCAHWjAzvD/BJCAR9AK', '', 100, '开启', '2023-10-24 22:03:50', '2023-10-26 07:27:16');
 
 -- 导出  表 versa.user_auth 结构
 DROP TABLE IF EXISTS `user_auth`;
