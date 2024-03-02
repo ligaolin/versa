@@ -1,7 +1,7 @@
 <template>
 <el-upload
     v-model:file-list="fileList"
-    :action="http+'/app/api/admin/other.Upload/Index'"
+    :action="http+'/api/admin/other.Upload/Index'"
     :headers="headers"
     multiple
     ref="upload"

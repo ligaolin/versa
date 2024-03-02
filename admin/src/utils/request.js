@@ -2,7 +2,7 @@ import axios from 'axios'
 import { http } from '@/data'
 import router from '@/router'
 
-axios.defaults.baseURL = http + "/app/api/"
+axios.defaults.baseURL = http + "/api/"
 axios.interceptors.request.use(config => { // 添加请求拦截器
     config.headers.Authorization = localStorage.getItem('adminToken')
     return config
