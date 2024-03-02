@@ -3,7 +3,7 @@
 namespace app\api\controller\db;
 
 use app\api\controller\Base;
-use app\api\api\db\FieldApi;
+use app\api\param\db\FieldApi;
 use app\utils\Table as UtTable;
 use app\utils\Other;
 

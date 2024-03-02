@@ -3,7 +3,7 @@
 namespace app\api\controller\user;
 
 use app\api\controller\Base;
-use app\api\api\user\UserGroupApi;
+use app\api\param\user\UserGroupApi;
 
 class UserGroup extends Base
 {

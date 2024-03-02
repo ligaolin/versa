@@ -3,7 +3,7 @@
 namespace app\api\controller\db;
 
 use app\api\controller\Base;
-use app\api\api\db\TableApi;
+use app\api\param\db\TableApi;
 use app\utils\Table as UtTable;
 
 class Table extends Base

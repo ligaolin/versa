@@ -8,10 +8,6 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-use app\utils\Route;
-use think\facade\Route as TpRoute;
+use think\facade\Route;
 
-TpRoute::rule('/', 'app\index\controller\Index@index');
-Route::SetRoute('index',[
-    ['action'=>'test.Test','base'=>['Index'],'method'=>'get'], // 测试
-]);
+Route::rule('/', 'app\index\controller\Index@index');

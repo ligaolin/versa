@@ -1,6 +1,6 @@
 <?php
 
-namespace app\api\api;
+namespace app\api\param;
 
 use think\exception\ValidateException;
 

@@ -3,7 +3,7 @@
 namespace app\api\controller\user;
 
 use app\api\controller\Base;
-use app\api\api\user\UserAuthApi;
+use app\api\param\user\UserAuthApi;
 
 class UserAuth extends Base
 {

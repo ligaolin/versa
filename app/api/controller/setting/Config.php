@@ -3,7 +3,7 @@
 namespace app\api\controller\setting;
 
 use app\api\controller\Base;
-use app\api\api\setting\ConfigApi;
+use app\api\param\setting\ConfigApi;
 use think\facade\Cache;
 
 class Config extends Base

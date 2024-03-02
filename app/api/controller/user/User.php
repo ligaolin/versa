@@ -3,7 +3,7 @@
 namespace app\api\controller\user;
 
 use app\api\controller\Base;
-use app\api\api\user\UserApi;
+use app\api\param\user\UserApi;
 use app\utils\Captcha;
 use Firebase\JWT\JWT;
 

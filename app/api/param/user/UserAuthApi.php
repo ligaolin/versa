@@ -1,8 +1,8 @@
 <?php
 
-namespace app\api\api\user;
+namespace app\api\param\user;
 
-use app\api\api\Base;
+use app\api\param\Base;
 
 class UserAuthApi extends Base {
     static $Get = [

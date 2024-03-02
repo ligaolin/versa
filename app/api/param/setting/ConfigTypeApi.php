@@ -1,8 +1,8 @@
 <?php
 
-namespace app\api\api\setting;
+namespace app\api\param\setting;
 
-use app\api\api\Base;
+use app\api\param\Base;
 
 class ConfigTypeApi extends Base {
     static $List = [

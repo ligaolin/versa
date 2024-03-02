@@ -3,7 +3,7 @@
 namespace app\api\controller\setting;
 
 use app\api\controller\Base;
-use app\api\api\setting\ConfigTypeApi;
+use app\api\param\setting\ConfigTypeApi;
 use think\facade\Db;
 
 class ConfigType extends Base

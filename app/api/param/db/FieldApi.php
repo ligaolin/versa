@@ -1,8 +1,8 @@
 <?php
 
-namespace app\api\api\db;
+namespace app\api\param\db;
 
-use app\api\api\Base;
+use app\api\param\Base;
 
 class FieldApi extends Base {
     static $List = [

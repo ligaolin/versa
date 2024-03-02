@@ -3,7 +3,7 @@
 namespace app\api\controller\setting;
 
 use app\api\controller\Base;
-use app\api\api\setting\AdminCateApi;
+use app\api\param\setting\AdminCateApi;
 
 class AdminCate extends Base
 {

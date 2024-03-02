@@ -4,7 +4,7 @@ namespace app\api\controller\other;
 
 use app\api\controller\Base;
 use app\utils\Upload as UtUpload;
-use app\api\api\other\UploadApi;
+use app\api\param\other\UploadApi;
 
 class Upload extends Base
 {

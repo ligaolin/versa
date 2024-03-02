@@ -4,7 +4,7 @@ namespace app\api\controller\other;
 
 use app\api\controller\Base;
 use app\utils\Files as UtFile;
-use app\api\api\other\FileApi;
+use app\api\param\other\FileApi;
 use app\utils\Other;
 
 class File extends Base

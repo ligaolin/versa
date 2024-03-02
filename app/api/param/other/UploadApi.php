@@ -1,8 +1,8 @@
 <?php
 
-namespace app\api\api\other;
+namespace app\api\param\other;
 
-use app\api\api\Base;
+use app\api\param\Base;
 
 class UploadApi extends Base {
     static $Index = [

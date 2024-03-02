@@ -4,7 +4,7 @@ namespace app\api\controller\other;
 
 use app\api\controller\Base;
 use app\utils\Captcha as UtoolCaptcha;
-use app\api\api\other\CaptchaApi;
+use app\api\param\other\CaptchaApi;
 
 class Captcha extends Base
 {
