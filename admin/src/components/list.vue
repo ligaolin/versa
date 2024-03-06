@@ -103,10 +103,9 @@ const Edit = (title='添加',data={})=>{
     editShow.value = true
 }
 
-const Del = (api,ids,field='id')=>{
+const Del = (api,ids,field='id',param={})=>{
     if(!ids) {ElMessage({message:'没有选中数据',type:'error'});return}
     ElMessageBox.confirm('确定删除指定数据吗').then(()=>{
-        let param = {}
         param[field] = ids
         Post(api,param).then(res=>{
             if(res.code==2000){

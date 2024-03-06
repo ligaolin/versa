@@ -70,7 +70,7 @@ const getData = ()=>{
 
 const listEleme = ref(null)
 const Del = (ids)=>{
-    listEleme.value.Del('FieldDel',ids,'name')
+    listEleme.value.Del('FieldDel',ids,'name',{table:table.value})
 }
 const addEdit = (item={}) => {
     item.table = table.value
