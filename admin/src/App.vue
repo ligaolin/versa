@@ -23,10 +23,11 @@ a{text-decoration:none;color:#337ecc;}
 .edit_table{width:100%;}
 .edit_table td:first-child{width:150px;text-align:right;}
 .edit_table td{padding:10px;}
-.edit_table .el-input{width:300px;}
+.edit_table .el-input,.edit_table .el-textarea{width:300px;}
 .edit_table .el-radio{margin-right:15px;}
 .edit_table .tips{margin-top:10px;}
 
 .listTable{width:100%;}
 .el-pagination{justify-content: center;align-items: center;margin-top: 20px;}
 </style>
+    
