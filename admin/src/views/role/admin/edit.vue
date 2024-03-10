@@ -19,7 +19,7 @@
             </editTr>
         </template>
         <editTr label="头像">
-            <upload :list="data.avatar" @change="uploadChange"/>
+            <upload :list="data.avatar" @change="uploadChange" limit="1"/>
         </editTr>
         <editTr>
             <el-button type="primary" @click="submit">提交</el-button>
