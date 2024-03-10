@@ -1,17 +1,17 @@
 <template>
 <div style="border: 1px solid #ccc;max-width:100%;">
-      <Toolbar
+    <Toolbar
         style="border-bottom: 1px solid #ccc"
         :editor="editorRef"
         :defaultConfig="toolbarConfig"
-      />
-      <Editor
+    />
+    <Editor
         style="min-height:150px;"
         v-model="valueHtml"
         :defaultConfig="editorConfig"
         @onChange="handleChange"
         @onCreated="handleCreated"
-      />
+    />
 </div>
 </template>
 
@@ -42,7 +42,7 @@ const upConfig = {
     server: http+'/api/admin/other.Upload/Index',
     customInsert: (res,insertFn) => {
         if(res.code == 2000){
-            insertFn(res.data.url);
+            insertFn(http+res.data.path);
         }else{
             ElMessage({message:res.msg,type:'error'})
         }

@@ -24,7 +24,7 @@
                     <span class="comm_head_admin">
                         <div>
                             <span>
-                                <el-avatar :size="35" :src="user.avatar && user.avatar.length && user.avatar[0] && user.avatar[0].url?user.avatar[0].url:''" />
+                                <el-avatar :size="35" :src="user.avatar && user.avatar.length && user.avatar[0] && user.avatar[0].path?http+user.avatar[0].path:''" />
                             </span>
                             <span class="comm_head_admin_name">{{user.name}}</span>
                             <el-icon><arrow-up /></el-icon>
@@ -64,6 +64,7 @@
 </template>
 
 <script setup>
+import { http } from '@/data'
 import { ref,watch } from 'vue'
 import changePassword from './changePassword.vue'
 import { RouterView } from 'vue-router'

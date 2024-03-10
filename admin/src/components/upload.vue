@@ -8,13 +8,13 @@
     :on-change="Change"
     :limit="limit"
     :accept="accept"
-  >
+>
     <el-button type="primary">上传文件</el-button>
     <template #file="{ file }">
         <template v-if="file.response && file.response.code && file.response.code==2000">
             <div v-if="file.response.data.type=='image' || file.response.data.type=='video'" class="thumb">
-                <el-image class="image" v-if="file.response.data.type=='image'" :src="file.response.data.url" fit="cover" />
-                <video class="video" v-if="file.response.data.type=='video'" :src="file.response.data.url" controls></video>
+                <el-image class="image" v-if="file.response.data.type=='image'" :src="http+file.response.data.path" fit="cover" />
+                <video class="video" v-if="file.response.data.type=='video'" :src="http+file.response.data.path" controls></video>
                 
                 <div class="operation">
                     <el-icon @click="preview(file.response.data)" color="white" :size="20"><Search /></el-icon>
@@ -31,8 +31,8 @@
 
 <el-dialog v-model="previewShow" title="预览" width="80%" >
     <div class="previewBox">
-        <el-image class="preview" v-if="previewItem.type=='image'" :src="previewItem.url" fit="contain" />
-        <video class="preview" v-if="previewItem.type=='video'" :src="previewItem.url" controls></video>
+        <el-image class="preview" v-if="previewItem.type=='image'" :src="http+previewItem.path" fit="contain" />
+        <video class="preview" v-if="previewItem.type=='video'" :src="http+previewItem.path" controls></video>
     </div>
 </el-dialog>
 
