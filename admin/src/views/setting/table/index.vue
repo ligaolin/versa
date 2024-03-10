@@ -8,7 +8,7 @@
         <template #operation="{ ids }">
             <el-button type="primary" @click="addEdit()">添加</el-button>
             <el-button type="danger" @click="Del(ids)">批量删除</el-button>
-            <el-button @click="Backups()">数据库备份</el-button>
+            <!-- <el-button @click="Backups()">数据库备份</el-button> -->
         </template>
 
         <el-table-column type="selection" width="55" align="center"/>
