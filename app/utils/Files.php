@@ -5,32 +5,30 @@ namespace app\utils;
 class Files{
     static function List($dir='static'){
         if(!$dir) $dir='static';
-        $dir1 = $dir;
         $contents = scandir($dir);
         $arr = [];
         // 遍历文件夹内容
         foreach ($contents as $item) {
             if ($item != "." && $item != "..") {
-                $path = $dir1.'/'.$item;
-                $file = $dir.'/'.$item;
+                $path = $dir.'/'.$item;
                 if (is_dir($dir . "/" . $item)) {
                     $arr[] = self::dirInfo($path,$item);
                 } else {
-                    $arr[] = self::fileInfo($file,$path,$item);
+                    $arr[] = self::fileInfo($path,$item);
                 }
             }
         }
         return $arr;
     }
 
-    static function fileInfo($file,$path,$name){
+    static function fileInfo($path,$name){
         return [
-            'mime' => mime_content_type($file),
-            'size' => filesize($file),
-            'extension' => pathinfo($file, PATHINFO_EXTENSION),
-            'type' => explode('/',mime_content_type($file))[0],
+            'mime' => mime_content_type($path),
+            'size' => filesize($path),
+            'extension' => pathinfo($path, PATHINFO_EXTENSION),
+            'type' => explode('/',mime_content_type($path))[0],
             'name' => $name,
-            'path' => $path,
+            'path' => '/'.$path,
             'url' => request()->domain().'/'.$path,
             'fileOrDir' => '文件',
         ];
