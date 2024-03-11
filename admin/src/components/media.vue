@@ -12,9 +12,9 @@
 
 <script setup>
 import { http } from "@/data";
-import { ref } from 'vue'
+import { ref,watch } from 'vue'
 const props = defineProps({
-    item:{type:Object,defaullt:{}},
+    item:{type:[Object,Array],defaullt:[]},
     width:{type:String,default:'70px'},
     height:{type:String,default:'70px'},
     fit:{type:String,default:'cover'},
@@ -26,6 +26,21 @@ const preview = (item)=>{
     previewItem.value = item
     previewShow.value = true
 }
+
+const item = ref({ type:'', path:''})
+const setData = ()=>{
+    if(props.item){
+        if(Array.isArray(props.item) && props.item.length){
+            item.value = props.item[0]
+        }else if(typeof props.item == 'object'){
+            item.value = props.item
+        }
+    }
+}
+setData()
+watch(()=>props.item,()=>{
+    setData()
+})
 </script>
 
 <style scoped>

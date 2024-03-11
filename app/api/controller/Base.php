@@ -180,11 +180,10 @@ class Base extends BaseController
             $res = $db->paginate([
                 'list_rows'=> isset($data['pageNum']) && $data['pageNum']?$data['pageNum']:10,
                 'page' => $data['page'],
-            ]);
+            ])->toArray();
         }else{
-            $res = ['data'=>$db->select()];
+            $res['data'] = $db->select()->toArray();
         }
-        $res = json_decode(json_encode($res),true);
         if($pid){
             foreach ($res['data'] as $k => $v) {
                 $cdb = self::Db()->where($pid,$v['id']);
