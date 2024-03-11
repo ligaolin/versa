@@ -67,6 +67,6 @@ const addEdit = (item={}) => {
     else listEleme.value.Edit('添加',item)
 }
 const change = (changeField,changeVal,whereVal)=>{
-    listEleme.value.Change('UserGroupAdminChange',changeField,changeVal,whereVal)
+    listEleme.value.Change('UserAdminChange',changeField,changeVal,whereVal)
 }
 </script>
