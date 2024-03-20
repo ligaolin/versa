@@ -55,15 +55,15 @@ class UserAuth extends Base
         $update['type'] = $type;
 
         if($data['id']){
-            if(self::Db()->where('name',$data['name'])->where('id','<>',$data['id'])->where('type',$type)->count()) throw new \Exception('同级已有相同权限名');
-            if($data['route'] && self::Db()->where('route',$data['route'])->where('id','<>',$data['id'])->where('type',$type)->count()) throw new \Exception('同级已有相同路由');
+            if(self::Db()->where('name',$data['name'])->where('id','<>',$data['id'])->where('pid',$data['pid'])->where('type',$type)->count()) throw new \Exception('同级已有相同权限名');
+            if($data['route'] && self::Db()->where('route',$data['route'])->where('id','<>',$data['id'])->where('pid',$data['pid'])->where('type',$type)->count()) throw new \Exception('同级已有相同路由');
 
             // 更新
             self::Db()->where('id = '.$data['id'])->update($update);
             return self::Success('更新完成');
         }else{
-            if(self::Db()->where('name',$data['name'])->where('type',$type)->count()) throw new \Exception('同级已有相同权限名');
-            if($data['route'] && self::Db()->where('route',$data['route'])->where('type',$type)->count()) throw new \Exception('同级已有相同路由');
+            if(self::Db()->where('name',$data['name'])->where('pid',$data['pid'])->where('type',$type)->count()) throw new \Exception('同级已有相同权限名');
+            if($data['route'] && self::Db()->where('route',$data['route'])->where('pid',$data['pid'])->where('type',$type)->count()) throw new \Exception('同级已有相同路由');
 
             // 添加
             if($id = self::Db()->insertGetId($update)) return self::Success('添加成功',$id);

@@ -176,11 +176,18 @@ class Base extends BaseController
     static function GetList($db,$data,$order='',$pid='',$childwhere=''){
         if(isset($data['order']) && $data['order'] && is_string($data['order'])) $db = $db->orderRaw($data['order']);
         else if($order)  $db = $db->orderRaw($order);
+
+        $pageNum = 10;
+        if(isset($data['pageNum']) && $data['pageNum']) $pageNum = $data['pageNum'];
+        if(isset($data['page_num']) && $data['page_num']) $pageNum = $data['page_num'];
+
         if(isset($data['page']) && $data['page']){
             $res = $db->paginate([
-                'list_rows'=> isset($data['pageNum']) && $data['pageNum']?$data['pageNum']:10,
+                'list_rows'=> $pageNum,
                 'page' => $data['page'],
             ])->toArray();
+            $res['total_page'] = intval($res['total']/$pageNum);
+            if($res['total']%$pageNum) $res['total_page']++;
         }else{
             $res['data'] = $db->select()->toArray();
         }
