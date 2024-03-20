@@ -191,6 +191,7 @@ class Base extends BaseController
         }else{
             $res['data'] = $db->select()->toArray();
         }
+        
         if($pid){
             foreach ($res['data'] as $k => $v) {
                 $cdb = self::Db()->where($pid,$v['id']);

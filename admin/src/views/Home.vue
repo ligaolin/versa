@@ -20,7 +20,7 @@
                 </div>
                 <div class="comm_head_text">
                     <span @click="cacheClear"><el-icon><Delete /></el-icon>清除缓存</span>
-                    <span><el-icon><House /></el-icon>访问网站</span>
+                    <span @click="goHome"><el-icon><House /></el-icon>访问网站</span>
                     <span class="comm_head_admin">
                         <div>
                             <span>
@@ -74,6 +74,7 @@ import { Post } from '@/api/api'
 import { Fullscreen } from '@/utils/other'
 const router = useRouter(),route = useRoute()
 
+function goHome(){window.open('/')}
 const passwordShow = ref(false)
 const cacheClear = ()=>{
     ElMessageBox.confirm('确定清除缓存吗').then(()=>{
