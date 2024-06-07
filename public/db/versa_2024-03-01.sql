@@ -14,6 +14,8 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+use `versa`;
+
 -- 导出  表 versa.admin_cate 结构
 DROP TABLE IF EXISTS `admin_cate`;
 CREATE TABLE IF NOT EXISTS `admin_cate` (
@@ -104,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- 正在导出表  versa.user 的数据：~2 rows (大约)
 DELETE FROM `user`;
 INSERT INTO `user` (`id`, `user_group_id`, `type`, `name`, `password`, `avatar`, `sort`, `state`, `created_at`, `updated_at`) VALUES
-	(1, 1, '管理员', 'admin', '$2y$10$4vGK0H44LOiLanBkodhw8ejnBWhAYWy8DGFI4yd0anOsJWVfdop5S', NULL, 0, '开启', '2023-10-10 06:14:16', '2023-12-11 06:39:06'),
+	(1, 1, '管理员', 'admin', '$2y$10$4vGK0H44LOiLanBkodhw8ejnBWhAYWy8DGFI4yd0anOsJWVfdop5S', NULL, 0, '开启', '2023-10-10 06:14:16', '2023-12-11 06:39:06');
 
 -- 导出  表 versa.user_auth 结构
 DROP TABLE IF EXISTS `user_auth`;
